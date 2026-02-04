@@ -31,7 +31,7 @@
                                 CornerRadius="8,8,0,0">
                             <!-- Placeholder Color/Icon logic -->
                             <Viewbox Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
-                                <Path Style="{StaticResource Icon.Library}" 
+                                <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"
                                       Stroke="{DynamicResource PrimaryAccentBrush}"
                                       Fill="Transparent"
                                       StrokeThickness="1.5"/>
@@ -53,12 +53,12 @@
                                            Margin="0,5,0,0"/>
 
                                 <!-- Last Modified simulation -->
-                                <TextBlock Text="Recent" Margin="0,15,0,0" FontSize="11" Foreground="#AAA"/>
+                                <TextBlock Text="Recent" Margin="0,15,0,0" FontSize="{DynamicResource FontSize_Small}" Foreground="#AAA"/>
                             </StackPanel>
                             
                             <!-- Options Button -->
                             <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
-                                <Path Style="{StaticResource Icon.MoreHorizontal}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Rename" Click="RenameLibrary_Click"/>
@@ -140,7 +140,7 @@
                                 <TextBlock Text="{Binding LastModified, StringFormat='{}Edited: {0:MMM dd}'}" Margin="0,15,0,0" FontSize="11" Foreground="#AAA"/>
                             </StackPanel>
                             <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
-                                <Path Style="{StaticResource Icon.MoreHorizontal}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Open" Click="OpenNotebook_ContextClick"/>
@@ -324,7 +324,7 @@
                                         </Style>
                                     </Button.Style>
                                     <Viewbox Width="16" Height="16">
-                                        <Path Style="{StaticResource Icon.Settings}"/>
+                                        <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}"/>
                                     </Viewbox>
                                     <Button.ContextMenu>
                                         <ContextMenu>
@@ -355,7 +355,7 @@
                                         Padding="8">
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}"
-                                                   FontSize="{DynamicResource FontSizeNormal}"
+                                                   FontSize="{DynamicResource FontSize_Body}"
                                                    FontWeight="SemiBold"
                                                    Foreground="{DynamicResource PrimaryTextBrush}"
                                                    TextTrimming="CharacterEllipsis"/>
@@ -380,10 +380,10 @@
                     VerticalAlignment="Center"
                     Visibility="Collapsed">
             <Viewbox Width="64" Height="64">
-                <Path Style="{DynamicResource Icon.Folder}"/>
+                <Path Data="{StaticResource Icon.Folder}" Style="{StaticResource IconBase}"/>
             </Viewbox>
             <TextBlock Text="{DynamicResource Str_NoLibraries}"
-                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontSize="{DynamicResource FontSize_Large}"
                        Foreground="{DynamicResource SecondaryTextBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,16,0,0"/>
@@ -401,10 +401,10 @@
                     VerticalAlignment="Center"
                     Visibility="Collapsed">
             <Viewbox Width="64" Height="64">
-                <Path Style="{StaticResource Icon.Library}"/>
+                <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"/>
             </Viewbox>
             <TextBlock Text="{DynamicResource Str_NoNotebooks}"
-                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontSize="{DynamicResource FontSize_Large}"
                        Foreground="{DynamicResource SecondaryTextBrush}"
                        HorizontalAlignment="Center"
                        Margin="0,16,0,0"/>

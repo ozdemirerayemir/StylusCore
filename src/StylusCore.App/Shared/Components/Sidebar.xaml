@@ -26,7 +26,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Width" 
-                                                         To="200" 
+                                                         To="240" 
                                                          Duration="0:0:0.25">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseOut"/>
@@ -62,7 +62,7 @@
                           Style="{StaticResource SidebarToggleButtonStyle}" 
                           Click="ToggleButton_Click">
                 <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Path Style="{StaticResource Icon.Menu}"/>
+                    <Path Data="{StaticResource Icon.Menu}" Style="{StaticResource IconBase}"/>
                 </Viewbox>
             </ToggleButton>
 
@@ -83,16 +83,14 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0" Height="64">
-                            <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path Style="{StaticResource Icon.Library}"/>
-                            </Viewbox>
+                            <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"/>
                         </Grid>
 
                         <TextBlock Grid.Column="1" 
                                    Text="{DynamicResource Str_Library}" 
                                    VerticalAlignment="Center" 
                                    Margin="10,0,0,0"
-                                   FontSize="{StaticResource FontSizeNormal}" 
+                                   FontSize="{StaticResource FontSize_Body}" 
                                    Foreground="{DynamicResource PrimaryTextBrush}"
                                    TextTrimming="CharacterEllipsis"
                                    Visibility="{Binding IsExpanded, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -118,7 +116,7 @@
 
                         <Grid Grid.Column="0" Height="64">
                             <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path Style="{StaticResource Icon.Settings}"/>
+                                <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}"/>
                             </Viewbox>
                         </Grid>
 
@@ -126,7 +124,7 @@
                                    Text="{DynamicResource Str_Settings}" 
                                    VerticalAlignment="Center" 
                                    Margin="10,0,0,0"
-                                   FontSize="{StaticResource FontSizeNormal}" 
+                                   FontSize="{StaticResource FontSize_Body}" 
                                    Foreground="{DynamicResource PrimaryTextBrush}" 
                                    TextTrimming="CharacterEllipsis"
                                    Visibility="{Binding IsExpanded, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>

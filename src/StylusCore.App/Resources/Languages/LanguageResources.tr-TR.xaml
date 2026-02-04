@@ -61,6 +61,22 @@
 
     <!-- Dialogs -->
     <sys:String x:Key="Str_SelectColor">Renk Seç</sys:String>
+    <sys:String x:Key="Str_Name">Ad</sys:String>
+    <sys:String x:Key="Str_PageFormat">Sayfa Formatı</sys:String>
+    <sys:String x:Key="Str_Orientation">Yönlendirme</sys:String>
+    <sys:String x:Key="Str_Portrait">Dikey</sys:String>
+    <sys:String x:Key="Str_Landscape">Yatay</sys:String>
+    <sys:String x:Key="Str_PageTemplate">Sayfa Şablonu</sys:String>
+    <sys:String x:Key="Str_Template_Blank">Boş</sys:String>
+    <sys:String x:Key="Str_Template_Lined">Çizgili</sys:String>
+    <sys:String x:Key="Str_Template_Grid">Kareli</sys:String>
+    <sys:String x:Key="Str_Template_Dotted">Noktalı</sys:String>
+    <sys:String x:Key="Str_Template_Cornell">Cornell</sys:String>
+    <sys:String x:Key="Str_Format_A4">A4 (210 × 297 mm)</sys:String>
+    <sys:String x:Key="Str_Format_A5">A5 (148 × 210 mm)</sys:String>
+    <sys:String x:Key="Str_Format_A3">A3 (297 × 420 mm)</sys:String>
+    <sys:String x:Key="Str_Format_Letter">Letter (8.5 × 11 in)</sys:String>
+    <sys:String x:Key="Str_Format_Infinite">Sonsuz (Sınırsız)</sys:String>
 
     <!-- Settings View -->
     <sys:String x:Key="Str_AutoSave">Otomatik Kayıt</sys:String>

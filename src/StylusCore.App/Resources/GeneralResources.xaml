@@ -21,7 +21,7 @@
     <!-- 3. Font Sizes -->
     <sys:Double x:Key="FontSize_Small">12</sys:Double>
     <sys:Double x:Key="FontSize_Body">14</sys:Double>
-    <sys:Double x:Key="FontSize_Large">16</sys:Double>
+    <sys:Double x:Key="FontSize_Large">18</sys:Double>
     <sys:Double x:Key="FontSize_Title">24</sys:Double>
     <sys:Double x:Key="FontSize_Header">32</sys:Double>
 

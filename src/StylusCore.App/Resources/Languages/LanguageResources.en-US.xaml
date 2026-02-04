@@ -61,6 +61,22 @@
 
     <!-- Dialogs -->
     <sys:String x:Key="Str_SelectColor">Select Color</sys:String>
+    <sys:String x:Key="Str_Name">Name</sys:String>
+    <sys:String x:Key="Str_PageFormat">Page Format</sys:String>
+    <sys:String x:Key="Str_Orientation">Orientation</sys:String>
+    <sys:String x:Key="Str_Portrait">Portrait</sys:String>
+    <sys:String x:Key="Str_Landscape">Landscape</sys:String>
+    <sys:String x:Key="Str_PageTemplate">Page Template</sys:String>
+    <sys:String x:Key="Str_Template_Blank">Blank</sys:String>
+    <sys:String x:Key="Str_Template_Lined">Lined</sys:String>
+    <sys:String x:Key="Str_Template_Grid">Grid</sys:String>
+    <sys:String x:Key="Str_Template_Dotted">Dotted</sys:String>
+    <sys:String x:Key="Str_Template_Cornell">Cornell</sys:String>
+    <sys:String x:Key="Str_Format_A4">A4 (210 × 297 mm)</sys:String>
+    <sys:String x:Key="Str_Format_A5">A5 (148 × 210 mm)</sys:String>
+    <sys:String x:Key="Str_Format_A3">A3 (297 × 420 mm)</sys:String>
+    <sys:String x:Key="Str_Format_Letter">Letter (8.5 × 11 in)</sys:String>
+    <sys:String x:Key="Str_Format_Infinite">Infinite (No boundaries)</sys:String>
 
     <!-- Settings View -->
     <sys:String x:Key="Str_AutoSave">Auto-Save</sys:String>

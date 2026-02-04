@@ -1,97 +1,123 @@
 ---
-description: StylusCore Project Guidelines and Rules (v2.0)
+description: StylusCore Project Guidelines and Rules (v6.5 - Universal Canvas + Icon Safety + Context Awareness + File Hierarchy)
 ---
 
 # 📏 StylusCore Development Guidelines
 
-This document establishes the strict rules for contributing to the StylusCore project. **All future development must adhere to these standards** to maintain consistency in architecture, design, and code quality.
+This document establishes the **STRICT** rules for contributing to the StylusCore project. **All future development must adhere to these standards.**
+
+The goal is to build a **"Super-App"** (like OneNote + draw.io + VS Code) where Ink, Text, Tables, Code Blocks, and Diagrams coexist on a high-performance **Infinite Canvas** with **Deep Zoom**.
 
 ---
 
 ## 🏗️ 1. Architectural & Layout Rules
 
-The application uses a specific layout structure based on **Grids** and **Features**.
-
-### Global Layout (MainWindow)
+### 1.1. Global Shell Layout (MainWindow)
 * **Structure:** Grid-based layout.
-* **Header:** Height **48px** (standard) or integrated into the Sidebar logic.
+* **Header:** Height **48px** (standard).
 * **Sidebar (Rail):**
-    * **Width (Collapsed):** `48px` or `64px` (Standard Rail width).
+    * **Width (Collapsed):** `48px` or `64px`.
     * **Width (Expanded):** `240px` - `280px`.
 * **Content Area:** Occupies the remaining space (`*`).
 
-### Page Layouts (Views)
-* **Root Element:** Must be a `Grid` (not `StackPanel`) to allow proper resizing.
-* **Row Definitions:**
-    * `Auto`: For Toolbars/Headers inside views.
-    * `*`: For the main content (Lists, InkCanvas).
-* **Margins:** Use `8px` or `16px` multiples (refer to `StandardControls.xaml` resources).
+### 1.2. View Layout Strategy
+* **Standard Views (Settings, Library):** Root is `Grid`.
+* **Editor View (Note Surface):** Root is **Infinite Canvas**. NEVER use `ScrollViewer`. Use `MatrixTransform` for Pan/Zoom.
+
+### 1.3. Page Concept
+* **Concept:** A "Page" is a **Visual Region** on the Infinite Canvas, not a hard container. Content can overflow.
 
 ---
 
-## 🖼️ 2. Iconography Rules
+## 🖼️ 2. Iconography Rules (CLIP PROTECTION)
 
-Icons must be **vector-based** and fully **theme-aware**.
+Icons must be **vector-based** and **never clipped**.
 
-* **Format:** SVG Path Data string only. **DO NOT** use PNG, JPG, or external `.svg` files.
-* **Location:** All icons must be defined in `src/StylusCore.App/Shared/Themes/Icons.xaml`.
-* **Naming Convention:** `Icon.[Name]` (e.g., `Icon.Pen`, `Icon.Settings`).
-* **Structure (StreamGeometry Resource):**
-    *(Preferred for performance)*
+* **Format:** SVG Path Data string only (`StreamGeometry`).
+* **Location:** `src/StylusCore.App/Shared/Themes/Icons.xaml`.
+* **The "Fit-to-Box" Rule (CRITICAL):**
+    * **Rule:** NEVER set explicit `Width` or `Height` on the `Path` element itself.
+    * **Reason:** This causes clipping if the parent container is smaller.
+    * **Correct Usage:** Let the Parent (`Grid` or `Border`) define the size.
+* **Usage Pattern:**
     ```xml
-    <StreamGeometry x:Key="Icon.Pen">M10,20 L30,40...</StreamGeometry>
-    ```
-* **Usage:**
-    ```xml
-    <Path Data="{StaticResource Icon.Pen}" Fill="{DynamicResource PrimaryTextBrush}" Stretch="Uniform"/>
+    <Grid Width="24" Height="24">
+        <Path Data="{StaticResource Icon.Pen}"
+              Fill="{DynamicResource PrimaryTextBrush}"
+              Stretch="Uniform"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+    </Grid>
     ```
 
 ---
 
-## 🎨 3. Theming, Typography & Colors
+## 🎨 3. Theming & Colors
 
-Hardcoded values are **STRICTLY PROHIBITED**.
-
-### Colors
-* **Rule:** Always use `DynamicResource` keys defined in `Shared/Themes/`.
+* **Colors:** Always use `DynamicResource` keys defined in `Shared/Themes/`.
     * ✅ Correct: `Background="{DynamicResource PrimaryBackgroundBrush}"`
-    * ❌ Incorrect: `Background="#FFFFFF"` or `Background="White"`
-* **Required Keys:** `PrimaryBackgroundBrush`, `PrimaryTextBrush`, `PrimaryAccentBrush`, `PrimaryBorderBrush`.
-
-### Typography (NEW CRITICAL RULE)
-* **Rule:** Do NOT use hardcoded FontSizes (e.g., `FontSize="14"`).
-* **Usage:** Use styles from `TextStyles.xaml`.
-    * ✅ Correct: `Style="{StaticResource Text.Body}"` or `Style="{StaticResource Text.Header1}"`
+* **Fonts:** NEVER hardcode `FontFamily`. Use `DynamicResource App.MainFont`.
+* **Standard Keys:** `PrimaryBackgroundBrush`, `PrimaryTextBrush`, `PrimaryAccentBrush`, `PrimaryBorderBrush`.
 
 ---
 
-## 🌍 4. Localization & Strings (NEW CRITICAL RULE)
+## 🌍 4. Localization & Strings
 
-* **Rule:** Hardcoded text strings in XAML are **FORBIDDEN**.
-    * ❌ Incorrect: `<TextBlock Text="Library Settings"/>`
-    * ✅ Correct: `<TextBlock Text="{x:Static p:Resources.LibrarySettings_Title}"/>`
-* **Why:** To ensure the application can support multiple languages (TR/EN) instantly without code refactoring.
-
----
-
-## ⚡ 5. Performance Standards (NEW CRITICAL RULE)
-
-* **Lists:** All `ListBox`, `ListView`, or `ItemsControl` displaying more than 10 items MUST use UI Virtualization.
-    * `VirtualizingStackPanel.IsVirtualizing="True"` (Default in ListBox, but check Styles).
-* **Images:** If user images are loaded, `DecodePixelWidth` must be set to prevent memory leaks.
-* **Async:** Never block the UI thread. Use `async/await` for file I/O and database operations.
+* **Rule:** Hardcoded text strings are **FORBIDDEN**.
+* **Method:** Use `DynamicResource` to support runtime language switching.
+    * ✅ Correct: `<TextBlock Text="{DynamicResource String.LibrarySettings.Title}"/>`
 
 ---
 
-## 📝 6. Naming & Coding Standards
+## 🧩 5. Mixed Media & Controls
 
-* **Namespaces:** Must follow the physical folder structure.
-    * `StylusCore.App.Features.[FeatureName].Views`
-* **Feature Isolation:** A feature (e.g., `Library`) should not directly depend on the internal logic of another feature. Use `EventAggregator` or `Core Services` to communicate.
+### 5.1. The "View-to-Edit" Pattern
+* **Rule:** Heavy controls (`DataGrid`, `RichTextBox`) are PROHIBITED on the Canvas for viewing.
+* **Mechanism:**
+    * **View Mode:** Render as **Vector Visual** (`DrawingVisual`) or lightweight `TextBlock`.
+    * **Edit Mode:** Overlay real WPF Control on double-click.
+    * **Exit:** Rasterize/Vectorize back to Visual on focus loss.
+
+### 5.2. Smart Objects
+* **Tables:** Draw lines using `DrawingContext` (Vector).
+* **Code:** Use `FormattedText` or lightweight Border.
 
 ---
 
-## 📂 7. Hierarchy & File Placement Strategy
+## 🖊️ 6. Ink Subsystem & "Deep Zoom"
+
+### 6.1. StylusPlugIn Mandate
+* **Rule:** Use custom `StylusPlugIn` on **Pen Thread**. No UI property access allowed.
+
+### 6.2. Vector Retention (OneNote Quality)
+* **Rule:** Use **`DrawingVisual`** for dry ink.
+* **Ban:** DO NOT use `WriteableBitmap` (blurs on zoom) or `Path` objects (too heavy).
+
+### 6.3. Input Arbitration
+* **Stylus:** Ink. | **Touch:** Pan/Zoom. | **Mouse:** Select.
+
+---
+
+## ⚡ 7. Performance & Optimization
+
+### 7.1. Navigation & Rendering
+* **Zoom:** MUST use `MatrixTransform`.
+* **Culling:** Use **QuadTree** to render only visible items.
+
+### 7.2. Lists & Images
+* **Lists:** `VirtualizationMode="Recycling"`.
+* **Images:** `DecodePixelWidth` MUST be set to display size. Use `IsAsync=True`.
+
+---
+
+## 🧠 8. MVVM & Memory
+
+* **Interaction:** Use `ICommand` (No Code-Behind).
+* **Memory:** `.Freeze()` all Geometries/Brushes. Use `WeakEventManager` for events.
+
+---
+
+## 📂 9. Hierarchy & File Placement Strategy (RESTORED)
 
 When creating a new file, follow this decision tree:
 
@@ -112,4 +138,53 @@ When creating a new file, follow this decision tree:
 
 ---
 
-**⚠️ IMPORTANT:** Before generating code, review these rules. If a requested feature violates these rules (e.g., hardcoded color), **REJECT** the request and correct it.
+# 🛡️ 10. DETAILED TECHNICAL XAML RULES
+
+## 10.1. COMPONENT CONSTRUCTION (Icon Safety)
+* **Wrapper Rule:** Wrap interactive controls in a `Border`.
+* **The "Zero-Padding" Rule:** For **Icon Buttons**, always set `Padding="0"`. Let the Grid/Border handle spacing.
+
+## 10.2. ALIGNMENT LOGIC
+* **Grid/Border:** `HorizontalAlignment="Stretch"`.
+* **Content/Icon:** `HorizontalAlignment="Center"`, `VerticalAlignment="Center"`.
+
+## 10.3. DIAGRAMMING (draw.io Logic)
+* **Anchors:** Shapes must have semantic anchor points.
+* **Geometry:** Use `PathGeometry` for all shapes.
+
+---
+
+# 🧩 11. COMPONENT-SPECIFIC BEST PRACTICES (RESTORED)
+
+## 11.1. ScrollViewer & Scrolling
+* **The "Nested Scroll" Ban:** NEVER place a `ListBox` inside a `ScrollViewer`. It kills virtualization.
+
+## 11.2. Text & Input Controls
+* **Text Wrapping:** For multi-line text, always set `TextWrapping="Wrap"`.
+* **Search/Filter:** Use `UpdateSourceTrigger=PropertyChanged` with `Delay=300`.
+
+## 11.3. DataGrid Optimization
+* **Column Widths:** Avoid `Width="Auto"` on large datasets. Use `*` or fixed width.
+
+---
+
+# 🚀 12. HIGH-PERFORMANCE ENGINEERING
+
+## 12.1. Layout Thrashing Mitigation
+* **Rule:** NEVER modify `Canvas.Left` for frequent movement. Use `RenderTransform`.
+
+## 12.2. Custom Drying Strategy
+* **Rule:** Disable default InkCanvas drying (`ActivateCustomDrying`). Render to `DrawingVisual`.
+
+---
+
+# 🎮 13. VIEW-SPECIFIC SHELL BEHAVIOR (Context Awareness)
+
+The application Shell must adapt based on `CurrentView`.
+
+## 13.1. The "Context Switch" Rule
+* **State: Library (LibraryView)** -> Sidebar shows `AllNotebooksList`. Ribbon shows `LibraryTools`.
+* **State: Editor (NotebookView)** -> Sidebar shows `Pages/Sections`. Ribbon shows `InkingTools`. Canvas is Active.
+
+## 13.2. State Preservation
+* **Rule:** When navigating Back, clear previous selection to prevent "Ghost Data".

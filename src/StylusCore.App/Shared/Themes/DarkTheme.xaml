@@ -60,16 +60,7 @@
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
     <SolidColorBrush x:Key="ConflictBrush" Color="{StaticResource ConflictColor}"/>
 
-    <!-- Typography (Same as Light) -->
-    <FontFamily x:Key="PrimaryFontFamily">Segoe UI</FontFamily>
-    <FontFamily x:Key="MonospaceFontFamily">Consolas</FontFamily>
-
-    <sys:Double x:Key="FontSizeSmall">11</sys:Double>
-    <sys:Double x:Key="FontSizeNormal">13</sys:Double>
-    <sys:Double x:Key="FontSizeMedium">15</sys:Double>
-    <sys:Double x:Key="FontSizeLarge">18</sys:Double>
-    <sys:Double x:Key="FontSizeXLarge">24</sys:Double>
-    <sys:Double x:Key="FontSizeTitle">32</sys:Double>
+    <!-- Typography moved to GeneralResources.xaml -->
 
     <!-- Sizing (Same as Light) -->
     <sys:Double x:Key="SidebarWidthExpanded">280</sys:Double>
@@ -125,8 +116,8 @@
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontFamily_Main}"/>
+        <Setter Property="FontSize" Value="{StaticResource FontSize_Body}"/>
         <Setter Property="Padding" Value="16,8"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{StaticResource PrimaryBorderBrush}"/>

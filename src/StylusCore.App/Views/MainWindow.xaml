@@ -32,13 +32,13 @@
                     <Button ToolTip="{DynamicResource Str_Tooltip_Select}" Style="{DynamicResource IconButtonStyle}" 
                             Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
                             Command="{Binding SelectToolCommand}">
-                        <Path Style="{StaticResource Icon.Select}"/>
+                        <Path Data="{StaticResource Icon.Select}" Style="{StaticResource IconBase}"/>
                     </Button>
                     <!-- Lasso Select -->
                     <Button ToolTip="{DynamicResource Str_Tooltip_Lasso}" Style="{DynamicResource IconButtonStyle}" 
                             Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
                             Margin="{DynamicResource Margin_Small}">
-                        <Path Style="{StaticResource Icon.Lasso}"/>
+                        <Path Data="{StaticResource Icon.Lasso}" Style="{StaticResource IconBase}"/>
                     </Button>
                 </StackPanel>
 
@@ -58,17 +58,17 @@
                     <!-- Pen (Red) -->
                     <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
                         <Grid>
-                            <Path Style="{StaticResource Icon.Pen}" Stroke="{DynamicResource AccentBrush}"/>
+                            <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}" Stroke="{DynamicResource AccentBrush}"/>
                             <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
                         </Grid>
                     </Button>
                     <!-- Highlighter -->
                     <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
-                        <Path Style="{StaticResource Icon.Highlighter}" Stroke="{DynamicResource HighlightBrush}" Fill="{DynamicResource HighlightFillBrush}"/>
+                        <Path Data="{StaticResource Icon.Highlighter}" Style="{StaticResource IconBase}" Stroke="{DynamicResource HighlightBrush}" Fill="{DynamicResource HighlightFillBrush}"/>
                     </Button>
                     <!-- Eraser -->
                     <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
-                        <Path Style="{StaticResource Icon.Eraser}"/>
+                        <Path Data="{StaticResource Icon.Eraser}" Style="{StaticResource IconBase}"/>
                     </Button>
                 </StackPanel>
 
@@ -80,7 +80,7 @@
                     <!-- Rect -->
                     <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
                             Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
-                        <Path Style="{StaticResource Icon.Rectangle}"/>
+                        <Path Data="{StaticResource Icon.Rectangle}" Style="{StaticResource IconBase}"/>
                     </Button>
                     <!-- Window Controls have been moved to the main window grid -->
                 </StackPanel>
@@ -88,7 +88,7 @@
                 <!-- Group: Ink to Shape -->
                 <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
                         Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
-                    <Path Style="{StaticResource Icon.InkToShape}"/>
+                    <Path Data="{StaticResource Icon.InkToShape}" Style="{StaticResource IconBase}"/>
                 </Button>
             </StackPanel>
         </ControlTemplate>

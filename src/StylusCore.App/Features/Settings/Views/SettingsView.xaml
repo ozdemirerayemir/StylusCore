@@ -10,14 +10,14 @@
 
             <!-- Header -->
             <TextBlock Text="{DynamicResource Str_Settings}"
-                       FontSize="{DynamicResource FontSizeTitle}"
+                       FontSize="{DynamicResource FontSize_Header}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource PrimaryTextBrush}"
                        Margin="0,0,0,24"/>
 
             <!-- Appearance Section -->
             <TextBlock Text="{DynamicResource Str_Appearance}"
-                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontSize="{DynamicResource FontSize_Large}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource PrimaryTextBrush}"
                        Margin="0,0,0,16"/>
@@ -70,7 +70,7 @@
 
             <!-- Auto-Save Section -->
             <TextBlock Text="{DynamicResource Str_AutoSave}"
-                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontSize="{DynamicResource FontSize_Large}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource PrimaryTextBrush}"
                        Margin="0,0,0,16"/>
@@ -116,7 +116,7 @@
 
             <!-- Key Bindings Section -->
             <TextBlock Text="{DynamicResource Str_KeyBindings}"
-                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontSize="{DynamicResource FontSize_Large}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource PrimaryTextBrush}"
                        Margin="0,0,0,16"/>

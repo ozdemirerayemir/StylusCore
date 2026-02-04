@@ -101,8 +101,8 @@
         <!-- Title -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
             <TextBlock Text="📓" FontSize="28" VerticalAlignment="Center" Margin="0,0,12,0"/>
-            <TextBlock Text="New Notebook"
-                       FontSize="{DynamicResource FontSizeTitle}"
+            <TextBlock Text="{DynamicResource Str_NewNotebook}"
+                       FontSize="{DynamicResource FontSize_Header}"
                        FontWeight="SemiBold"
                        Foreground="{DynamicResource PrimaryTextBrush}"
                        VerticalAlignment="Center"/>
@@ -113,7 +113,7 @@
             <StackPanel>
 
                 <!-- Name -->
-                <TextBlock Text="Name"
+                <TextBlock Text="{DynamicResource Str_Name}"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource PrimaryTextBrush}"
                            Margin="0,0,0,8"/>
@@ -126,7 +126,7 @@
                          BorderBrush="{DynamicResource PrimaryBorderBrush}"/>
 
                 <!-- Cover Color -->
-                <TextBlock Text="Cover Color"
+                <TextBlock Text="{DynamicResource Str_CoverColor}"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource PrimaryTextBrush}"
                            Margin="0,20,0,8"/>
@@ -142,7 +142,7 @@
                 </WrapPanel>
 
                 <!-- Page Format -->
-                <TextBlock Text="Page Format"
+                <TextBlock Text="{DynamicResource Str_PageFormat}"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource PrimaryTextBrush}"
                            Margin="0,20,0,8"/>
@@ -150,15 +150,15 @@
                           SelectedIndex="0"
                           Width="200"
                           HorizontalAlignment="Left">
-                    <ComboBoxItem Content="A4 (210 × 297 mm)"/>
-                    <ComboBoxItem Content="A5 (148 × 210 mm)"/>
-                    <ComboBoxItem Content="A3 (297 × 420 mm)"/>
-                    <ComboBoxItem Content="Letter (8.5 × 11 in)"/>
-                    <ComboBoxItem Content="Infinite (No boundaries)"/>
+                    <ComboBoxItem Content="{DynamicResource Str_Format_A4}"/>
+                    <ComboBoxItem Content="{DynamicResource Str_Format_A5}"/>
+                    <ComboBoxItem Content="{DynamicResource Str_Format_A3}"/>
+                    <ComboBoxItem Content="{DynamicResource Str_Format_Letter}"/>
+                    <ComboBoxItem Content="{DynamicResource Str_Format_Infinite}"/>
                 </ComboBox>
 
                 <!-- Orientation -->
-                <TextBlock Text="Orientation"
+                <TextBlock Text="{DynamicResource Str_Orientation}"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource PrimaryTextBrush}"
                            Margin="0,20,0,8"/>
@@ -181,7 +181,7 @@
                                     <Border Height="1" Background="#DDD" Margin="0,2"/>
                                 </StackPanel>
                             </Border>
-                            <TextBlock Text="Portrait" 
+                            <TextBlock Text="{DynamicResource Str_Portrait}" 
                                        FontSize="11" 
                                        FontWeight="Medium"
                                        Foreground="{DynamicResource SecondaryTextBrush}" 
@@ -207,7 +207,7 @@
                                     <Border Height="1" Background="#DDD" Margin="0,2"/>
                                 </StackPanel>
                             </Border>
-                            <TextBlock Text="Landscape" 
+                            <TextBlock Text="{DynamicResource Str_Landscape}" 
                                        FontSize="11" 
                                        FontWeight="Medium"
                                        Foreground="{DynamicResource SecondaryTextBrush}" 
@@ -217,7 +217,7 @@
                 </StackPanel>
 
                 <!-- Template -->
-                <TextBlock Text="Page Template"
+                <TextBlock Text="{DynamicResource Str_PageTemplate}"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource PrimaryTextBrush}"
                            Margin="0,20,0,8"/>
@@ -226,7 +226,7 @@
                     <RadioButton x:Name="TemplateBlank" Style="{StaticResource TemplateCardStyle}" IsChecked="True" Tag="Blank">
                         <StackPanel HorizontalAlignment="Center">
                             <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4"/>
-                            <TextBlock Text="Blank" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Blank}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -241,7 +241,7 @@
                                     <Border Height="1" Background="#CCC" Margin="0,4"/>
                                 </StackPanel>
                             </Border>
-                            <TextBlock Text="Lined" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Lined}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -265,7 +265,7 @@
                                     <Border Grid.Row="4" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
                                 </Grid>
                             </Border>
-                            <TextBlock Text="Grid" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Grid}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -288,7 +288,7 @@
                                     <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="40"/>
                                 </Canvas>
                             </Border>
-                            <TextBlock Text="Dotted" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Dotted}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -301,7 +301,7 @@
                                     <Border Height="1" Background="#CCC" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                                 </Grid>
                             </Border>
-                            <TextBlock Text="Cornell" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Cornell}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
                 </WrapPanel>
@@ -311,12 +311,12 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-            <Button Content="Cancel"
+            <Button Content="{DynamicResource Str_Cancel}"
                     Style="{DynamicResource SecondaryButtonStyle}"
                     Width="100"
                     Margin="0,0,12,0"
                     Click="Cancel_Click"/>
-            <Button Content="Create"
+            <Button Content="{DynamicResource Str_Create}"
                     Style="{DynamicResource PrimaryButtonStyle}"
                     Width="100"
                     Click="Create_Click"/>
