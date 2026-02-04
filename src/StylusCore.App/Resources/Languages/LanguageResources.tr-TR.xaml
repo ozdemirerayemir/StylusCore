@@ -1,0 +1,101 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- General -->
+    <sys:String x:Key="Str_AppName">Stylus Core</sys:String>
+    <sys:String x:Key="Str_Cancel">İptal</sys:String>
+    <sys:String x:Key="Str_Save">Kaydet</sys:String>
+    <sys:String x:Key="Str_Delete">Sil</sys:String>
+    <sys:String x:Key="Str_Rename">Yeniden Adlandır</sys:String>
+    <sys:String x:Key="Str_Create">Oluştur</sys:String>
+    <sys:String x:Key="Str_Confirm">Onayla</sys:String>
+    
+    <!-- Sidebar -->
+    <sys:String x:Key="Str_Library">Kütüphane</sys:String>
+    <sys:String x:Key="Str_Settings">Ayarlar</sys:String>
+    <sys:String x:Key="Str_User">Kullanıcı</sys:String>
+    <sys:String x:Key="Str_Sections">Not Bölümleri</sys:String>
+    
+    <!-- Library View -->
+    <sys:String x:Key="Str_NewLibrary">+ Yeni Kütüphane</sys:String>
+    <sys:String x:Key="Str_NewNotebook">+ Yeni Defter</sys:String>
+    <sys:String x:Key="Str_NotebooksCount">defter</sys:String>
+    <sys:String x:Key="Str_PagesCount">sayfa</sys:String>
+    <sys:String x:Key="Str_NoLibraries">Henüz kütüphane yok</sys:String>
+    <sys:String x:Key="Str_CreateFirstLibrary">İlk Kütüphaneni Oluştur</sys:String>
+    <sys:String x:Key="Str_NoNotebooks">Bu kütüphanede defter yok</sys:String>
+    <sys:String x:Key="Str_CreateFirstNotebook">İlk defterini oluştur</sys:String>
+
+    <!-- Search -->
+    <sys:String x:Key="Str_SearchSubjects">Konularda ara...</sys:String>
+    <sys:String x:Key="Str_EnterLibraryName">Kütüphane adı girin:</sys:String>
+    <sys:String x:Key="Str_EnterNotebookName">Yeni adı girin:</sys:String>
+    
+    <!-- Context Menus -->
+    <sys:String x:Key="Str_Duplicate">Çoğalt</sys:String>
+    <sys:String x:Key="Str_ChangeColor">Renk Değiştir</sys:String>
+    <sys:String x:Key="Str_CoverColor">Kapak Rengi</sys:String>
+    <sys:String x:Key="Str_Export">Dışa Aktar</sys:String>
+    <sys:String x:Key="Str_Move">Taşı</sys:String>
+    <sys:String x:Key="Str_DeleteConfirm">'{0}' öğesini silmek istediğinize emin misiniz?</sys:String>
+    
+    <!-- Settings View (Future) -->
+    <sys:String x:Key="Str_Appearance">Görünüm</sys:String>
+    <sys:String x:Key="Str_Theme">Tema</sys:String>
+    <sys:String x:Key="Str_Theme_Light">Aydınlık</sys:String>
+    <sys:String x:Key="Str_Theme_Dark">Karanlık</sys:String>
+    <sys:String x:Key="Str_Language">Dil</sys:String>
+    <sys:String x:Key="Str_DarkMode">Karanlık Mod</sys:String>
+    <sys:String x:Key="Str_LightMode">Aydınlık Mod</sys:String>
+
+    <!-- Colors -->
+    <sys:String x:Key="Str_Color_Purple">Mor</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Mavi</sys:String>
+    <sys:String x:Key="Str_Color_Green">Yeşil</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Sarı</sys:String>
+    <sys:String x:Key="Str_Color_Red">Kırmızı</sys:String>
+    <sys:String x:Key="Str_Color_Pink">Pembe</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Turuncu</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Turkuaz</sys:String>
+
+    <!-- Dialogs -->
+    <sys:String x:Key="Str_SelectColor">Renk Seç</sys:String>
+
+    <!-- Settings View -->
+    <sys:String x:Key="Str_AutoSave">Otomatik Kayıt</sys:String>
+    <sys:String x:Key="Str_SaveInterval">Kayıt sıklığı (saniye)</sys:String>
+    <sys:String x:Key="Str_ShowSaveIndicator">Kayıt göstergesini göster</sys:String>
+    <sys:String x:Key="Str_KeyBindings">Tuş Atamaları</sys:String>
+    <sys:String x:Key="Str_Input">Giriş</sys:String>
+    <sys:String x:Key="Str_Action">İşlem</sys:String>
+    <sys:String x:Key="Str_Modifiers">Değiştiriciler</sys:String>
+    <sys:String x:Key="Str_ResetDefaults">Varsayılanlara Dön</sys:String>
+    <sys:String x:Key="Str_SaveSettings">Ayarları Kaydet</sys:String>
+
+    <!-- Tooltips -->
+    <sys:String x:Key="Str_Tooltip_Select">Nesneleri Seç</sys:String>
+    <sys:String x:Key="Str_Tooltip_Lasso">Kement Seçimi</sys:String>
+    <sys:String x:Key="Str_Tooltip_PenBlack">Kalem (Siyah 0.5mm)</sys:String>
+    <sys:String x:Key="Str_Tooltip_PenRed">Kalem (Kırmızı 1.0mm)</sys:String>
+    <sys:String x:Key="Str_Tooltip_Highlighter">Vurgulayıcı</sys:String>
+    <sys:String x:Key="Str_Tooltip_Eraser">Silgi</sys:String>
+    <sys:String x:Key="Str_Tooltip_Rect">Dikdörtgen</sys:String>
+    <sys:String x:Key="Str_Tooltip_Circle">Daire</sys:String>
+    <sys:String x:Key="Str_Tooltip_Triangle">Üçgen</sys:String>
+    <sys:String x:Key="Str_Tooltip_InkToShape">Mürekkep Şekle Dönüştür</sys:String>
+    <sys:String x:Key="Str_Tooltip_RibbonOptions">Şerit Görüntüleme Seçenekleri</sys:String>
+    <sys:String x:Key="Str_Tooltip_BackToLibraries">Kütüphanelere Dön</sys:String>
+
+    <!-- Ribbon Menu -->
+    <sys:String x:Key="Str_Ribbon_AutoHide">Şeridi Otomatik Gizle</sys:String>
+    <sys:String x:Key="Str_Ribbon_TabsOnly">Sadece Sekmeleri Göster</sys:String>
+    <sys:String x:Key="Str_Ribbon_AlwaysShow">Şeridi Her Zaman Göster</sys:String>
+    <sys:String x:Key="Str_Ribbon_File">Dosya</sys:String>
+    <sys:String x:Key="Str_Ribbon_Home">Giriş</sys:String>
+    <sys:String x:Key="Str_Ribbon_Insert">Ekle</sys:String>
+    <sys:String x:Key="Str_Ribbon_Draw">Çiz</sys:String>
+    <sys:String x:Key="Str_Ribbon_View">Görünüm</sys:String>
+    <sys:String x:Key="Str_Ribbon_Help">Yardım</sys:String>
+    
+</ResourceDictionary>

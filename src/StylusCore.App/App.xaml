@@ -1,0 +1,27 @@
+<Application x:Class="StylusCore.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:StylusCore.App.Converters"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Styles (Base) -->
+                <ResourceDictionary Source="Resources/GeneralResources.xaml"/>
+                <ResourceDictionary Source="Shared/Themes/Icons.xaml"/>
+                <ResourceDictionary Source="Shared/Themes/StandardControls.xaml"/>
+                
+                <!-- Services will inject Theme and Language dictionaries here at runtime -->
+                <!-- Defaults for Design Time (Optional, but good for XAML Designer) -->
+                <ResourceDictionary Source="Shared/Themes/LightTheme.xaml"/>
+                <ResourceDictionary Source="Resources/Languages/LanguageResources.en-US.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

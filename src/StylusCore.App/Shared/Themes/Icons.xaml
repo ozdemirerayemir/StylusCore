@@ -1,0 +1,234 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- StylusCore Icon Library - Lucide Icons                                   -->
+    <!-- All icons are 24x24 viewBox, use with Viewbox to scale                  -->
+    <!-- Stroke colors should be bound to DynamicResource for theme support      -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+    <!-- ═══════════════════════════════ -->
+    <!-- SIDEBAR ICONS                   -->
+    <!-- ═══════════════════════════════ -->
+    
+    <!-- Base Icon Style -->
+    <Style x:Key="IconBase" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="StrokeThickness" Value="2"/>
+        <Setter Property="StrokeLineJoin" Value="Round"/>
+        <Setter Property="StrokeStartLineCap" Value="Round"/>
+        <Setter Property="StrokeEndLineCap" Value="Round"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="Fill" Value="Transparent"/>
+    </Style>
+
+    <!-- Menu (Hamburger) -->
+    <Style x:Key="Icon.Menu" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M3 12h18M3 6h18M3 18h18"/>
+    </Style>
+    
+    <!-- Library (Updated from Prototype) -->
+    <Style x:Key="Icon.Library" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+    </Style>
+
+    <!-- Book (New from Prototype) -->
+    <Style x:Key="Icon.Book" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+    </Style>
+    
+    <!-- Settings (Updated from Prototype) -->
+    <Style x:Key="Icon.Settings" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+    </Style>
+
+    <!-- More Horizontal (New from Prototype) -->
+    <Style x:Key="Icon.MoreHorizontal" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 12c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm7 0c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zM5 12c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1z"/>
+    </Style>
+    
+    <!-- User -->
+    <Style x:Key="Icon.User" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2 M12 7 m-4 0 a4 4 0 1 0 8 0 a4 4 0 1 0-8 0"/>
+    </Style>
+
+    <!-- ═══════════════════════════════ -->
+    <!-- FILE/NOTEBOOK ICONS             -->
+    <!-- ═══════════════════════════════ -->
+    
+    <!-- New File (File Plus) -->
+    <Style x:Key="Icon.NewFile" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M11.35 22H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.706.706l3.588 3.588A2.4 2.4 0 0 1 20 8v5.35 M14 2v5a1 1 0 0 0 1 1h5 M14 19h6 M17 16v6"/>
+    </Style>
+    
+    <!-- New Folder (Folder Plus) -->
+    <Style x:Key="Icon.NewFolder" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 10v6 M9 13h6 M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+    </Style>
+    
+    <!-- Save -->
+    <Style x:Key="Icon.Save" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7 M7 3v4a1 1 0 0 0 1 1h7"/>
+    </Style>
+    
+    <!-- Folder (Open) -->
+    <Style x:Key="Icon.Folder" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M6 14 L7.5 11.1A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/>
+    </Style>
+    
+    <!-- File -->
+    <Style x:Key="Icon.File" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z M14 2v5a1 1 0 0 0 1 1h5"/>
+    </Style>
+    
+    <!-- Trash -->
+    <Style x:Key="Icon.Trash" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M10 11v6 M14 11v6 M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6 M3 6h18 M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+    </Style>
+    
+    <!-- Edit (Square Pen) -->
+    <Style x:Key="Icon.Edit" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7 M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/>
+    </Style>
+    
+    <!-- Copy -->
+    <Style x:Key="Icon.Copy" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M8 8 L22 8 L22 22 L8 22 Z M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+    </Style>
+
+    <!-- ═══════════════════════════════ -->
+    <!-- TOOLBAR/DRAWING ICONS           -->
+    <!-- ═══════════════════════════════ -->
+
+    <!-- Select Tool (Cursor) -->
+    <Style x:Key="Icon.Select" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M3 3l7 7m0 0l-7 7m7-7H3"/>
+    </Style>
+
+    <!-- Lasso Select -->
+    <Style x:Key="Icon.Lasso" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M4.9 19.1C3.1 16.6 2 13.4 2 10 2 4.5 6.5 2 12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10c-1.8 0-3.5-0.5-5-1.3"/>
+        <Setter Property="StrokeDashArray" Value="2 2"/>
+    </Style>
+    
+    <!-- Pen -->
+    <Style x:Key="Icon.Pen" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M13 21h8 M15 5 L19 9 M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+    </Style>
+    
+    <!-- Eraser -->
+    <Style x:Key="Icon.Eraser" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21 M5.082 11.09 L13.91 19.918"/>
+    </Style>
+    
+    <!-- Highlighter -->
+    <Style x:Key="Icon.Highlighter" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M9 11 L3 17v3h9l3-3 M22 12 L17.4 16.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>
+    </Style>
+    
+    <!-- Undo -->
+    <Style x:Key="Icon.Undo" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M9 14 L4 9 L9 4 M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11"/>
+    </Style>
+    
+    <!-- Redo -->
+    <Style x:Key="Icon.Redo" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M15 14 L20 9 L15 4 M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13"/>
+    </Style>
+    
+    <!-- Zoom In -->
+    <Style x:Key="Icon.ZoomIn" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M11 11 m-8 0 a8 8 0 1 0 16 0 a8 8 0 1 0-16 0 M21 21 L16.65 16.65 M11 8v6 M8 11h6"/>
+    </Style>
+    
+    <!-- Zoom Out -->
+    <Style x:Key="Icon.ZoomOut" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M11 11 m-8 0 a8 8 0 1 0 16 0 a8 8 0 1 0-16 0 M21 21 L16.65 16.65 M8 11h6"/>
+    </Style>
+    
+    <!-- Move -->
+    <Style x:Key="Icon.Move" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 2v20 M15 19 L12 22 L9 19 M19 9 L22 12 L19 15 M2 12h20 M5 9 L2 12 L5 15 M9 5 L12 2 L15 5"/>
+    </Style>
+
+    <!-- Chevron Left -->
+    <Style x:Key="Icon.ChevronLeft" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M15 18l-6-6 6-6"/>
+    </Style>
+
+    <!-- Chevron Right -->
+    <Style x:Key="Icon.ChevronRight" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M9 18l6-6-6-6"/>
+    </Style>
+
+
+
+    <!-- ═══════════════════════════════ -->
+    <!-- SHAPES                          -->
+    <!-- ═══════════════════════════════ -->
+
+    <!-- Rectangle -->
+    <Style x:Key="Icon.Rectangle" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M3 3h18v18H3z"/>
+    </Style>
+
+    <!-- Circle (Ellipse) -->
+    <Style x:Key="Icon.Circle" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/>
+    </Style>
+
+    <!-- Triangle -->
+    <Style x:Key="Icon.Triangle" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 2L2 22h20L12 2z"/>
+    </Style>
+    
+    <!-- Ink To Shape (Wand) -->
+    <Style x:Key="Icon.InkToShape" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M20 6L9 17l-5-5"/>
+    </Style>
+
+    <!-- ═══════════════════════════════ -->
+    <!-- GENERAL/UI ICONS                -->
+    <!-- ═══════════════════════════════ -->
+    
+    <!-- Search -->
+    <Style x:Key="Icon.Search" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M21 21 L16.66 16.66 M11 11 m-8 0 a8 8 0 1 0 16 0 a8 8 0 1 0-16 0"/>
+    </Style>
+    
+    <!-- Plus -->
+    <Style x:Key="Icon.Plus" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M5 12h14 M12 5v14"/>
+    </Style>
+    
+    <!-- X (Close) -->
+    <Style x:Key="Icon.Close" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M18 6 L6 18 M6 6 L18 18"/>
+    </Style>
+    
+    <!-- Check -->
+    <Style x:Key="Icon.Check" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M20 6 L9 17 L4 12"/>
+    </Style>
+    
+    <!-- Info -->
+    <Style x:Key="Icon.Info" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 12 m-10 0 a10 10 0 1 0 20 0 a10 10 0 1 0-20 0 M12 16v-4 M12 8h.01"/>
+    </Style>
+    
+    <!-- Alert (Octagon) -->
+    <Style x:Key="Icon.Alert" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 16h.01 M12 8v4 M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/>
+    </Style>
+    
+    <!-- Sun (Light Mode) -->
+    <Style x:Key="Icon.Sun" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M12 12 m-4 0 a4 4 0 1 0 8 0 a4 4 0 1 0-8 0 M12 2v2 M12 20v2 M4.93 4.93 L6.34 6.34 M17.66 17.66 L19.07 19.07 M2 12h2 M20 12h2 M6.34 17.66 L4.93 19.07 M19.07 4.93 L17.66 6.34"/>
+    </Style>
+    
+    <!-- Moon (Dark Mode) -->
+    <Style x:Key="Icon.Moon" TargetType="Path" BasedOn="{StaticResource IconBase}">
+        <Setter Property="Data" Value="M18 5h4 M20 3v4 M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/>
+    </Style>
+
+</ResourceDictionary>

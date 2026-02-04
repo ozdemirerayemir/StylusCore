@@ -1,0 +1,101 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- General -->
+    <sys:String x:Key="Str_AppName">Stylus Core</sys:String>
+    <sys:String x:Key="Str_Cancel">Cancel</sys:String>
+    <sys:String x:Key="Str_Save">Save</sys:String>
+    <sys:String x:Key="Str_Delete">Delete</sys:String>
+    <sys:String x:Key="Str_Rename">Rename</sys:String>
+    <sys:String x:Key="Str_Create">Create</sys:String>
+    <sys:String x:Key="Str_Confirm">Confirm</sys:String>
+    
+    <!-- Sidebar -->
+    <sys:String x:Key="Str_Library">Library</sys:String>
+    <sys:String x:Key="Str_Settings">Settings</sys:String>
+    <sys:String x:Key="Str_User">User</sys:String>
+    <sys:String x:Key="Str_Sections">Note Sections</sys:String>
+    
+    <!-- Library View -->
+    <sys:String x:Key="Str_NewLibrary">+ New Library</sys:String>
+    <sys:String x:Key="Str_NewNotebook">+ New Notebook</sys:String>
+    <sys:String x:Key="Str_NotebooksCount">notebooks</sys:String>
+    <sys:String x:Key="Str_PagesCount">pages</sys:String>
+    <sys:String x:Key="Str_NoLibraries">No libraries yet</sys:String>
+    <sys:String x:Key="Str_CreateFirstLibrary">Create Your First Library</sys:String>
+    <sys:String x:Key="Str_NoNotebooks">No notebooks in this library</sys:String>
+    <sys:String x:Key="Str_CreateFirstNotebook">Create your first notebook</sys:String>
+    
+    <!-- Search -->
+    <sys:String x:Key="Str_SearchSubjects">Search subjects...</sys:String>
+    <sys:String x:Key="Str_EnterLibraryName">Enter library name:</sys:String>
+    <sys:String x:Key="Str_EnterNotebookName">Enter new name:</sys:String>
+    
+    <!-- Context Menus -->
+    <sys:String x:Key="Str_Duplicate">Duplicate</sys:String>
+    <sys:String x:Key="Str_ChangeColor">Change Color</sys:String>
+    <sys:String x:Key="Str_CoverColor">Cover color</sys:String>
+    <sys:String x:Key="Str_Export">Export</sys:String>
+    <sys:String x:Key="Str_Move">Move</sys:String>
+    <sys:String x:Key="Str_DeleteConfirm">Are you sure you want to delete '{0}'?</sys:String>
+    
+    <!-- Settings View (Future) -->
+    <sys:String x:Key="Str_Appearance">Appearance</sys:String>
+    <sys:String x:Key="Str_Theme">Theme</sys:String>
+    <sys:String x:Key="Str_Theme_Light">Light</sys:String>
+    <sys:String x:Key="Str_Theme_Dark">Dark</sys:String>
+    <sys:String x:Key="Str_Language">Language</sys:String>
+    <sys:String x:Key="Str_DarkMode">Dark Mode</sys:String>
+    <sys:String x:Key="Str_LightMode">Light Mode</sys:String>
+
+    <!-- Colors -->
+    <sys:String x:Key="Str_Color_Purple">Purple</sys:String>
+    <sys:String x:Key="Str_Color_Blue">Blue</sys:String>
+    <sys:String x:Key="Str_Color_Green">Green</sys:String>
+    <sys:String x:Key="Str_Color_Yellow">Yellow</sys:String>
+    <sys:String x:Key="Str_Color_Red">Red</sys:String>
+    <sys:String x:Key="Str_Color_Pink">Pink</sys:String>
+    <sys:String x:Key="Str_Color_Orange">Orange</sys:String>
+    <sys:String x:Key="Str_Color_Teal">Teal</sys:String>
+
+    <!-- Dialogs -->
+    <sys:String x:Key="Str_SelectColor">Select Color</sys:String>
+
+    <!-- Settings View -->
+    <sys:String x:Key="Str_AutoSave">Auto-Save</sys:String>
+    <sys:String x:Key="Str_SaveInterval">Save interval (seconds)</sys:String>
+    <sys:String x:Key="Str_ShowSaveIndicator">Show save indicator</sys:String>
+    <sys:String x:Key="Str_KeyBindings">Key Bindings</sys:String>
+    <sys:String x:Key="Str_Input">Input</sys:String>
+    <sys:String x:Key="Str_Action">Action</sys:String>
+    <sys:String x:Key="Str_Modifiers">Modifiers</sys:String>
+    <sys:String x:Key="Str_ResetDefaults">Reset to Defaults</sys:String>
+    <sys:String x:Key="Str_SaveSettings">Save Settings</sys:String>
+
+    <!-- Tooltips -->
+    <sys:String x:Key="Str_Tooltip_Select">Select Objects</sys:String>
+    <sys:String x:Key="Str_Tooltip_Lasso">Lasso Select</sys:String>
+    <sys:String x:Key="Str_Tooltip_PenBlack">Pen (Black 0.5mm)</sys:String>
+    <sys:String x:Key="Str_Tooltip_PenRed">Pen (Red 1.0mm)</sys:String>
+    <sys:String x:Key="Str_Tooltip_Highlighter">Highlighter</sys:String>
+    <sys:String x:Key="Str_Tooltip_Eraser">Eraser</sys:String>
+    <sys:String x:Key="Str_Tooltip_Rect">Rectangle</sys:String>
+    <sys:String x:Key="Str_Tooltip_Circle">Circle</sys:String>
+    <sys:String x:Key="Str_Tooltip_Triangle">Triangle</sys:String>
+    <sys:String x:Key="Str_Tooltip_InkToShape">Ink to Shape</sys:String>
+    <sys:String x:Key="Str_Tooltip_RibbonOptions">Ribbon Display Options</sys:String>
+    <sys:String x:Key="Str_Tooltip_BackToLibraries">Back to Libraries</sys:String>
+
+    <!-- Ribbon Menu -->
+    <sys:String x:Key="Str_Ribbon_AutoHide">Auto-hide Ribbon</sys:String>
+    <sys:String x:Key="Str_Ribbon_TabsOnly">Show Tabs Only</sys:String>
+    <sys:String x:Key="Str_Ribbon_AlwaysShow">Always Show Ribbon</sys:String>
+    <sys:String x:Key="Str_Ribbon_File">File</sys:String>
+    <sys:String x:Key="Str_Ribbon_Home">Home</sys:String>
+    <sys:String x:Key="Str_Ribbon_Insert">Insert</sys:String>
+    <sys:String x:Key="Str_Ribbon_Draw">Draw</sys:String>
+    <sys:String x:Key="Str_Ribbon_View">View</sys:String>
+    <sys:String x:Key="Str_Ribbon_Help">Help</sys:String>
+
+</ResourceDictionary>

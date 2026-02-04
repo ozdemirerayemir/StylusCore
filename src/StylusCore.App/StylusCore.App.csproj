@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>StylusCore.App</RootNamespace>
+    <AssemblyName>StylusCore</AssemblyName>
+    <StartupObject>StylusCore.App.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StylusCore.Core\StylusCore.Core.csproj" />
+    <ProjectReference Include="..\StylusCore.Input\StylusCore.Input.csproj" />
+    <ProjectReference Include="..\StylusCore.Drawing\StylusCore.Drawing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\library.svg" />
+    <Resource Include="Assets\Icons\settings.svg" />
+    <Resource Include="Assets\Icons\menu.svg" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,94 @@
+<UserControl x:Class="StylusCore.App.Shared.Components.HeaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:StylusCore.App.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="800">
+             
+    <UserControl.Resources>
+        <!-- Window Control Styles (Local or from StandardControls) -->
+        <Style TargetType="Button" x:Key="CaptionButtonStyle">
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A000000"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="CloseButtonStyle" BasedOn="{StaticResource CaptionButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#E81123"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#CC0E1D"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Border Background="{DynamicResource PrimaryBackgroundBrush}" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="0,0,0,1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 1. HOME BUTTON ("StylusCore") -->
+            <Button Grid.Column="0" 
+                    Background="Transparent" 
+                    BorderThickness="0" 
+                    Padding="12,0" 
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    Command="{Binding NavigateToLibraryRootCommand}"> <!-- Binding to ViewModel -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Width="22" Height="22" Background="#0078D4" CornerRadius="4" Margin="0,0,8,0">
+                        <TextBlock Text="S" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                    </Border>
+                    <TextBlock Text="StylusCore" FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <!-- 2. SPACER / BREADCRUMBS (Removed as per request) -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
+                 <!-- Breadcrumbs removed -->
+            </StackPanel>
+
+            <!-- 3. WINDOW CONTROLS -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
+                <Button Command="{Binding MinimizeCommand}" Style="{StaticResource CaptionButtonStyle}" ToolTip="Minimize">
+                    <Path Data="M0,7 L10,7 M0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <!-- Maximize (Optional, maybe hidden in prototype but good to have) -->
+                <Button Command="{Binding MaximizeCommand}" Style="{StaticResource CaptionButtonStyle}" ToolTip="Maximize">
+                    <Path Data="M1,1 L9,1 L9,9 L1,9 Z" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButtonStyle}" ToolTip="Close">
+                    <Path Data="M0,0 L10,10 M0,10 L10,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

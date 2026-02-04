@@ -1,0 +1,30 @@
+{
+    "bindings": [
+        {
+            "device": "Tablet_Button1",
+            "action": "OpenRadialMenu",
+            "menuId": "main_mode"
+        },
+        {
+            "device": "Tablet_Button2",
+            "action": "OpenRadialMenu",
+            "menuId": "pen_tools"
+        },
+        {
+            "device": "Tablet_Dial1",
+            "action": "Zoom"
+        },
+        {
+            "device": "Tablet_Dial2",
+            "action": "BrushSize"
+        },
+        {
+            "device": "Pen_Button1",
+            "action": "Pan"
+        },
+        {
+            "device": "Pen_Button2",
+            "action": "ToggleEraser"
+        }
+    ]
+}

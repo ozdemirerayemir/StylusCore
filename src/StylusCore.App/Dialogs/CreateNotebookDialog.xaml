@@ -1,0 +1,325 @@
+<Window x:Class="StylusCore.App.Dialogs.CreateNotebookDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Notebook"
+        Width="480"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="{DynamicResource PrimaryBackgroundBrush}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" 
+                      ResizeBorderThickness="0" 
+                      GlassFrameThickness="1" 
+                      CornerRadius="0" 
+                      UseAeroCaptionButtons="True"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <!-- Color Button Style -->
+        <Style x:Key="ColorButtonStyle" TargetType="RadioButton">
+            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Ellipse x:Name="ColorCircle"
+                                     Fill="{TemplateBinding Background}"
+                                     Stroke="{DynamicResource PrimaryBorderBrush}"
+                                     StrokeThickness="1"/>
+                            <Ellipse x:Name="SelectionRing"
+                                     Stroke="{DynamicResource PrimaryAccentBrush}"
+                                     StrokeThickness="3"
+                                     Visibility="Collapsed"/>
+                            <Path x:Name="Checkmark"
+                                  Data="M5,12 L9,16 L19,6"
+                                  Stroke="White"
+                                  StrokeThickness="2"
+                                  StrokeLineJoin="Round"
+                                  Visibility="Collapsed"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Width="20" Height="20"
+                                  Stretch="Uniform"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="SelectionRing" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="Checkmark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Template Card Style -->
+        <Style x:Key="TemplateCardStyle" TargetType="RadioButton">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="90"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Border"
+                                Background="{DynamicResource SecondaryBackgroundBrush}"
+                                BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                                BorderThickness="2"
+                                CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Border" Property="BorderBrush"
+                                        Value="{DynamicResource PrimaryAccentBrush}"/>
+                                <Setter TargetName="Border" Property="BorderThickness" Value="3"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background"
+                                        Value="{DynamicResource TertiaryBackgroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- Title -->
+            <RowDefinition Height="*"/>      <!-- Content -->
+            <RowDefinition Height="Auto"/>  <!-- Buttons -->
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="📓" FontSize="28" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <TextBlock Text="New Notebook"
+                       FontSize="{DynamicResource FontSizeTitle}"
+                       FontWeight="SemiBold"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <!-- Name -->
+                <TextBlock Text="Name"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,0,0,8"/>
+                <TextBox x:Name="NameTextBox"
+                         Padding="12,10"
+                         FontSize="14"
+                         MaxLength="100"
+                         Background="{DynamicResource SecondaryBackgroundBrush}"
+                         Foreground="{DynamicResource PrimaryTextBrush}"
+                         BorderBrush="{DynamicResource PrimaryBorderBrush}"/>
+
+                <!-- Cover Color -->
+                <TextBlock Text="Cover Color"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,20,0,8"/>
+                <WrapPanel x:Name="ColorPanel">
+                    <RadioButton x:Name="ColorPurple" Background="#9B59B6" Style="{StaticResource ColorButtonStyle}" IsChecked="True" Tag="Purple"/>
+                    <RadioButton x:Name="ColorBlue" Background="#3498DB" Style="{StaticResource ColorButtonStyle}" Tag="Blue"/>
+                    <RadioButton x:Name="ColorGreen" Background="#27AE60" Style="{StaticResource ColorButtonStyle}" Tag="Green"/>
+                    <RadioButton x:Name="ColorYellow" Background="#F1C40F" Style="{StaticResource ColorButtonStyle}" Tag="Yellow"/>
+                    <RadioButton x:Name="ColorRed" Background="#E74C3C" Style="{StaticResource ColorButtonStyle}" Tag="Red"/>
+                    <RadioButton x:Name="ColorPink" Background="#E91E63" Style="{StaticResource ColorButtonStyle}" Tag="Pink"/>
+                    <RadioButton x:Name="ColorOrange" Background="#E67E22" Style="{StaticResource ColorButtonStyle}" Tag="Orange"/>
+                    <RadioButton x:Name="ColorTeal" Background="#1ABC9C" Style="{StaticResource ColorButtonStyle}" Tag="Teal"/>
+                </WrapPanel>
+
+                <!-- Page Format -->
+                <TextBlock Text="Page Format"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,20,0,8"/>
+                <ComboBox x:Name="FormatComboBox"
+                          SelectedIndex="0"
+                          Width="200"
+                          HorizontalAlignment="Left">
+                    <ComboBoxItem Content="A4 (210 × 297 mm)"/>
+                    <ComboBoxItem Content="A5 (148 × 210 mm)"/>
+                    <ComboBoxItem Content="A3 (297 × 420 mm)"/>
+                    <ComboBoxItem Content="Letter (8.5 × 11 in)"/>
+                    <ComboBoxItem Content="Infinite (No boundaries)"/>
+                </ComboBox>
+
+                <!-- Orientation -->
+                <TextBlock Text="Orientation"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,20,0,8"/>
+                <StackPanel Orientation="Horizontal">
+                    <!-- Portrait -->
+                    <RadioButton x:Name="PortraitRadio" IsChecked="True" 
+                                 Style="{StaticResource TemplateCardStyle}" 
+                                 Width="80" Height="100">
+                        <StackPanel HorizontalAlignment="Center">
+                            <!-- Vertical A4 Paper -->
+                            <Border Width="36" Height="50" 
+                                    Background="White" 
+                                    BorderBrush="#CCC" 
+                                    BorderThickness="1"
+                                    CornerRadius="2" 
+                                    Margin="0,0,0,6">
+                                <StackPanel VerticalAlignment="Top" Margin="4,6,4,0">
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="Portrait" 
+                                       FontSize="11" 
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource SecondaryTextBrush}" 
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <!-- Landscape -->
+                    <RadioButton x:Name="LandscapeRadio" 
+                                 Style="{StaticResource TemplateCardStyle}" 
+                                 Width="100" Height="100">
+                        <StackPanel HorizontalAlignment="Center">
+                            <!-- Horizontal A4 Paper -->
+                            <Border Width="56" Height="36" 
+                                    Background="White" 
+                                    BorderBrush="#CCC" 
+                                    BorderThickness="1"
+                                    CornerRadius="2" 
+                                    Margin="0,7,0,6">
+                                <StackPanel VerticalAlignment="Top" Margin="6,4,6,0">
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                    <Border Height="1" Background="#DDD" Margin="0,2"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="Landscape" 
+                                       FontSize="11" 
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource SecondaryTextBrush}" 
+                                       HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+
+                <!-- Template -->
+                <TextBlock Text="Page Template"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Margin="0,20,0,8"/>
+                <WrapPanel>
+                    <!-- Blank -->
+                    <RadioButton x:Name="TemplateBlank" Style="{StaticResource TemplateCardStyle}" IsChecked="True" Tag="Blank">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4"/>
+                            <TextBlock Text="Blank" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <!-- Lined -->
+                    <RadioButton x:Name="TemplateLined" Style="{StaticResource TemplateCardStyle}" Tag="Lined">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4">
+                                <StackPanel VerticalAlignment="Center" Margin="4">
+                                    <Border Height="1" Background="#CCC" Margin="0,4"/>
+                                    <Border Height="1" Background="#CCC" Margin="0,4"/>
+                                    <Border Height="1" Background="#CCC" Margin="0,4"/>
+                                    <Border Height="1" Background="#CCC" Margin="0,4"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="Lined" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <!-- Grid -->
+                    <RadioButton x:Name="TemplateGrid" Style="{StaticResource TemplateCardStyle}" Tag="Grid">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/><RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Column="1" Grid.RowSpan="5" Width="1" Background="#CCC"/>
+                                    <Border Grid.Column="2" Grid.RowSpan="5" Width="1" Background="#CCC"/>
+                                    <Border Grid.Column="3" Grid.RowSpan="5" Width="1" Background="#CCC"/>
+                                    <Border Grid.Row="1" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
+                                    <Border Grid.Row="2" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
+                                    <Border Grid.Row="3" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
+                                    <Border Grid.Row="4" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
+                                </Grid>
+                            </Border>
+                            <TextBlock Text="Grid" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <!-- Dotted -->
+                    <RadioButton x:Name="TemplateDotted" Style="{StaticResource TemplateCardStyle}" Tag="Dotted">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4">
+                                <Canvas>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="8" Canvas.Top="10"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="18" Canvas.Top="10"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="10"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="8" Canvas.Top="20"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="18" Canvas.Top="20"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="20"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="8" Canvas.Top="30"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="18" Canvas.Top="30"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="30"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="8" Canvas.Top="40"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="18" Canvas.Top="40"/>
+                                    <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="40"/>
+                                </Canvas>
+                            </Border>
+                            <TextBlock Text="Dotted" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <!-- Cornell -->
+                    <RadioButton x:Name="TemplateCornell" Style="{StaticResource TemplateCardStyle}" Tag="Cornell">
+                        <StackPanel HorizontalAlignment="Center">
+                            <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4">
+                                <Grid>
+                                    <Border Width="1" Background="#CCC" HorizontalAlignment="Left" Margin="10,0,0,10"/>
+                                    <Border Height="1" Background="#CCC" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
+                                </Grid>
+                            </Border>
+                            <TextBlock Text="Cornell" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </RadioButton>
+                </WrapPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Cancel"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Width="100"
+                    Margin="0,0,12,0"
+                    Click="Cancel_Click"/>
+            <Button Content="Create"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    Width="100"
+                    Click="Create_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

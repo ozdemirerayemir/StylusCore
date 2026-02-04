@@ -1,0 +1,135 @@
+<Window x:Class="StylusCore.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:StylusCore.App.Shared.Components"
+        xmlns:views="clr-namespace:StylusCore.App.Features.Library.Views"
+        Title="StylusCore"
+        Width="1280" Height="800"
+        MinWidth="800" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PrimaryBackgroundBrush}"
+        WindowStyle="None"
+        AllowsTransparency="False"
+        ResizeMode="CanResize"
+        MouseDown="Window_MouseDown"
+        StateChanged="Window_StateChanged">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32"  
+                      ResizeBorderThickness="5"
+                      GlassFrameThickness="0"
+                      CornerRadius="0"
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <!-- Reusable Toolbar Content Template -->
+        <ControlTemplate x:Key="RibbonToolbarTemplate">
+            <StackPanel Orientation="Horizontal">
+                <!-- Group: Selection -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <!-- Select Tool -->
+                    <Button ToolTip="{DynamicResource Str_Tooltip_Select}" Style="{DynamicResource IconButtonStyle}" 
+                            Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Command="{Binding SelectToolCommand}">
+                        <Path Style="{StaticResource Icon.Select}"/>
+                    </Button>
+                    <!-- Lasso Select -->
+                    <Button ToolTip="{DynamicResource Str_Tooltip_Lasso}" Style="{DynamicResource IconButtonStyle}" 
+                            Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Margin="{DynamicResource Margin_Small}">
+                        <Path Style="{StaticResource Icon.Lasso}"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Divider -->
+                <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="8,8,16,8"/>
+
+                <!-- Group: Tools -->
+                <StackPanel Orientation="Horizontal">
+                    <!-- Pen -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
+                        <Grid>
+                            <Path Style="{StaticResource Icon.Pen}"/>
+                            <!-- Color Indicator (TODO: Make Dynamic) -->
+                            <Ellipse Width="8" Height="8" Fill="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
+                        </Grid>
+                    </Button>
+                    <!-- Pen (Red) -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
+                        <Grid>
+                            <Path Style="{StaticResource Icon.Pen}" Stroke="{DynamicResource AccentBrush}"/>
+                            <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
+                        </Grid>
+                    </Button>
+                    <!-- Highlighter -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
+                        <Path Style="{StaticResource Icon.Highlighter}" Stroke="{DynamicResource HighlightBrush}" Fill="{DynamicResource HighlightFillBrush}"/>
+                    </Button>
+                    <!-- Eraser -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
+                        <Path Style="{StaticResource Icon.Eraser}"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Divider -->
+                <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="16,8,16,8"/>
+
+                <!-- Group: Shapes -->
+                <StackPanel Orientation="Horizontal">
+                    <!-- Rect -->
+                    <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
+                        <Path Style="{StaticResource Icon.Rectangle}"/>
+                    </Button>
+                    <!-- Window Controls have been moved to the main window grid -->
+                </StackPanel>
+
+                <!-- Group: Ink to Shape -->
+                <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                        Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
+                    <Path Style="{StaticResource Icon.InkToShape}"/>
+                </Button>
+            </StackPanel>
+        </ControlTemplate>
+
+    </Window.Resources>
+
+    <!-- Main Window Border (Rounded Corners) -->
+    <Border Background="{DynamicResource PrimaryBackgroundBrush}"
+            CornerRadius="12"
+            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+            BorderThickness="1">
+
+        <!-- GLOBAL GRID STRUCTURE -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/> <!-- Header -->
+                <RowDefinition Height="*"/>    <!-- Body -->
+            </Grid.RowDefinitions>
+
+            <!-- ROW 0: GLOBAL HEADER -->
+            <controls:HeaderControl Grid.Row="0" Panel.ZIndex="1000"/>
+
+            <!-- ROW 1: MAIN BODY (Sidebar + Content) -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/> <!-- Sidebar (Rail) -->
+                    <ColumnDefinition Width="*"/>    <!-- Main Content -->
+                </Grid.ColumnDefinitions>
+
+                <!-- 1. SIDEBAR (RAIL) -->
+                <controls:Sidebar x:Name="Sidebar" Grid.Column="0" Loaded="Sidebar_Loaded"/>
+
+                <!-- Vertical Divider -->
+                <Rectangle Grid.Column="0" HorizontalAlignment="Right" Width="1" Fill="#F0F0F0"/>
+
+                <!-- 2. MAIN CONTENT AREA -->
+                <Border Grid.Column="1" Background="{DynamicResource SecondaryBackgroundBrush}">
+                    <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </Border>
+
+</Window>

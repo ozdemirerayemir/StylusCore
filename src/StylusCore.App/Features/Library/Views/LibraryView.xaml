@@ -1,0 +1,418 @@
+<Page x:Class="StylusCore.App.Features.Library.Views.LibraryView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Library"
+      Background="{DynamicResource PrimaryBackgroundBrush}">
+
+    <Page.Resources>
+        <!-- Library Template (Prototype Style) -->
+        <DataTemplate x:Key="LibraryTemplate">
+            <!-- Removed Button wrapper to kill default hover effects -->
+            <Grid Width="200" Height="240" Margin="10">
+                <Border Background="White"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="LibraryCard_Click"
+                        Tag="{Binding}">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" Opacity="0.05" BlurRadius="10"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Icon Area (Top - Colored) -->
+                        <Border Grid.Row="0" 
+                                Background="{DynamicResource TertiaryBackgroundBrush}" 
+                                CornerRadius="8,8,0,0">
+                            <!-- Placeholder Color/Icon logic -->
+                            <Viewbox Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                                <Path Style="{StaticResource Icon.Library}" 
+                                      Stroke="{DynamicResource PrimaryAccentBrush}"
+                                      Fill="Transparent"
+                                      StrokeThickness="1.5"/>
+                            </Viewbox>
+                        </Border>
+
+                        <!-- Text Area (Bottom) -->
+                        <Grid Grid.Row="1" Margin="15">
+                            <StackPanel VerticalAlignment="Top">
+                                <TextBlock Text="{Binding Name}"
+                                           FontWeight="Bold"
+                                           FontSize="16"
+                                           Foreground="#333"
+                                           TextTrimming="CharacterEllipsis"/>
+                                
+                                <TextBlock Text="{Binding Notebooks.Count, StringFormat='{}{0} Notebooks'}"
+                                           FontSize="13"
+                                           Foreground="#888"
+                                           Margin="0,5,0,0"/>
+
+                                <!-- Last Modified simulation -->
+                                <TextBlock Text="Recent" Margin="0,15,0,0" FontSize="11" Foreground="#AAA"/>
+                            </StackPanel>
+                            
+                            <!-- Options Button -->
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
+                                <Path Style="{StaticResource Icon.MoreHorizontal}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Rename" Click="RenameLibrary_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Delete" Click="DeleteLibrary_Click" Foreground="{DynamicResource ErrorBrush}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    
+                    <Border.Style>
+                        <Style TargetType="Border">
+                             <Style.Triggers>
+                                 <Trigger Property="IsMouseOver" Value="True">
+                                     <Setter Property="Background" Value="#FAFAFA"/>
+                                 </Trigger>
+                             </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Notebook Template (Prototype Style) -->
+        <DataTemplate x:Key="NotebookTemplate">
+            <!-- Notebook Card (No Button Wrapper) -->
+            <Grid Width="200" Height="240" Margin="10">
+                <Border Background="White"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1"
+                        CornerRadius="8"
+                        Cursor="Hand"
+                        MouseLeftButtonUp="NotebookCard_Click"
+                        Tag="{Binding}">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" Opacity="0.05" BlurRadius="10"/>
+                    </Border.Effect>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Cover with Icon -->
+                        <Border Grid.Row="0" CornerRadius="8,8,0,0">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="#FFE0B2"/> <!-- Default Orange -->
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Blue"><Setter Property="Background" Value="#C5CAE9"/></DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Green"><Setter Property="Background" Value="#C8E6C9"/></DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Teal"><Setter Property="Background" Value="#B2DFDB"/></DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Purple"><Setter Property="Background" Value="#E1BEE7"/></DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Path Fill="#F57C00" Stretch="Uniform" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                                 <Path.Style>
+                                     <Style TargetType="Path" BasedOn="{StaticResource Icon.Book}">
+                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CoverColor}" Value="Blue"><Setter Property="Fill" Value="#3F51B5"/></DataTrigger>
+                                            <DataTrigger Binding="{Binding CoverColor}" Value="Green"><Setter Property="Fill" Value="#4CAF50"/></DataTrigger>
+                                            <DataTrigger Binding="{Binding CoverColor}" Value="Teal"><Setter Property="Fill" Value="#009688"/></DataTrigger>
+                                            <DataTrigger Binding="{Binding CoverColor}" Value="Purple"><Setter Property="Fill" Value="#9C27B0"/></DataTrigger>
+                                         </Style.Triggers>
+                                     </Style>
+                                 </Path.Style>
+                            </Path>
+                        </Border>
+
+                        <Grid Grid.Row="1" Margin="15">
+                            <StackPanel VerticalAlignment="Top">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Foreground="#333" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock FontSize="13" Foreground="#888" Margin="0,5,0,0">
+                                     <Run Text="{Binding Pages.Count, Mode=OneWay}"/>
+                                     <Run Text=" Pages"/>
+                                </TextBlock>
+                                <TextBlock Text="{Binding LastModified, StringFormat='{}Edited: {0:MMM dd}'}" Margin="0,15,0,0" FontSize="11" Foreground="#AAA"/>
+                            </StackPanel>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
+                                <Path Style="{StaticResource Icon.MoreHorizontal}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Open" Click="OpenNotebook_ContextClick"/>
+                                        <MenuItem Header="Duplicate" Click="DuplicateNotebook_Click"/>
+                                        <MenuItem Header="Change Color" Click="ChangeNotebookColor_Click"/>
+                                        <MenuItem Header="Rename" Click="RenameNotebook_Click"/>
+                                        <Separator/>
+                                        <MenuItem Header="Delete" Click="DeleteNotebook_Click" Foreground="{DynamicResource ErrorBrush}"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    
+                    <Border.Style>
+                        <Style TargetType="Border">
+                             <Style.Triggers>
+                                 <Trigger Property="IsMouseOver" Value="True">
+                                     <Setter Property="Background" Value="#FAFAFA"/>
+                                 </Trigger>
+                             </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <!-- Header -->
+            <RowDefinition Height="Auto"/>
+            <!-- Content -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header (Prototype Style) -->
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        
+            <!-- Title -->
+            <!-- Title - Centered Vertically -->
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
+                <TextBlock x:Name="PageTitle" Text="{DynamicResource Str_Library}" FontSize="32" FontWeight="Bold" Foreground="#333" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                <!-- Optional subtitle or breadcrumb hint could go here -->
+            </StackPanel>
+
+            <!-- Search Bar (Centered Pill) -->
+            <!-- Reduced Width from (implicit) to fixed smaller width or column constraint -->
+            <Border Grid.Column="1" Height="38" Width="400" Background="#F0F0F0" CornerRadius="19" Margin="30,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid>
+                    <TextBlock Text="Search..." VerticalAlignment="Center" Margin="15,0" Foreground="#888" IsHitTestVisible="False">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchBox}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBox x:Name="SearchBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0" Foreground="#333"/>
+                </Grid>
+            </Border>
+
+            <!-- + Add New Button -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                 <!-- Button for Libraries -->
+                 <Button x:Name="NewLibraryButton" Content="+ New Library" Width="125" Height="38" Style="{StaticResource PrimaryButtonStyle}" Click="NewLibrary_Click"/>
+                 
+                 <!-- Button for Notebooks (Initially Collapsed) -->
+                 <Button x:Name="NewNotebookButton" Content="+ New Book" Width="125" Height="38" Style="{StaticResource PrimaryButtonStyle}" Click="NewNotebook_Click" Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Libraries Grid (visible when no library selected) -->
+        <ScrollViewer x:Name="LibrariesScrollViewer"
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+
+            <ItemsControl x:Name="LibrariesList"
+                          ItemsSource="{Binding Libraries}"
+                          ItemTemplate="{StaticResource LibraryTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Notebooks Grid (visible when a library is selected) -->
+        <ScrollViewer x:Name="NotebooksScrollViewer"
+                      Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Visibility="Collapsed">
+
+            <ItemsControl x:Name="NotebooksList"
+                          ItemsSource="{Binding SelectedLibrary.Notebooks}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Notebook Card (Nebo style - colored cover) -->
+                        <Border x:Name="NotebookCard"
+                                CornerRadius="{DynamicResource LargeCornerRadius}"
+                                Width="160"
+                                Height="200"
+                                Margin="0,0,16,16"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="NotebookCard_Click"
+                                Tag="{Binding}">
+                            
+                            <!-- Dynamic background based on CoverColor -->
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Background" Value="#9B59B6"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Purple">
+                                            <Setter Property="Background" Value="#9B59B6"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Blue">
+                                            <Setter Property="Background" Value="#3498DB"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Green">
+                                            <Setter Property="Background" Value="#27AE60"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Yellow">
+                                            <Setter Property="Background" Value="#F1C40F"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Red">
+                                            <Setter Property="Background" Value="#E74C3C"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Pink">
+                                            <Setter Property="Background" Value="#E91E63"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Orange">
+                                            <Setter Property="Background" Value="#E67E22"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CoverColor}" Value="Teal">
+                                            <Setter Property="Background" Value="#1ABC9C"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            
+                            <!-- Context Menu logic handled by Button inside, but keeping Border ContextMenu as fallback or alternative -->
+                            
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <!-- Three Dots Menu Button (Top Right) -->
+                                <Button Grid.Row="0"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,8,8,0"
+                                        Width="24" Height="24"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Padding="0"
+                                        Click="NotebookOptions_Click"
+                                        Tag="{Binding}">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
+                                            <!-- Additional triggers if needed -->
+                                        </Style>
+                                    </Button.Style>
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Style="{StaticResource Icon.Settings}"/>
+                                    </Viewbox>
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameNotebook_Click"/>
+                                            <MenuItem Header="{DynamicResource Str_ChangeColor}" Click="ChangeNotebookColor_Click"/>
+                                            <Separator/>
+                                            <MenuItem Header="{DynamicResource Str_Delete}" Click="DeleteNotebook_Click" Foreground="Red"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                                
+                                <!-- Notebook Information Area -->
+                                
+                                <!-- Notebook Cover Design -->
+                                <Border Grid.Row="1" Margin="8,8,8,0">
+                                    <!-- Simple book lines decoration -->
+                                    <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,8">
+                                        <Border Height="2" Background="White" Opacity="0.3" Margin="0,4"/>
+                                        <Border Height="2" Background="White" Opacity="0.3" Margin="0,4"/>
+                                        <Border Height="2" Background="White" Opacity="0.3" Margin="0,4"/>
+                                    </StackPanel>
+                                </Border>
+                                
+                                <!-- Notebook Info -->
+                                <Border Grid.Row="1" 
+                                        Background="{DynamicResource SecondaryBackgroundBrush}" 
+                                        CornerRadius="0,0,8,8"
+                                        Padding="8">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontSize="{DynamicResource FontSizeNormal}"
+                                                   FontWeight="SemiBold"
+                                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock FontSize="{DynamicResource FontSizeSmall}"
+                                                   Foreground="{DynamicResource SecondaryTextBrush}">
+                                            <Run Text="{Binding Pages.Count, Mode=OneWay}"/>
+                                            <Run Text=" "/><Run Text="{DynamicResource Str_PagesCount}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Empty State for Libraries -->
+        <StackPanel x:Name="EmptyLibrariesState"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+            <Viewbox Width="64" Height="64">
+                <Path Style="{DynamicResource Icon.Folder}"/>
+            </Viewbox>
+            <TextBlock Text="{DynamicResource Str_NoLibraries}"
+                       FontSize="{DynamicResource FontSizeLarge}"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       HorizontalAlignment="Center"
+                       Margin="0,16,0,0"/>
+            <Button Content="{DynamicResource Str_CreateFirstLibrary}"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Margin="0,16,0,0"
+                    Click="NewLibrary_Click"/>
+        </StackPanel>
+        
+        <!-- Empty State for Notebooks -->
+        <StackPanel x:Name="EmptyNotebooksState"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+            <Viewbox Width="64" Height="64">
+                <Path Style="{StaticResource Icon.Library}"/>
+            </Viewbox>
+            <TextBlock Text="{DynamicResource Str_NoNotebooks}"
+                       FontSize="{DynamicResource FontSizeLarge}"
+                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       HorizontalAlignment="Center"
+                       Margin="0,16,0,0"/>
+            <Button Content="{DynamicResource Str_CreateFirstNotebook}"
+                    Style="{DynamicResource PrimaryButtonStyle}"
+                    HorizontalAlignment="Center"
+                    Margin="0,16,0,0"
+                    Click="NewNotebook_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
