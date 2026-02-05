@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using StylusCore.Core.Enums;
-using StylusCore.Input.Bindings;
+using StylusCore.Engine.Wpf.Input.Bindings;
 
 namespace StylusCore.App.Controls
 {

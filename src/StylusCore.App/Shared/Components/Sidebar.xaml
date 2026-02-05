@@ -7,6 +7,32 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        
+        <Style x:Key="SidebarIconButtonStyle" TargetType="ButtonBase">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="48"/> <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ButtonBase">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                SnapsToDevicePixels="True"
+                                CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Left" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1A000000"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Border Background="{DynamicResource SidebarBackgroundBrush}" 
@@ -14,8 +40,7 @@
             BorderThickness="0,0,1,0">
 
         <Grid x:Name="SidebarGrid">
-            <Grid.Width>64</Grid.Width>
-            
+            <Grid.Width>48</Grid.Width> 
             <Grid.HorizontalAlignment>Left</Grid.HorizontalAlignment>
 
             <Grid.Style>
@@ -26,7 +51,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Width" 
-                                                         To="240" 
+                                                         To="200" 
                                                          Duration="0:0:0.25">
                                             <DoubleAnimation.EasingFunction>
                                                 <QuadraticEase EasingMode="EaseOut"/>
@@ -39,7 +64,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="Width" 
-                                                         To="64" 
+                                                         To="48" 
                                                          Duration="0:0:0.2"/>
                                     </Storyboard>
                                 </BeginStoryboard>
@@ -50,83 +75,90 @@
             </Grid.Style>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="64"/> 
-                <RowDefinition Height="*"/>  
-                <RowDefinition Height="64"/> 
-            </Grid.RowDefinitions>
+                <RowDefinition Height="48"/> <RowDefinition Height="*"/>  <RowDefinition Height="48"/> </Grid.RowDefinitions>
 
             <ToggleButton Grid.Row="0" 
-                          Width="64" 
-                          Height="64" 
-                          HorizontalAlignment="Left" 
-                          Style="{StaticResource SidebarToggleButtonStyle}" 
+                          Height="48"
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Top"
+                          Style="{StaticResource SidebarIconButtonStyle}" 
                           Click="ToggleButton_Click">
-                <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Path Data="{StaticResource Icon.Menu}" Style="{StaticResource IconBase}"/>
-                </Viewbox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48"/> 
+                        <ColumnDefinition Width="*"/>  
+                    </Grid.ColumnDefinitions>
+                    
+                    <Path Grid.Column="0" 
+                          Data="{StaticResource Icon.Menu}" 
+                          Style="{StaticResource IconBase}" 
+                          Stretch="Uniform" 
+                          Width="20" Height="20"
+                          HorizontalAlignment="Center" 
+                          VerticalAlignment="Center"/>
+                </Grid>
             </ToggleButton>
 
-            <StackPanel Grid.Row="1" Margin="0,20,0,0">
-                <Button Style="{StaticResource SidebarItemButtonStyle}" 
+            <StackPanel Grid.Row="1" Margin="0,10,0,0"> 
+                <Button Style="{StaticResource SidebarIconButtonStyle}" 
                         ToolTip="Library" 
-                        Click="LibraryButton_Click" 
-                        HorizontalContentAlignment="Left" 
-                        HorizontalAlignment="Left"
-                        Padding="0"
-                        Margin="0"
-                        Width="{Binding Width, ElementName=SidebarGrid}">
-                    
-                    <Grid Width="{Binding Width, ElementName=SidebarGrid}">
+                        Click="LibraryButton_Click"
+                        HorizontalAlignment="Stretch"> 
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/> 
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="48"/> 
+                            <ColumnDefinition Width="*"/>  
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Height="64">
-                            <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"/>
+                        <Grid Grid.Column="0" Width="48" Height="48">
+                             <Path Data="{StaticResource Icon.Library}" 
+                                   Style="{StaticResource IconBase}" 
+                                   Stretch="Uniform" 
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
                         </Grid>
 
                         <TextBlock Grid.Column="1" 
                                    Text="{DynamicResource Str_Library}" 
-                                   VerticalAlignment="Center" 
-                                   Margin="10,0,0,0"
+                                   VerticalAlignment="Center"
                                    FontSize="{StaticResource FontSize_Body}" 
                                    Foreground="{DynamicResource PrimaryTextBrush}"
                                    TextTrimming="CharacterEllipsis"
+                                   Margin="0,0,10,0"
                                    Visibility="{Binding IsExpanded, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </Grid>
                 </Button>
             </StackPanel>
 
             <StackPanel Grid.Row="2">
-                <Button Style="{StaticResource SidebarItemButtonStyle}" 
+                <Button Style="{StaticResource SidebarIconButtonStyle}" 
                         ToolTip="Settings" 
-                        Click="SettingsButton_Click" 
-                        HorizontalContentAlignment="Left"
-                        HorizontalAlignment="Left"
-                        Padding="0"
-                        Margin="0"
-                        Width="{Binding Width, ElementName=SidebarGrid}">
+                        Click="SettingsButton_Click"
+                        HorizontalAlignment="Stretch">
                     
-                    <Grid Width="{Binding Width, ElementName=SidebarGrid}">
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/> 
+                            <ColumnDefinition Width="48"/> 
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Height="64">
-                            <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}"/>
-                            </Viewbox>
+                        <Grid Grid.Column="0" Width="48" Height="48">
+                             <Path Data="{StaticResource Icon.Settings}" 
+                                   Style="{StaticResource IconBase}" 
+                                   Stretch="Uniform" 
+                                   Width="20" Height="20"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
                         </Grid>
 
                         <TextBlock Grid.Column="1" 
                                    Text="{DynamicResource Str_Settings}" 
-                                   VerticalAlignment="Center" 
-                                   Margin="10,0,0,0"
+                                   VerticalAlignment="Center"
                                    FontSize="{StaticResource FontSize_Body}" 
                                    Foreground="{DynamicResource PrimaryTextBrush}" 
                                    TextTrimming="CharacterEllipsis"
+                                   Margin="0,0,10,0"
                                    Visibility="{Binding IsExpanded, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     </Grid>
                 </Button>
@@ -135,6 +167,3 @@
         </Grid>
     </Border>
 </UserControl>
-
-
-

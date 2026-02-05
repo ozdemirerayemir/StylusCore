@@ -28,7 +28,9 @@ namespace StylusCore.App.Features.Editor.Views
         private const double COLLAPSED_WIDTH = 48;
 
         private bool _isPanelCollapsed = false;
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         private double _lastPanelWidth = 250;
+#pragma warning restore CS0414
         private Guid? _activeSectionId = null; // Track active section for adding pages
 
         public NotebookView()
@@ -45,11 +47,25 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void NotebookView_Loaded(object sender, RoutedEventArgs e)
         {
-            DrawingCanvas.ViewModel = _viewModel;
+            // Wire up CanvasHostControl events
+            DrawingCanvas.Renderer = _viewModel.Renderer;
+            DrawingCanvas.PointerDown += (p, pressure) => _viewModel.OnPointerDown(p, pressure);
+            DrawingCanvas.PointerMove += (p, pressure) => _viewModel.OnPointerMove(p, pressure);
+            DrawingCanvas.PointerUp += (p) => _viewModel.OnPointerUp(p);
+
+            // Subscribe to ViewModel page changes
+            _viewModel.PageChanged += (s, page) => DrawingCanvas.RenderPage(page);
+
             _viewModel.StartAutoSave();
             // Start at default fixed width
             SetPanelWidth(DEFAULT_PANEL_WIDTH);
             RefreshSectionsUI();
+
+            // Render initial page
+            if (_viewModel.CurrentPage != null)
+            {
+                DrawingCanvas.RenderPage(_viewModel.CurrentPage);
+            }
         }
 
         // Drag & Drop State

@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StylusCore.Core\StylusCore.Core.csproj" />
-    <ProjectReference Include="..\StylusCore.Input\StylusCore.Input.csproj" />
-    <ProjectReference Include="..\StylusCore.Drawing\StylusCore.Drawing.csproj" />
+    <ProjectReference Include="..\StylusCore.Engine.Wpf\StylusCore.Engine.Wpf.csproj" />
+    <ProjectReference Include="..\StylusCore.Infrastructure\StylusCore.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

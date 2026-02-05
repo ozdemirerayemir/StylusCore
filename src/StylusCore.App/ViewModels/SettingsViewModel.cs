@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using StylusCore.Core.Enums;
-using StylusCore.Input.Bindings;
+using StylusCore.Engine.Wpf.Input.Bindings;
 
 namespace StylusCore.App.ViewModels
 {

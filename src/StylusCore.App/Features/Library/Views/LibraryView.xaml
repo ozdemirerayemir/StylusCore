@@ -30,12 +30,15 @@
                                 Background="{DynamicResource TertiaryBackgroundBrush}" 
                                 CornerRadius="8,8,0,0">
                             <!-- Placeholder Color/Icon logic -->
-                            <Viewbox Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                            <Grid Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
                                 <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"
                                       Stroke="{DynamicResource PrimaryAccentBrush}"
                                       Fill="Transparent"
+                                      Stretch="Uniform"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
                                       StrokeThickness="1.5"/>
-                            </Viewbox>
+                            </Grid>
                         </Border>
 
                         <!-- Text Area (Bottom) -->
@@ -116,7 +119,8 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <Path Fill="#F57C00" Stretch="Uniform" Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                            <Grid Width="48" Height="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.5">
+                                <Path Fill="#F57C00" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
                                  <Path.Style>
                                      <Style TargetType="Path" BasedOn="{StaticResource Icon.Book}">
                                          <Style.Triggers>
@@ -128,6 +132,7 @@
                                      </Style>
                                  </Path.Style>
                             </Path>
+                            </Grid>
                         </Border>
 
                         <Grid Grid.Row="1" Margin="15">
@@ -323,9 +328,9 @@
                                             <!-- Additional triggers if needed -->
                                         </Style>
                                     </Button.Style>
-                                    <Viewbox Width="16" Height="16">
-                                        <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}"/>
-                                    </Viewbox>
+                                    <Grid Width="16" Height="16">
+                                        <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Grid>
                                     <Button.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameNotebook_Click"/>
@@ -379,9 +384,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Visibility="Collapsed">
-            <Viewbox Width="64" Height="64">
-                <Path Data="{StaticResource Icon.Folder}" Style="{StaticResource IconBase}"/>
-            </Viewbox>
+            <Grid Width="64" Height="64">
+                <Path Data="{StaticResource Icon.Folder}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
             <TextBlock Text="{DynamicResource Str_NoLibraries}"
                        FontSize="{DynamicResource FontSize_Large}"
                        Foreground="{DynamicResource SecondaryTextBrush}"
@@ -400,9 +405,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Visibility="Collapsed">
-            <Viewbox Width="64" Height="64">
-                <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}"/>
-            </Viewbox>
+            <Grid Width="64" Height="64">
+                <Path Data="{StaticResource Icon.Library}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
             <TextBlock Text="{DynamicResource Str_NoNotebooks}"
                        FontSize="{DynamicResource FontSize_Large}"
                        Foreground="{DynamicResource SecondaryTextBrush}"

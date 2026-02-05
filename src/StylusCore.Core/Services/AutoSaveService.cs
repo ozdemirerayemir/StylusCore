@@ -61,7 +61,7 @@ namespace StylusCore.Core.Services
     /// <summary>
     /// Implementation of auto-save service
     /// </summary>
-    public class AutoSaveService : IAutoSaveService, IDisposable
+    public class AutoSaveService : IAutoSaveService, Ports.IAutosaveScheduler, IDisposable
     {
         private readonly IStorageService _storageService;
         private Timer _timer;

@@ -6,8 +6,8 @@ using System.Windows;
 using StylusCore.Core.Enums;
 using StylusCore.Core.Models;
 using StylusCore.Core.Services;
-using StylusCore.Drawing.Rendering;
-using StylusCore.Drawing.Tools;
+using StylusCore.Engine.Wpf.Rendering;
+using StylusCore.Engine.Wpf.Tools;
 
 namespace StylusCore.App.Features.Editor.ViewModels
 {

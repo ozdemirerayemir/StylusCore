@@ -34,7 +34,7 @@ namespace StylusCore.Core.Services
     /// <summary>
     /// Implementation of export service
     /// </summary>
-    public class ExportService : IExportService
+    public class ExportService : IExportService, Ports.IExportPipeline
     {
         public async Task<byte[]> ExportToPdfAsync(Notebook notebook)
         {

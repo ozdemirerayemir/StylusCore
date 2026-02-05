@@ -4,8 +4,8 @@ using System.Runtime.CompilerServices;
 using StylusCore.Core.Enums;
 using StylusCore.Core.Models;
 using StylusCore.Core.Services;
-using StylusCore.Input.Bindings;
-using StylusCore.Input.Devices;
+using StylusCore.Engine.Wpf.Input.Bindings;
+using StylusCore.Engine.Wpf.Input.Devices;
 
 namespace StylusCore.App.Core.ViewModels
 {

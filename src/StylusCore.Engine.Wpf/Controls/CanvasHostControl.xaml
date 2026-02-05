@@ -1,0 +1,77 @@
+<UserControl x:Class="StylusCore.Engine.Wpf.Controls.CanvasHostControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             ClipToBounds="True"
+             Focusable="True"
+             Background="{DynamicResource CanvasBackgroundBrush}">
+
+    <Grid x:Name="CanvasGrid">
+        <!-- Page Background with Template -->
+        <Border x:Name="PageBackground"
+                Background="{DynamicResource CanvasBackgroundBrush}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <!-- Page dimensions set in code -->
+        </Border>
+
+        <!-- Drawing Surface -->
+        <Canvas x:Name="DrawingSurface"
+                Background="Transparent"
+                MouseDown="DrawingSurface_MouseDown"
+                MouseMove="DrawingSurface_MouseMove"
+                MouseUp="DrawingSurface_MouseUp"
+                MouseWheel="DrawingSurface_MouseWheel"
+                StylusDown="DrawingSurface_StylusDown"
+                StylusMove="DrawingSurface_StylusMove"
+                StylusUp="DrawingSurface_StylusUp">
+
+            <!-- Strokes are rendered as Path elements -->
+            <Canvas x:Name="StrokesLayer"/>
+
+            <!-- Shapes layer -->
+            <Canvas x:Name="ShapesLayer"/>
+
+            <!-- Current stroke preview -->
+            <Path x:Name="CurrentStrokePath"
+                  Stroke="{Binding CurrentColor}"
+                  StrokeThickness="{Binding CurrentWidth}"
+                  StrokeStartLineCap="Round"
+                  StrokeEndLineCap="Round"
+                  StrokeLineJoin="Round"/>
+
+            <!-- Selection overlay -->
+            <Canvas x:Name="SelectionLayer"
+                    Visibility="Collapsed"/>
+        </Canvas>
+
+        <!-- Zoom controls overlay (bottom right) -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="16">
+            <Button Style="{DynamicResource IconButtonStyle}"
+                    Width="32" Height="32"
+                    Click="ZoomOut_Click">
+                <TextBlock Text="−" FontSize="16" FontWeight="Bold"/>
+            </Button>
+            <TextBlock x:Name="ZoomLabel"
+                       Text="100%"
+                       Width="50"
+                       TextAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource SecondaryTextBrush}"/>
+            <Button Style="{DynamicResource IconButtonStyle}"
+                    Width="32" Height="32"
+                    Click="ZoomIn_Click">
+                <TextBlock Text="+" FontSize="16" FontWeight="Bold"/>
+            </Button>
+            <Button Style="{DynamicResource IconButtonStyle}"
+                    Width="32" Height="32"
+                    Margin="8,0,0,0"
+                    Click="ZoomFit_Click"
+                    ToolTip="Fit to Page">
+                <TextBlock Text="◱" FontSize="14"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

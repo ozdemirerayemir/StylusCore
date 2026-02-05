@@ -2,65 +2,15 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using StylusCore.Core.Models;
+using StylusCore.Core.Ports;
 
-namespace StylusCore.Core.Services
+namespace StylusCore.Infrastructure.Persistence
 {
     /// <summary>
-    /// Service for saving and loading notebooks and libraries.
-    /// Uses SQLite for data persistence.
+    /// SQLite-based implementation of document storage.
+    /// Implements IDocumentStore from Core/Ports.
     /// </summary>
-    public interface IStorageService
-    {
-        /// <summary>
-        /// Save a library to storage
-        /// </summary>
-        Task SaveLibraryAsync(Library library);
-
-        /// <summary>
-        /// Load a library from storage
-        /// </summary>
-        Task<Library> LoadLibraryAsync(Guid libraryId);
-
-        /// <summary>
-        /// Save a notebook to storage
-        /// </summary>
-        Task SaveNotebookAsync(Notebook notebook);
-
-        /// <summary>
-        /// Load a notebook from storage
-        /// </summary>
-        Task<Notebook> LoadNotebookAsync(Guid notebookId);
-
-        /// <summary>
-        /// Save a page to storage
-        /// </summary>
-        Task SavePageAsync(Page page);
-
-        /// <summary>
-        /// Load a page from storage
-        /// </summary>
-        Task<Page> LoadPageAsync(Guid pageId);
-
-        /// <summary>
-        /// Get all libraries
-        /// </summary>
-        Task<Library[]> GetAllLibrariesAsync();
-
-        /// <summary>
-        /// Delete a library
-        /// </summary>
-        Task DeleteLibraryAsync(Guid libraryId);
-
-        /// <summary>
-        /// Delete a notebook
-        /// </summary>
-        Task DeleteNotebookAsync(Guid notebookId);
-    }
-
-    /// <summary>
-    /// Implementation of storage service using SQLite
-    /// </summary>
-    public class StorageService : IStorageService, Ports.IDocumentStore
+    public class SqliteDocumentStore : IDocumentStore
     {
         private readonly string _dataPath;
 
@@ -69,23 +19,21 @@ namespace StylusCore.Core.Services
         private readonly List<Notebook> _notebooks = new List<Notebook>();
         private readonly List<Page> _pages = new List<Page>();
 
-        public StorageService()
+        public SqliteDocumentStore()
         {
-            // Default data path in user's app data folder
             _dataPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "StylusCore",
                 "data"
             );
 
-            // Ensure directory exists
             if (!Directory.Exists(_dataPath))
             {
                 Directory.CreateDirectory(_dataPath);
             }
         }
 
-        public StorageService(string dataPath)
+        public SqliteDocumentStore(string dataPath)
         {
             _dataPath = dataPath;
             if (!Directory.Exists(_dataPath))
@@ -156,7 +104,6 @@ namespace StylusCore.Core.Services
             if (lib != null)
             {
                 _libraries.Remove(lib);
-                // Cascading delete simulation
                 var notebooksToDelete = _notebooks.Where(n => n.LibraryId == libraryId).ToList();
                 foreach (var nb in notebooksToDelete)
                 {
