@@ -4,40 +4,59 @@ using System.Windows.Controls;
 
 namespace StylusCore.App.Shared.Components
 {
-    /// <summary>
-    /// Fixed Rail Sidebar Control.
-    /// </summary>
     public partial class Sidebar : UserControl
     {
+        // Events
         public event EventHandler<string> NavigationRequested;
-        public event EventHandler ToggleRequested; 
+        public event EventHandler ToggleRequested;
+
+        // Sabit değerler
+        private const double CollapsedWidth = 48;
+        private const double ExpandedWidth = 198;
+
+        // State
+        private bool _isExpanded = false;
 
         public Sidebar()
         {
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(Sidebar), new PropertyMetadata(false));
-
         public bool IsExpanded
         {
-            get { return (bool)GetValue(IsExpandedProperty); }
-            set { SetValue(IsExpandedProperty, value); }
+            get => _isExpanded;
+            set
+            {
+                if (_isExpanded != value)
+                {
+                    _isExpanded = value;
+                    ApplyState();
+                }
+            }
         }
 
-        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        private void ApplyState()
+        {
+            // Width güncelle
+            this.Width = _isExpanded ? ExpandedWidth : CollapsedWidth;
+
+            // Text visibility güncelle
+            LibraryText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+            SettingsText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Toggle_Click(object sender, RoutedEventArgs e)
         {
             IsExpanded = !IsExpanded;
             ToggleRequested?.Invoke(this, EventArgs.Empty);
         }
 
-        private void LibraryButton_Click(object sender, RoutedEventArgs e)
+        private void Library_Click(object sender, RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, "Library");
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private void Settings_Click(object sender, RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, "Settings");
         }

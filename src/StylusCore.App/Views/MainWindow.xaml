@@ -114,17 +114,14 @@
             <!-- ROW 1: MAIN BODY (Sidebar + Content) -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/> <!-- Sidebar (Rail) -->
-                    <ColumnDefinition Width="*"/>    <!-- Main Content -->
+                    <ColumnDefinition x:Name="SidebarColumn" Width="48"/> <!-- Sabit, code-behind'dan güncellenir -->
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- 1. SIDEBAR (RAIL) -->
+                <!-- SIDEBAR -->
                 <controls:Sidebar x:Name="Sidebar" Grid.Column="0" Loaded="Sidebar_Loaded"/>
 
-                <!-- Vertical Divider -->
-                <Rectangle Grid.Column="0" HorizontalAlignment="Right" Width="1" Fill="{DynamicResource PrimaryBorderBrush}"/>
-
-                <!-- 2. MAIN CONTENT AREA -->
+                <!-- MAIN CONTENT -->
                 <Border Grid.Column="1" Background="{DynamicResource SecondaryBackgroundBrush}">
                     <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
                 </Border>

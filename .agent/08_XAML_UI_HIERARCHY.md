@@ -52,12 +52,51 @@ It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`,
   - `Shell.SidebarCollapsedWidth = 48`
   - `Shell.SidebarExpandedWidth = 240`
 
-### 2.3 No-Jitter Sidebar Geometry
-- **MUST:** Sidebar items use a 2-column internal grid:
-  - Column 0 (Icon Slot): `Shell.IconSlotWidth` (fixed)
-  - Column 1 (Text Slot): `*`
-- **MUST:** When sidebar expands/collapses, **Column 0 never changes**; only Column 1 changes.
-- **MUST:** Icon alignment stays centered in Column 0; label is vertically centered in Column 1.
+### 2.3 No-Jitter Sidebar Implementation
+
+#### Temel Prensipler
+- **MUST:** Sidebar UserControl `Width` property'si doğrudan set edilmeli (48 veya 198)
+- **MUST:** MainWindow'da Sidebar column'u sabit `Width` değeri almalı (XAML: `Width="48"`)
+- **MUST:** Toggle event'inde MainWindow `SidebarColumn.Width` güncellemeli
+- **MUST:** Text elemanları `Visibility.Collapsed/Visible` ile göster/gizle (width animasyonu YOK)
+
+#### Sidebar.xaml Yapısı
+```
+UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
+└── Border (BorderThickness="0,0,1,0" - sağ kenar divider)
+    └── Grid (3 Row)
+        ├── Row 0: Toggle Button (☰)
+        ├── Row 1: Nav Items (Icon + Text, Horizontal StackPanel)
+        └── Row 2: Settings (Icon + Text, Horizontal StackPanel)
+```
+
+#### Sidebar.xaml.cs Mantığı
+```csharp
+private const double CollapsedWidth = 48;
+private const double ExpandedWidth = 198;
+
+private void ApplyState()
+{
+    this.Width = _isExpanded ? ExpandedWidth : CollapsedWidth;
+    LibraryText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+    SettingsText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+}
+```
+
+#### MainWindow.xaml.cs Entegrasyonu
+```csharp
+private void Sidebar_ToggleRequested(object sender, EventArgs e)
+{
+    SidebarColumn.Width = new GridLength(Sidebar.Width);
+}
+```
+
+#### ⚠️ YAPILMAMASI GEREKENLER
+- ❌ Column width animasyonu (jitter yaratır)
+- ❌ Auto column (belirsiz genişlik)
+- ❌ Ayrı 1px divider column (gereksiz karmaşıklık)
+- ❌ HorizontalAlignment="Left" + Auto column (çakışma)
+
 
 ---
 

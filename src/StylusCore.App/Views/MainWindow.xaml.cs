@@ -26,7 +26,7 @@ namespace StylusCore.App.Views
 
             _viewModel = App.MainViewModel;
             DataContext = _viewModel;
-            
+
             // Navigate to Library view on startup
             MainContentFrame.Navigate(new LibraryView());
 
@@ -34,7 +34,7 @@ namespace StylusCore.App.Views
             Closing += MainWindow_Closing;
             PreviewKeyDown += MainWindow_PreviewKeyDown;
             PreviewKeyUp += MainWindow_PreviewKeyUp;
-            
+
             // Subscribe to ViewModel navigation requests (Breadcrumb)
             _viewModel.NavigationRequested += ViewModel_NavigationRequested;
 
@@ -45,16 +45,8 @@ namespace StylusCore.App.Views
 
         private void Sidebar_ToggleRequested(object sender, EventArgs e)
         {
-             // Toggle Sidebar Width
-             // If expanded (width > 64), collapse to 64. If collapsed, expand to 240.
-             if (Sidebar.Width > 64)
-             {
-                 Sidebar.Width = 64;
-             }
-             else
-             {
-                 Sidebar.Width = 240;
-             }
+            // Sidebar genişliğine göre column'u güncelle
+            SidebarColumn.Width = new System.Windows.GridLength(Sidebar.Width);
         }
 
         private void ViewModel_NavigationRequested(object sender, string destination)
@@ -73,8 +65,8 @@ namespace StylusCore.App.Views
             }
             else if (destination == "NotebookList")
             {
-                 // Ensure we are on LibraryView
-                 if (!(MainContentFrame.Content is LibraryView))
+                // Ensure we are on LibraryView
+                if (!(MainContentFrame.Content is LibraryView))
                 {
                     MainContentFrame.Navigate(new LibraryView());
                 }
@@ -95,7 +87,7 @@ namespace StylusCore.App.Views
                 {
                     this.DragMove();
                 }
-                catch 
+                catch
                 {
                     // DragMove can throw if called while not pressed, double safety.
                 }
