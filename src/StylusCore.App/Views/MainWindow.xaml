@@ -122,7 +122,7 @@
                 <controls:Sidebar x:Name="Sidebar" Grid.Column="0" Loaded="Sidebar_Loaded"/>
 
                 <!-- Vertical Divider -->
-                <Rectangle Grid.Column="0" HorizontalAlignment="Right" Width="1" Fill="#F0F0F0"/>
+                <Rectangle Grid.Column="0" HorizontalAlignment="Right" Width="1" Fill="{DynamicResource PrimaryBorderBrush}"/>
 
                 <!-- 2. MAIN CONTENT AREA -->
                 <Border Grid.Column="1" Background="{DynamicResource SecondaryBackgroundBrush}">

@@ -2,7 +2,7 @@
 description: StylusCore Technical Constitution — 05_RENDERING_PERF_WPF (v1.0)
 ---
 
-# ⚡ 05 — RENDERING & PERFORMANCE KERNEL (WPF / .NET 8)
+# ⚡ 05 — RENDERING & PERFORMANCE KERNEL (WPF / .NET 10)
 
 This document defines STRICT, engine-grade rules for StylusCore’s WPF renderer to prevent FPS drops, stutter, excessive allocations, and visual-tree explosion.
 

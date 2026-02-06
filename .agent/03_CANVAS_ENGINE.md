@@ -5,7 +5,7 @@ description: StylusCore Technical Constitution — 03_CANVAS_ENGINE (v1.0)
 # 🧱 03 — CANVAS ENGINE (Infinite World + Camera + QuadTree + View-to-Edit)
 
 This document defines the STRICT rules for the StylusCore Canvas Engine.
-**Goal:** an engine-grade Infinite Canvas core (OneNote/Miro-class) on WPF/.NET 8 with deep zoom, high-performance ink, and mixed media.
+**Goal:** an engine-grade Infinite Canvas core (OneNote/Miro-class) on WPF/.NET 10 with deep zoom, high-performance ink, and mixed media.
 
 ---
 

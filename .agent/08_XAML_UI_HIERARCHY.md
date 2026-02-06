@@ -2,7 +2,7 @@
 description: StylusCore Technical Constitution — 08_UI_SHELL_XAML (v1.0)
 ---
 
-# 🧩 08 — UI SHELL & XAML HIERARCHY (WPF / .NET 8)
+# 🧩 08 — UI SHELL & XAML HIERARCHY (WPF / .NET 10)
 
 This document defines STRICT rules for StylusCore’s **Shell UI** (MainWindow, Header, Sidebar, Library, Settings, Dialogs) and its **XAML design system**.  
 It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`, `05_RENDERING_PERF_WPF.md`).

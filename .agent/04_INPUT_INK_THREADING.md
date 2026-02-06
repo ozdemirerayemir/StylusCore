@@ -4,7 +4,7 @@ description: StylusCore Technical Constitution — 04_INPUT_INK_THREADING (v1.1)
 
 # 🖊️ 04 — INPUT, INK & THREADING (StylusPlugIn + Wet/Dry + 16ms Pump)
 
-This document defines the STRICT, engine-grade rules for StylusCore’s low-latency stylus input on WPF/.NET 8.
+This document defines the STRICT, engine-grade rules for StylusCore’s low-latency stylus input on WPF/.NET 10.
 It is written to be directly consumable by AI agents (Antigravity/Cursor) and humans.
 
 **Goal:** Infinite Canvas in world coordinates with Deep Zoom (0.1–50x), supporting high sample rates (Surface/Wacom) without jitter, UI freezes, or threading bugs.
