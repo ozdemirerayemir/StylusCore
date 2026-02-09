@@ -1,6 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
-using StylusCore.App.ViewModels;
+using StylusCore.App.Features.Settings.ViewModels;
 
 namespace StylusCore.App.Features.Settings.Views
 {

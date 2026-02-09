@@ -1,6 +1,6 @@
 using System;
 using System.Windows;
-using StylusCore.App.ViewModels;
+using StylusCore.App.Features.Settings.ViewModels;
 using StylusCore.App.Core.ViewModels;
 
 namespace StylusCore.App
@@ -44,12 +44,12 @@ namespace StylusCore.App
             // Add global exception handler for debugging
             DispatcherUnhandledException += App_DispatcherUnhandledException;
 
-            try 
+            try
             {
                 // Initialize Services (Resources first)
                 ThemeService = new Services.ThemeService();
                 LanguageService = new Services.LanguageService();
-                
+
                 // Initialize ViewModels
                 MainViewModel = new MainViewModel();
                 SettingsViewModel = new SettingsViewModel();
@@ -62,9 +62,9 @@ namespace StylusCore.App
                 LanguageService.Initialize();
 
                 // Subscribe to settings changes
-                SettingsViewModel.ThemeChanged += (s, theme) => 
+                SettingsViewModel.ThemeChanged += (s, theme) =>
                 {
-                   ThemeService.SetTheme(theme == "Dark" ? Services.ThemeService.AppTheme.Dark : Services.ThemeService.AppTheme.Light);
+                    ThemeService.SetTheme(theme == "Dark" ? Services.ThemeService.AppTheme.Dark : Services.ThemeService.AppTheme.Light);
                 };
 
                 // Initialize devices and bindings

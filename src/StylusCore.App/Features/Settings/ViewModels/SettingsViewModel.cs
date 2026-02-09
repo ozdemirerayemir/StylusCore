@@ -8,7 +8,7 @@ using System.Text.Json;
 using StylusCore.Core.Enums;
 using StylusCore.Engine.Wpf.Input.Bindings;
 
-namespace StylusCore.App.ViewModels
+namespace StylusCore.App.Features.Settings.ViewModels
 {
     /// <summary>
     /// ViewModel for the Settings view.

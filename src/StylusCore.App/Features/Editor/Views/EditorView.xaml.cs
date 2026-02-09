@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using StylusCore.App.ViewModels;
 using StylusCore.App.Features.Editor.ViewModels;
 using StylusCore.Core.Models;
 using ModelPage = StylusCore.Core.Models.Page;
