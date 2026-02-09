@@ -120,15 +120,11 @@ Modes are not just visual — they define boundaries for ownership, input bindin
 - **MUST:** Active Input Mode must switch to `GraphicsTablet` or `Editor` bindings via `BindingManager`.
 - Input events flow through `StylusCore.Engine.Wpf/Input/*` stack.
 
-**Ribbon rule (Target Architecture):**
+**Ribbon rule:** ✅ (Completed 2026-02-10)
 - **MUST:** Functional Ribbon (pen tools) lives inside `EditorView.xaml`
 - **FORBIDDEN:** Ribbon as a global control in `MainWindow`
 
-**Transition Note (Legacy Handling):**
-- **CURRENT STATUS:** Ribbon is currently hosted in `MainWindow.xaml` (`EditorRibbonContainer`).
-- **RULE:** Any task that modifies the Ribbon MUST explicitly check if it's a refactor task.
-    - If Refactor: Move Ribbon to `EditorView.xaml`.
-    - If Feature: You MAY modify `MainWindow` resources temporarily, but MUST flag it as "Legacy Location".
+
 - Never “half move” the Ribbon.
 
 **Editor Sidebar behavior:**
@@ -264,8 +260,6 @@ Agents MUST NOT “work around” violations silently.
 - Any Editor tool UI: `RibbonToolbar`, pen color pickers, tool selectors, stroke width UI
 - Any canvas surface control: `CanvasHostControl`, drawing-surface visuals
 - Any ItemsControl-style rendering of canvas content
-
-**Exception (Legacy):** `EditorRibbonContainer` currently exists here. See Transition Note in Section 3.2.
 
 ### 7.2 Features/Library/* (Library Mode Only)
 **Library feature MUST contain ONLY library UI:**

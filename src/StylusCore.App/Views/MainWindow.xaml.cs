@@ -131,9 +131,7 @@ namespace StylusCore.App.Views
             var editorView = new EditorView();
             editorView.LoadNotebook(notebook);
             MainContentFrame.Navigate(editorView);
-
-            // Show Editor Ribbon
-            EditorRibbonContainer.Visibility = System.Windows.Visibility.Visible;
+            // Ribbon now lives inside EditorView - no visibility toggle needed
         }
 
         /// <summary>
@@ -141,16 +139,13 @@ namespace StylusCore.App.Views
         /// </summary>
         public void NavigateToLibrary()
         {
-            // 1. Clear ViewModel State
+            // Clear ViewModel State
             if (_viewModel != null)
             {
                 _viewModel.CurrentNotebook = null;
             }
 
-            // 2. Hide Editor Ribbon
-            EditorRibbonContainer.Visibility = System.Windows.Visibility.Collapsed;
-
-            // 3. Navigate
+            // Navigate (Ribbon automatically disappears since it's inside EditorView)
             MainContentFrame.Navigate(new LibraryView());
         }
 

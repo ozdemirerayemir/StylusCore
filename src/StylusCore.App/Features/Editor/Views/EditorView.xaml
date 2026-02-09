@@ -10,138 +10,221 @@
         <!-- Use centralized styles directly or create thin wrappers if needed -->
     </Page.Resources>
 
-    <!-- MAIN CONTENT (Ribbon moved to MainWindow) -->
+    <!-- MAIN EDITOR LAYOUT -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <!-- Sections Panel (collapsible) -->
-            <ColumnDefinition x:Name="SectionsPanelColumn" Width="250" MinWidth="48" MaxWidth="350"/>
-            <!-- GridSplitter -->
-            <ColumnDefinition Width="Auto"/>
-            <!-- Canvas -->
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <!-- Row 0: Editor Ribbon (Context-specific toolbar) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Row 1: Main Content (Sections + Canvas) -->
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <!-- Sections Panel -->
-        <Border x:Name="SectionsPanel"
-                Grid.Column="0"
-                Background="{DynamicResource PrimaryBackgroundBrush}"
+        <!-- ROW 0: EDITOR RIBBON -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource TertiaryBackgroundBrush}"
                 BorderBrush="{DynamicResource PrimaryBorderBrush}"
-                BorderThickness="0,0,1,0">
-            <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.05" Direction="0" ShadowDepth="2"/>
-            </Border.Effect>
+                BorderThickness="0,0,0,1"
+                Padding="8,4">
+            <StackPanel Orientation="Horizontal">
+                <!-- Group: Selection -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
+                    <!-- Select Tool -->
+                    <Button ToolTip="{DynamicResource Str_Tooltip_Select}" Style="{DynamicResource IconButtonStyle}" 
+                            Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Command="{Binding SelectToolCommand}">
+                        <Path Data="{StaticResource Icon.Select}" Style="{StaticResource IconBase}"/>
+                    </Button>
+                    <!-- Lasso Select -->
+                    <Button ToolTip="{DynamicResource Str_Tooltip_Lasso}" Style="{DynamicResource IconButtonStyle}" 
+                            Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Margin="{DynamicResource Margin_Small}">
+                        <Path Data="{StaticResource Icon.Lasso}" Style="{StaticResource IconBase}"/>
+                    </Button>
+                </StackPanel>
 
-            <Grid ClipToBounds="False">
-                <Grid.RowDefinitions>
-                    <!-- Header: "Sections" + Collapse Button -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Sections List -->
-                    <RowDefinition Height="*"/>
-                    <!-- Add Buttons -->
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                <!-- Divider -->
+                <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="8,8,16,8"/>
 
-                <!-- Header -->
-                <Border Grid.Row="0"
-                        Padding="16,12"
-                        Background="{DynamicResource TertiaryBackgroundBrush}"
-                        BorderBrush="{DynamicResource PrimaryBorderBrush}"
-                        BorderThickness="0,0,0,1">
-                    <Grid>
-                        <TextBlock x:Name="SectionsTitle"
-                                   Text="Sections"
-                                   FontWeight="SemiBold"
-                                   FontSize="14"
-                                   VerticalAlignment="Center"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
-                        
-                        <!-- Collapse/Expand Button -->
-                        <Button x:Name="CollapseBtn"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
-                                Style="{DynamicResource IconButtonStyle}"
-                                ToolTip="{DynamicResource Str_Tooltip_CollapsePanel}"
-                                Padding="0"
-                                Click="CollapsePanel_Click">
-                            <Grid Width="16" Height="16">
-                                <Path Data="{StaticResource Icon.ChevronLeft}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Button>
-                    </Grid>
-                </Border>
+                <!-- Group: Tools -->
+                <StackPanel Orientation="Horizontal">
+                    <!-- Pen -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
+                        <Grid>
+                            <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}"/>
+                            <!-- Color Indicator (TODO: Make Dynamic) -->
+                            <Ellipse Width="8" Height="8" Fill="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
+                        </Grid>
+                    </Button>
+                    <!-- Pen (Red) -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
+                        <Grid>
+                            <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}" Stroke="{DynamicResource AccentBrush}"/>
+                            <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
+                        </Grid>
+                    </Button>
+                    <!-- Highlighter -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
+                        <Path Data="{StaticResource Icon.Highlighter}" Style="{StaticResource IconBase}" Stroke="{DynamicResource HighlightBrush}" Fill="{DynamicResource HighlightFillBrush}"/>
+                    </Button>
+                    <!-- Eraser -->
+                    <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
+                        <Path Data="{StaticResource Icon.Eraser}" Style="{StaticResource IconBase}"/>
+                    </Button>
+                </StackPanel>
 
-                <!-- Sections + Pages List -->
-                <ScrollViewer Grid.Row="1"
-                              VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel x:Name="SectionsContainer">
-                        <!-- Will be populated programmatically -->
-                    </StackPanel>
-                </ScrollViewer>
+                <!-- Divider -->
+                <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="16,8,16,8"/>
 
-                <!-- Add Buttons -->
-                <Border x:Name="BottomButtonsBorder"
-                        Grid.Row="2"
-                        Padding="8,8"
-                        Background="{DynamicResource TertiaryBackgroundBrush}"
-                        BorderBrush="{DynamicResource PrimaryBorderBrush}"
-                        BorderThickness="0,1,0,0">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <!-- Group: Shapes -->
+                <StackPanel Orientation="Horizontal">
+                    <!-- Rect -->
+                    <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                            Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
+                        <Path Data="{StaticResource Icon.Rectangle}" Style="{StaticResource IconBase}"/>
+                    </Button>
+                </StackPanel>
 
-                        <Button Grid.Column="0"
-                                Content="+ Section"
-                                Margin="0,0,4,0"
-                                Style="{DynamicResource FlatButtonStyle}"
-                                Click="AddSection_Click"/>
-                        <Button Grid.Column="1"
-                                Content="+ Page"
-                                Margin="4,0,0,0"
-                                Style="{DynamicResource FlatButtonStyle}"
-                                Click="AddPage_Click"/>
-                    </Grid>
-                </Border>
-
-                <!-- Collapsed State Overlay (visible when panel is narrow) -->
-                <Border x:Name="CollapsedOverlay"
-                        Grid.RowSpan="3"
-                        Background="{DynamicResource PrimaryBackgroundBrush}"
-                        Visibility="Collapsed">
-                    <StackPanel VerticalAlignment="Top"
-                                HorizontalAlignment="Center"
-                                Margin="0,16">
-                        <Button x:Name="ExpandBtn"
-                                Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
-                                Style="{DynamicResource IconButtonStyle}"
-                                ToolTip="{DynamicResource Str_Tooltip_ExpandPanel}"
-                                Padding="0"
-                                Click="ExpandPanel_Click">
-                            <Grid Width="16" Height="16">
-                                <Path Data="{StaticResource Icon.ChevronRight}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Button>
-                    </StackPanel>
-                </Border>
-            </Grid>
+                <!-- Group: Ink to Shape -->
+                <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                        Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
+                    <Path Data="{StaticResource Icon.InkToShape}" Style="{StaticResource IconBase}"/>
+                </Button>
+            </StackPanel>
         </Border>
 
-        <!-- GridSplitter for resizing -->
-        <GridSplitter Grid.Column="1"
-                      Width="5"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Stretch"
-                      Background="{DynamicResource PrimaryBorderBrush}"
-                      Cursor="SizeWE"
-                      ShowsPreview="False"
-                      DragCompleted="GridSplitter_DragCompleted"
-                      DragDelta="GridSplitter_DragDelta"/>
+        <!-- ROW 1: MAIN CONTENT (Sections + Canvas) -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!-- Sections Panel (collapsible) -->
+                <ColumnDefinition x:Name="SectionsPanelColumn" Width="250" MinWidth="48" MaxWidth="350"/>
+                <!-- GridSplitter -->
+                <ColumnDefinition Width="Auto"/>
+                <!-- Canvas -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- Drawing Canvas -->
-        <engine:CanvasHostControl x:Name="DrawingCanvas"
-                                   Grid.Column="2"/>
+            <!-- Sections Panel -->
+            <Border x:Name="SectionsPanel"
+                    Grid.Column="0"
+                    Background="{DynamicResource PrimaryBackgroundBrush}"
+                    BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                    BorderThickness="0,0,1,0">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.05" Direction="0" ShadowDepth="2"/>
+                </Border.Effect>
+
+                <Grid ClipToBounds="False">
+                    <Grid.RowDefinitions>
+                        <!-- Header: "Sections" + Collapse Button -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Sections List -->
+                        <RowDefinition Height="*"/>
+                        <!-- Add Buttons -->
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Header -->
+                    <Border Grid.Row="0"
+                            Padding="16,12"
+                            Background="{DynamicResource TertiaryBackgroundBrush}"
+                            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                            BorderThickness="0,0,0,1">
+                        <Grid>
+                            <TextBlock x:Name="SectionsTitle"
+                                       Text="Sections"
+                                       FontWeight="SemiBold"
+                                       FontSize="14"
+                                       VerticalAlignment="Center"
+                                       Foreground="{DynamicResource PrimaryTextBrush}"/>
+                            
+                            <!-- Collapse/Expand Button -->
+                            <Button x:Name="CollapseBtn"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
+                                    Style="{DynamicResource IconButtonStyle}"
+                                    ToolTip="{DynamicResource Str_Tooltip_CollapsePanel}"
+                                    Padding="0"
+                                    Click="CollapsePanel_Click">
+                                <Grid Width="16" Height="16">
+                                    <Path Data="{StaticResource Icon.ChevronLeft}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <!-- Sections + Pages List -->
+                    <ScrollViewer Grid.Row="1"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="SectionsContainer">
+                            <!-- Will be populated programmatically -->
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <!-- Add Buttons -->
+                    <Border x:Name="BottomButtonsBorder"
+                            Grid.Row="2"
+                            Padding="8,8"
+                            Background="{DynamicResource TertiaryBackgroundBrush}"
+                            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                            BorderThickness="0,1,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="+ Section"
+                                    Margin="0,0,4,0"
+                                    Style="{DynamicResource FlatButtonStyle}"
+                                    Click="AddSection_Click"/>
+                            <Button Grid.Column="1"
+                                    Content="+ Page"
+                                    Margin="4,0,0,0"
+                                    Style="{DynamicResource FlatButtonStyle}"
+                                    Click="AddPage_Click"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Collapsed State Overlay (visible when panel is narrow) -->
+                    <Border x:Name="CollapsedOverlay"
+                            Grid.RowSpan="3"
+                            Background="{DynamicResource PrimaryBackgroundBrush}"
+                            Visibility="Collapsed">
+                        <StackPanel VerticalAlignment="Top"
+                                    HorizontalAlignment="Center"
+                                    Margin="0,16">
+                            <Button x:Name="ExpandBtn"
+                                    Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
+                                    Style="{DynamicResource IconButtonStyle}"
+                                    ToolTip="{DynamicResource Str_Tooltip_ExpandPanel}"
+                                    Padding="0"
+                                    Click="ExpandPanel_Click">
+                                <Grid Width="16" Height="16">
+                                    <Path Data="{StaticResource Icon.ChevronRight}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- GridSplitter for resizing -->
+            <GridSplitter Grid.Column="1"
+                          Width="5"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          Background="{DynamicResource PrimaryBorderBrush}"
+                          Cursor="SizeWE"
+                          ShowsPreview="False"
+                          DragCompleted="GridSplitter_DragCompleted"
+                          DragDelta="GridSplitter_DragDelta"/>
+
+            <!-- Drawing Canvas -->
+            <engine:CanvasHostControl x:Name="DrawingCanvas"
+                                       Grid.Column="2"/>
+        </Grid>
     </Grid>
 </Page>
