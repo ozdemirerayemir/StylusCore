@@ -48,8 +48,8 @@ src/StylusCore.App/
 │   │   └── 📁 ViewModels/        # (LibraryViewModel.cs)
 │   │
 │   ├── 📁 Editor/                # Not Alma / Editör Modülü
-│   │   ├── 📁 Views/             # (NotebookView.xaml)
-│   │   └── 📁 ViewModels/        # (NotebookViewModel.cs)
+│   │   ├── 📁 Views/             # (EditorView.xaml)
+│   │   └── 📁 ViewModels/        # (EditorViewModel.cs)
 │   │
 │   └── 📁 Settings/              # Ayarlar Modülü
 │       ├── 📁 Views/             # (SettingsView.xaml)

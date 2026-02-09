@@ -332,11 +332,18 @@
                                         <Path Data="{StaticResource Icon.Settings}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Grid>
                                     <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameNotebook_Click"/>
+                                        <ContextMenu x:Name="NotebookContextMenu">
+                                            <!-- Command binding reaches LibraryViewModel via the Page's DataContext -->
+                                            <!-- PlacementTarget is the Button, Button.Tag holds the Notebook -->
+                                            <MenuItem Header="{DynamicResource Str_Rename}" 
+                                                      Command="{Binding DataContext.RenameNotebookCommand, Source={x:Reference NotebooksList}}"
+                                                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
                                             <MenuItem Header="{DynamicResource Str_ChangeColor}" Click="ChangeNotebookColor_Click"/>
                                             <Separator/>
-                                            <MenuItem Header="{DynamicResource Str_Delete}" Click="DeleteNotebook_Click" Foreground="Red"/>
+                                            <MenuItem Header="{DynamicResource Str_Delete}" 
+                                                      Command="{Binding DataContext.DeleteNotebookCommand, Source={x:Reference NotebooksList}}"
+                                                      CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                                      Foreground="Red"/>
                                         </ContextMenu>
                                     </Button.ContextMenu>
                                 </Button>

@@ -108,6 +108,12 @@
     <!-- Chevron Right -->
     <StreamGeometry x:Key="Icon.ChevronRight">M9 18l6-6-6-6</StreamGeometry>
 
+    <!-- Chevron Up -->
+    <StreamGeometry x:Key="Icon.ChevronUp">M18 15l-6-6-6 6</StreamGeometry>
+
+    <!-- Chevron Down -->
+    <StreamGeometry x:Key="Icon.ChevronDown">M6 9l6 6 6-6</StreamGeometry>
+
     <!-- ═══════════════════════════════ -->
     <!-- SHAPES                          -->
     <!-- ═══════════════════════════════ -->

@@ -50,7 +50,7 @@
                     <!-- Pen -->
                     <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
                         <Grid>
-                            <Path Style="{StaticResource Icon.Pen}"/>
+                            <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}"/>
                             <!-- Color Indicator (TODO: Make Dynamic) -->
                             <Ellipse Width="8" Height="8" Fill="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
                         </Grid>
@@ -105,14 +105,26 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/> <!-- Header -->
+                <RowDefinition Height="Auto"/> <!-- Editor Ribbon (full width, visible in Editor mode) -->
                 <RowDefinition Height="*"/>    <!-- Body -->
             </Grid.RowDefinitions>
 
             <!-- ROW 0: GLOBAL HEADER -->
             <controls:HeaderControl Grid.Row="0" Panel.ZIndex="1000"/>
 
-            <!-- ROW 1: MAIN BODY (Sidebar + Content) -->
-            <Grid Grid.Row="1">
+            <!-- ROW 1: EDITOR RIBBON (full width, above Sidebar) -->
+            <Border x:Name="EditorRibbonContainer" 
+                    Grid.Row="1"
+                    Background="{DynamicResource TertiaryBackgroundBrush}"
+                    BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                    BorderThickness="0,0,0,1"
+                    Padding="8,4"
+                    Visibility="Collapsed">
+                <ContentControl Template="{StaticResource RibbonToolbarTemplate}"/>
+            </Border>
+
+            <!-- ROW 2: MAIN BODY (Sidebar + Content) -->
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="SidebarColumn" Width="48"/> <!-- Sabit, code-behind'dan güncellenir -->
                     <ColumnDefinition Width="*"/>

@@ -43,6 +43,12 @@ namespace StylusCore.App.Shared.Components
             // Text visibility güncelle
             LibraryText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
             SettingsText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+
+            // BookText visibility only when BookButton is visible
+            if (BookButton.Visibility == Visibility.Visible)
+            {
+                BookText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         private void Toggle_Click(object sender, RoutedEventArgs e)
@@ -56,9 +62,26 @@ namespace StylusCore.App.Shared.Components
             NavigationRequested?.Invoke(this, "Library");
         }
 
+        private void Book_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationRequested?.Invoke(this, "Book");
+        }
+
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             NavigationRequested?.Invoke(this, "Settings");
+        }
+
+        /// <summary>
+        /// Show or hide the Book navigation item based on active surface
+        /// </summary>
+        public void SetBookButtonVisible(bool isVisible)
+        {
+            BookButton.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+            if (_isExpanded)
+            {
+                BookText.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
     }
 }

@@ -77,6 +77,7 @@
     <Style x:Key="PrimaryButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource PrimaryAccentBrush}"/>
         <Setter Property="Foreground" Value="White"/>
+        <Setter Property="MinHeight" Value="32"/>
         <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"/>
         <Setter Property="Padding" Value="16,8"/>
@@ -111,6 +112,7 @@
     <Style x:Key="SecondaryButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
+        <Setter Property="MinHeight" Value="32"/>
         <Setter Property="FontFamily" Value="{StaticResource FontFamily_Main}"/>
         <Setter Property="FontSize" Value="{StaticResource FontSize_Body}"/>
         <Setter Property="Padding" Value="16,8"/>

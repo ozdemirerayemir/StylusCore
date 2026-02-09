@@ -3,9 +3,12 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using StylusCore.Core.Models;
 using LibraryModel = StylusCore.Core.Models.Library;
 using StylusCore.Core.Services;
+using StylusCore.App.Core.ViewModels;
 
 namespace StylusCore.App.Features.Library.ViewModels
 {
@@ -16,6 +19,53 @@ namespace StylusCore.App.Features.Library.ViewModels
     public class LibraryViewModel : INotifyPropertyChanged
     {
         private readonly IStorageService _storageService;
+
+        #region Commands
+
+        private ICommand _renameNotebookCommand;
+        /// <summary>
+        /// Command to rename a notebook (takes Notebook as parameter)
+        /// </summary>
+        public ICommand RenameNotebookCommand => _renameNotebookCommand ??=
+            new MainViewModel.RelayCommand(ExecuteRenameNotebook, CanExecuteNotebookCommand);
+
+        private ICommand _deleteNotebookCommand;
+        /// <summary>
+        /// Command to delete a notebook (takes Notebook as parameter)
+        /// </summary>
+        public ICommand DeleteNotebookCommand => _deleteNotebookCommand ??=
+            new MainViewModel.RelayCommand(ExecuteDeleteNotebook, CanExecuteNotebookCommand);
+
+        private bool CanExecuteNotebookCommand(object parameter) => parameter is Notebook;
+
+        private void ExecuteRenameNotebook(object parameter)
+        {
+            if (parameter is Notebook notebook)
+            {
+                // Temporary MessageBox for verification - will be replaced with proper dialog
+                MessageBox.Show($"RenameNotebookCommand executed for: {notebook.Name}",
+                    "MVVM Command Test", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private async void ExecuteDeleteNotebook(object parameter)
+        {
+            if (parameter is Notebook notebook)
+            {
+                var result = MessageBox.Show(
+                    $"Are you sure you want to delete '{notebook.Name}'?",
+                    "Delete Notebook",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    await DeleteNotebookAsync(notebook);
+                }
+            }
+        }
+
+        #endregion
 
         #region Properties
 
@@ -95,7 +145,7 @@ namespace StylusCore.App.Features.Library.ViewModels
             _storageService = storageService;
             Libraries = new ObservableCollection<LibraryModel>();
         }
-        
+
         // Constructor that allows injecting validation service (TODO: Use Dependency Injection properly later)
         private readonly IValidationService _validationService;
         public LibraryViewModel(IStorageService storageService, IValidationService validationService) : this(storageService)
@@ -173,7 +223,7 @@ namespace StylusCore.App.Features.Library.ViewModels
                 var result = _validationService.ValidateNotebookName(name, SelectedLibrary.Id, SelectedLibrary.Notebooks);
                 if (!result.IsValid)
                 {
-                     throw new ArgumentException(result.ErrorMessage);
+                    throw new ArgumentException(result.ErrorMessage);
                 }
             }
 

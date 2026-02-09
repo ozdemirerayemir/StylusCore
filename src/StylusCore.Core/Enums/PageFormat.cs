@@ -78,9 +78,9 @@ namespace StylusCore.Core.Enums
         TabsOnly,
 
         /// <summary>
-        /// Focus mode - minimal UI
+        /// FullScreen mode - minimal UI, maximum canvas space
         /// </summary>
-        Focus
+        FullScreen
     }
 
     /// <summary>

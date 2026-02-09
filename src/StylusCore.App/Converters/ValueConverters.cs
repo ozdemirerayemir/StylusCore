@@ -35,6 +35,30 @@ namespace StylusCore.App.Converters
     }
 
     /// <summary>
+    /// Converts boolean to Visibility (inverted: true = Collapsed, false = Visible)
+    /// </summary>
+    public class InverseBoolToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool boolValue)
+            {
+                return boolValue ? Visibility.Collapsed : Visibility.Visible;
+            }
+            return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is Visibility visibility)
+            {
+                return visibility != Visibility.Visible;
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
     /// Converts null to Visibility (null = Collapsed, not null = Visible)
     /// </summary>
     public class NullToVisibilityConverter : IValueConverter
@@ -42,7 +66,7 @@ namespace StylusCore.App.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var isNull = value == null;
-            
+
             // If parameter is "Invert", invert the logic
             if (parameter is string param && param == "Invert")
             {

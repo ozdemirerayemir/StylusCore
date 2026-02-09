@@ -1,19 +1,18 @@
-<Page x:Class="StylusCore.App.Features.Editor.Views.NotebookView"
+<Page x:Class="StylusCore.App.Features.Editor.Views.EditorView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:controls="clr-namespace:StylusCore.App.Controls"
       xmlns:engine="clr-namespace:StylusCore.Engine.Wpf.Controls;assembly=StylusCore.Engine.Wpf"
-      Title="Notebook"
+      Title="Editor"
       Background="{DynamicResource SecondaryBackgroundBrush}">
 
     <Page.Resources>
         <!-- Use centralized styles directly or create thin wrappers if needed -->
     </Page.Resources>
 
+    <!-- MAIN CONTENT (Ribbon moved to MainWindow) -->
     <Grid>
         <Grid.ColumnDefinitions>
-            <!-- Sections Panel (collapsible) -->
-            <!-- FIX: Added MaxWidth="350" to prevent rubber-banding -->
             <!-- Sections Panel (collapsible) -->
             <ColumnDefinition x:Name="SectionsPanelColumn" Width="250" MinWidth="48" MaxWidth="350"/>
             <!-- GridSplitter -->
@@ -131,7 +130,6 @@
         </Border>
 
         <!-- GridSplitter for resizing -->
-        <!-- FIX: ShowsPreview="False" enforces real-time update and prevents ghosting beyond MaxWidth -->
         <GridSplitter Grid.Column="1"
                       Width="5"
                       HorizontalAlignment="Center"

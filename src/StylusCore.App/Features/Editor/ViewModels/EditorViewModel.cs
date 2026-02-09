@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using StylusCore.Core.Enums;
 using StylusCore.Core.Models;
 using StylusCore.Core.Services;
 using StylusCore.Engine.Wpf.Rendering;
 using StylusCore.Engine.Wpf.Tools;
+using StylusCore.App.Core.ViewModels;
 
 namespace StylusCore.App.Features.Editor.ViewModels
 {
     /// <summary>
-    /// ViewModel for the Notebook editor view.
+    /// ViewModel for the Editor view.
     /// Manages pages, drawing, and undo/redo.
     /// </summary>
-    public class NotebookViewModel : INotifyPropertyChanged
+    public class EditorViewModel : INotifyPropertyChanged
     {
         #region Services
 
@@ -163,6 +165,53 @@ namespace StylusCore.App.Features.Editor.ViewModels
         /// </summary>
         public bool CanRedo => _redoStack.Count > 0;
 
+        private RibbonMode _ribbonMode = RibbonMode.Full;
+        /// <summary>
+        /// Current ribbon display mode (Full, TabsOnly, FullScreen)
+        /// </summary>
+        public RibbonMode RibbonMode
+        {
+            get => _ribbonMode;
+            set
+            {
+                if (_ribbonMode != value)
+                {
+                    _ribbonMode = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsRibbonVisible));
+                    OnPropertyChanged(nameof(IsRibbonFull));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Whether the ribbon toolbar should be visible (false in FullScreen mode)
+        /// </summary>
+        public bool IsRibbonVisible => RibbonMode != RibbonMode.FullScreen;
+
+        /// <summary>
+        /// Whether the ribbon should show full content (false in TabsOnly mode)
+        /// </summary>
+        public bool IsRibbonFull => RibbonMode == RibbonMode.Full;
+
+        private ICommand _cycleRibbonModeCommand;
+        /// <summary>
+        /// Command to cycle ribbon mode: Full → TabsOnly → FullScreen → Full
+        /// </summary>
+        public ICommand CycleRibbonModeCommand => _cycleRibbonModeCommand ??=
+            new MainViewModel.RelayCommand(o => CycleRibbonMode());
+
+        private void CycleRibbonMode()
+        {
+            RibbonMode = RibbonMode switch
+            {
+                RibbonMode.Full => RibbonMode.TabsOnly,
+                RibbonMode.TabsOnly => RibbonMode.FullScreen,
+                RibbonMode.FullScreen => RibbonMode.Full,
+                _ => RibbonMode.Full
+            };
+        }
+
         #endregion
 
         #region Events
@@ -174,7 +223,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
 
         #region Constructor
 
-        public NotebookViewModel()
+        public EditorViewModel()
         {
             _storageService = new StorageService();
             _autoSaveService = new AutoSaveService(_storageService);
@@ -264,7 +313,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
             };
 
             Notebook.Pages.Insert(insertIndex, page);
-            
+
             // Renumber pages
             RenumberPages();
 
@@ -279,7 +328,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
 
             // 1. Get ordered sections
             var orderedSections = Notebook.Sections.OrderBy(s => s.SortOrder).ToList();
-            
+
             // 2. Add pages for each section in order
             foreach (var section in orderedSections)
             {
@@ -287,7 +336,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
                     .Where(p => p.SectionId == section.Id)
                     .OrderBy(p => p.PageNumber)
                     .ToList();
-                
+
                 newPageList.AddRange(sectionPages);
             }
 
@@ -296,7 +345,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
                 .Where(p => p.SectionId == null)
                 .OrderBy(p => p.PageNumber)
                 .ToList();
-            
+
             newPageList.AddRange(unsectioned);
 
             // 4. Update Notebook.Pages with the new order
@@ -329,10 +378,10 @@ namespace StylusCore.App.Features.Editor.ViewModels
         {
             var sections = Notebook.Sections.OrderBy(s => s.SortOrder).ToList();
             sections.Remove(section);
-            
+
             // Clamp index
             newIndex = Math.Max(0, Math.Min(newIndex, sections.Count));
-            
+
             sections.Insert(newIndex, section);
 
             // Update sort orders
@@ -379,10 +428,10 @@ namespace StylusCore.App.Features.Editor.ViewModels
             };
 
             Notebook.Sections.Add(section);
-            
+
             // Mark current page as belonging to this section
             CurrentPage.SectionId = section.Id;
-            
+
             return section;
         }
 

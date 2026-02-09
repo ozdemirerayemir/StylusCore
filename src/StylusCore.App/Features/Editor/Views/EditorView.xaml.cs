@@ -15,11 +15,11 @@ using StylusCore.App.Dialogs;
 namespace StylusCore.App.Features.Editor.Views
 {
     /// <summary>
-    /// NotebookView - Editor view with sections panel
+    /// EditorView - Editor view with sections panel
     /// </summary>
-    public partial class NotebookView : System.Windows.Controls.Page
+    public partial class EditorView : System.Windows.Controls.Page
     {
-        private readonly NotebookViewModel _viewModel;
+        private readonly EditorViewModel _viewModel;
 
         // Panel width constants (Fixed Pixels)
         private const double DEFAULT_PANEL_WIDTH = 250;
@@ -33,19 +33,19 @@ namespace StylusCore.App.Features.Editor.Views
 #pragma warning restore CS0414
         private Guid? _activeSectionId = null; // Track active section for adding pages
 
-        public NotebookView()
+        public EditorView()
         {
             InitializeComponent();
 
-            _viewModel = new NotebookViewModel();
+            _viewModel = new EditorViewModel();
             DataContext = _viewModel;
 
-            Loaded += NotebookView_Loaded;
-            Unloaded += NotebookView_Unloaded;
-            SizeChanged += NotebookView_SizeChanged;
+            Loaded += EditorView_Loaded;
+            Unloaded += EditorView_Unloaded;
+            SizeChanged += EditorView_SizeChanged;
         }
 
-        private void NotebookView_Loaded(object sender, RoutedEventArgs e)
+        private void EditorView_Loaded(object sender, RoutedEventArgs e)
         {
             // Wire up CanvasHostControl events
             DrawingCanvas.Renderer = _viewModel.Renderer;
@@ -73,12 +73,12 @@ namespace StylusCore.App.Features.Editor.Views
         private bool _isDragging;
         private object _dragObject;
 
-        private void NotebookView_Unloaded(object sender, RoutedEventArgs e)
+        private void EditorView_Unloaded(object sender, RoutedEventArgs e)
         {
             _viewModel.StopAutoSave();
         }
 
-        private void NotebookView_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             // With fixed pixels, we only need to care if the WINDOW is smaller than the panel
             if (!_isPanelCollapsed)
@@ -394,40 +394,40 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void CollapsePanel()
         {
-            // _lastPanelWidth = SectionsPanelColumn.Width.Value;
-            // _isPanelCollapsed = true;
+            _lastPanelWidth = SectionsPanelColumn.ActualWidth;
+            _isPanelCollapsed = true;
 
-            // SectionsPanelColumn.Width = new GridLength(COLLAPSED_WIDTH);
-            // SectionsPanelColumn.MinWidth = COLLAPSED_WIDTH; 
-            // SectionsPanelColumn.MaxWidth = MAX_PANEL_WIDTH; // Fixed Max
+            SectionsPanelColumn.Width = new GridLength(COLLAPSED_WIDTH);
+            SectionsPanelColumn.MinWidth = COLLAPSED_WIDTH;
+            SectionsPanelColumn.MaxWidth = COLLAPSED_WIDTH; // Lock at collapsed width
 
-            // CollapsedOverlay.Visibility = Visibility.Visible;
-            // SectionsTitle.Visibility = Visibility.Collapsed;
-            // CollapseBtn.Visibility = Visibility.Collapsed;
-            // if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
+            CollapsedOverlay.Visibility = Visibility.Visible;
+            SectionsTitle.Visibility = Visibility.Collapsed;
+            CollapseBtn.Visibility = Visibility.Collapsed;
+            if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
         }
 
         private void ExpandPanel()
         {
-            // _isPanelCollapsed = false;
+            _isPanelCollapsed = false;
 
-            // // Restore to default (250) or last valid width if reasonable
-            // var targetWidth = Math.Max(DEFAULT_PANEL_WIDTH, Math.Min(_lastPanelWidth, MAX_PANEL_WIDTH)); 
+            // Restore to default (250) or last valid width if reasonable
+            var targetWidth = Math.Max(DEFAULT_PANEL_WIDTH, Math.Min(_lastPanelWidth, MAX_PANEL_WIDTH));
 
-            // SectionsPanelColumn.MinWidth = 48; 
-            // SectionsPanelColumn.MaxWidth = MAX_PANEL_WIDTH; // Fixed Max Pixel Limit
-            // SetPanelWidth(targetWidth);
+            SectionsPanelColumn.MinWidth = MIN_PANEL_WIDTH;
+            SectionsPanelColumn.MaxWidth = MAX_PANEL_WIDTH; // Fixed Max Pixel Limit
+            SetPanelWidth(targetWidth);
 
-            // CollapsedOverlay.Visibility = Visibility.Collapsed;
-            // SectionsTitle.Visibility = Visibility.Visible;
-            // CollapseBtn.Visibility = Visibility.Visible;
-            // if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
+            CollapsedOverlay.Visibility = Visibility.Collapsed;
+            SectionsTitle.Visibility = Visibility.Visible;
+            CollapseBtn.Visibility = Visibility.Visible;
+            if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
         }
 
         private void SetPanelWidth(double width)
         {
-            // var clampedWidth = Math.Max(48, Math.Min(width, MAX_PANEL_WIDTH));
-            // SectionsPanelColumn.Width = new GridLength(clampedWidth);
+            var clampedWidth = Math.Max(MIN_PANEL_WIDTH, Math.Min(width, MAX_PANEL_WIDTH));
+            SectionsPanelColumn.Width = new GridLength(clampedWidth);
         }
 
         private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
@@ -440,44 +440,45 @@ namespace StylusCore.App.Features.Editor.Views
             // Give live visual feedback before releasing
             var currentWidth = SectionsPanelColumn.ActualWidth;
 
-            // if (currentWidth < MIN_PANEL_WIDTH)
-            // {
-            //     // Show collapsed state visuals immediately
-            //     CollapsedOverlay.Visibility = Visibility.Visible;
-            //     SectionsTitle.Visibility = Visibility.Collapsed;
-            //     CollapseBtn.Visibility = Visibility.Collapsed;
+            if (currentWidth < MIN_PANEL_WIDTH)
+            {
+                // Show collapsed state visuals immediately
+                CollapsedOverlay.Visibility = Visibility.Visible;
+                SectionsTitle.Visibility = Visibility.Collapsed;
+                CollapseBtn.Visibility = Visibility.Collapsed;
 
-            //     if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
-            // }
-            // else
-            // {
-            //     // Show expanded state visuals
-            //     CollapsedOverlay.Visibility = Visibility.Collapsed;
-            //     SectionsTitle.Visibility = Visibility.Visible;
-            //     CollapseBtn.Visibility = Visibility.Visible;
+                if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // Show expanded state visuals
+                CollapsedOverlay.Visibility = Visibility.Collapsed;
+                SectionsTitle.Visibility = Visibility.Visible;
+                CollapseBtn.Visibility = Visibility.Visible;
 
-            //     if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
-            // }
+                if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
+            }
         }
 
         private void CheckAndSnapPanel()
         {
-            // var currentWidth = SectionsPanelColumn.ActualWidth;
+            var currentWidth = SectionsPanelColumn.ActualWidth;
 
-            // if (currentWidth < MIN_PANEL_WIDTH)
-            // {
-            //     CollapsePanel();
-            // }
-            // else if (currentWidth > MAX_PANEL_WIDTH)
-            // {
-            //     // Snap back to MAX if exceeded (handle elasticity)
-            //     SetPanelWidth(MAX_PANEL_WIDTH);
-            // }
-            // else
-            // {
-            //     // Remember valid width
-            //     _lastPanelWidth = currentWidth;
-            // }
+            if (currentWidth < MIN_PANEL_WIDTH)
+            {
+                CollapsePanel();
+            }
+            else if (currentWidth > MAX_PANEL_WIDTH)
+            {
+                // Snap back to MAX if exceeded (handle elasticity)
+                SetPanelWidth(MAX_PANEL_WIDTH);
+                _lastPanelWidth = MAX_PANEL_WIDTH;
+            }
+            else
+            {
+                // Remember valid width
+                _lastPanelWidth = currentWidth;
+            }
         }
 
         #endregion

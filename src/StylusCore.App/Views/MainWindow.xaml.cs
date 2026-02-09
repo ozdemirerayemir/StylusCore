@@ -128,9 +128,12 @@ namespace StylusCore.App.Views
         /// </summary>
         public void NavigateToNotebook(StylusCore.Core.Models.Notebook notebook)
         {
-            var notebookView = new NotebookView();
-            notebookView.LoadNotebook(notebook);
-            MainContentFrame.Navigate(notebookView);
+            var editorView = new EditorView();
+            editorView.LoadNotebook(notebook);
+            MainContentFrame.Navigate(editorView);
+
+            // Show Editor Ribbon
+            EditorRibbonContainer.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>
@@ -144,7 +147,10 @@ namespace StylusCore.App.Views
                 _viewModel.CurrentNotebook = null;
             }
 
-            // 2. Navigate
+            // 2. Hide Editor Ribbon
+            EditorRibbonContainer.Visibility = System.Windows.Visibility.Collapsed;
+
+            // 3. Navigate
             MainContentFrame.Navigate(new LibraryView());
         }
 

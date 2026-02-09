@@ -54,8 +54,9 @@
                 </StackPanel>
             </Button>
 
-            <!-- ROW 1: Library -->
+            <!-- ROW 1: Navigation Items -->
             <StackPanel Grid.Row="1" Margin="0,8,0,0">
+                <!-- Library Button -->
                 <Button Style="{StaticResource SidebarButtonStyle}" Click="Library_Click" ToolTip="Library">
                     <StackPanel Orientation="Horizontal">
                         <Grid Width="48" Height="48">
@@ -66,6 +67,29 @@
                         </Grid>
                         <TextBlock x:Name="LibraryText"
                                    Text="{DynamicResource Str_Library}"
+                                   VerticalAlignment="Center"
+                                   FontSize="{StaticResource FontSize_Body}"
+                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Visibility="Collapsed"
+                                   Margin="0,0,16,0"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- Book Button (visible only when in Editor surface) -->
+                <Button x:Name="BookButton" 
+                        Style="{StaticResource SidebarButtonStyle}" 
+                        Click="Book_Click" 
+                        ToolTip="Book"
+                        Visibility="Collapsed">
+                    <StackPanel Orientation="Horizontal">
+                        <Grid Width="48" Height="48">
+                            <Path Data="{StaticResource Icon.Book}" 
+                                  Style="{StaticResource IconBase}"
+                                  Width="20" Height="20" Stretch="Uniform"
+                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock x:Name="BookText"
+                                   Text="{DynamicResource Str_Book}"
                                    VerticalAlignment="Center"
                                    FontSize="{StaticResource FontSize_Body}"
                                    Foreground="{DynamicResource PrimaryTextBrush}"

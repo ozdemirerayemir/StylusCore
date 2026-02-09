@@ -40,10 +40,12 @@ It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`,
 ### 2.1 Required Layout
 - **MUST:** MainWindow root is `Grid` with:
   - Row 0: Header (`Shell.HeaderHeight`)
-  - Row 1: Content (`*`)
-- **MUST:** Row 1 uses columns:
+  - Row 1: Editor Ribbon (`Auto`, visible only in Editor mode, full width)
+  - Row 2: Content (`*`)
+- **MUST:** Row 2 uses columns:
   - Column 0: Sidebar (`Shell.SidebarWidth`)
   - Column 1: Main Content (`*`)
+- **MUST:** Editor Ribbon spans full width (above Sidebar), not inside EditorView.
 - **MUST:** Use star sizing (`*`) for growable areas and `Auto` only for intrinsic sizing.
 
 ### 2.2 Default Metrics (UI Density = Compact)
