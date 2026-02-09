@@ -2,183 +2,225 @@
 description: StylusCore Agent Entry Point (Routing + Precedence + Output Contract)
 ---
 
-# 🤖 StylusCore — AGENT.md (Önce bunu oku)
+# 🤖 StylusCore — AGENT.md (Read This First)
 
-Bu dosya, AI agent'ların (Antigravity/Cursor vb.) **hangi görev için hangi kural dosyalarını** okuyacağını belirleyen tek giriş kapısıdır.
+This file is the **single entry point** that defines **which rule documents an AI agent** (Antigravity / Cursor / Copilot / etc.) must read **for which type of task**.
 
-> **Kullanım:** Her promptta → "`.agent/AGENT.md` oku ve uygula"
-
----
-
-## 0) Precedence (Çelişki olursa hangisi kazanır?)
-
-1) **`.agent/01_CONSTITUTION.md`** (RED LINES) — her şeyin üstünde
-2) **`.agent/00_PRODUCT_VISION.md`** (Product/UX Intent) — ürün niyeti & etkileşim modeli
-3) Göreve özel dosyalar (Architecture/Canvas/Input/Persistence/XAML/Undo vb.)
-4) Best practices / öneriler (dokümanlarda aksi yazmıyorsa)
-
-Şüphede kalırsan:
-- **RED LINE'ı bozma.**
-- Ürün davranışı/UX kararında tereddüt varsa: **00_PRODUCT_VISION.md** kazanır.
-- Uyumlu alternatif öner ve çatışmayı açıkça yaz.
+> **Usage:** In every prompt → “Read and follow `.agent/AGENT.md`”
 
 ---
 
-## 1) Her görevden önce ZORUNLU
+## 0) Precedence (What wins on conflict?)
 
-1. ✅ `.agent/00_PRODUCT_VISION.md` oku (özellikle UX/Mode/Text/Voice/Radial işleri için)
-2. ✅ `.agent/01_CONSTITUTION.md` oku (RED LINES)
-3. ✅ Bu dosyadan (AGENT.md) "Task Routing" bölümünden uygun kategoriyi seç
-4. ✅ Kategoride listelenen dosyaları oku
-5. ✅ Çıktını "Output Contract" formatında ver (aşağıda)
+1) **`.agent/01_CONSTITUTION.md`** (RED LINES) — highest authority  
+2) **`.agent/00_PRODUCT_VISION.md`** (Product / UX Intent) — behavior & UX intent  
+3) Task-specific module specifications (02–08)  
+4) Best practices / recommendations (only if not contradicted)
+
+If in doubt:
+- **Do NOT violate a RED LINE.**
+- If there is uncertainty about user behavior or UX decisions,  
+  **00_PRODUCT_VISION.md wins** (as long as RED LINES are respected).
+- Propose a compliant alternative and explicitly state the conflict.
+
+> **Note:** Module documents (02–08) may **specialize** RED LINES,  
+> but MUST NOT weaken or override them.
 
 ---
 
-## 2) Task Routing — "Ne yapıyorsun?"
+## 1) Mandatory Before Every Task
 
-Aşağıdan en uygun kategoriyi seç. **Listelenen dosyalar okunmadan kod yazma.**
+1. ✅ Read `.agent/01_CONSTITUTION.md` (RED LINES)
+2. ✅ If the task affects UX or behavior, read `.agent/00_PRODUCT_VISION.md`
+3. ✅ From this file (AGENT.md), select the appropriate **Task Routing** category
+4. ✅ Read **all documents listed in that category**
+5. ✅ Produce output using the **Output Contract** defined below
 
-### A) Product/UX / Interaction Tasarımı (Mode, Radial, Text/Voice davranışı, akış)
-Oku:
-- `.agent/00_PRODUCT_VISION.md`
+---
+
+## 2) Task Routing — “What are you doing?”
+
+Select the closest category. **Do not write code before reading the listed files.**
+
+### A) Product / UX / Interaction Design  
+*(Modes, Radial, Text/Voice behavior, user flows)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
-- `.agent/02_ARCHITECTURE.md` (UI/Editor ayrımı, bağımlılıklar)
-- `.agent/08_XAML_UI_HIERARCHY.md` (Shell UI kuralları)
+- `.agent/00_PRODUCT_VISION.md`
+- `.agent/02_ARCHITECTURE.md`
+- `.agent/08_XAML_UI_HIERARCHY.md`
 
-> Not: Bu kategori “kod yazmadan önce doğru davranışı tanımlama” içindir.
+> This category defines behavior **before** implementation.
 
-### B) Editor/Canvas Engine (kamera, zoom/pan, scene graph, quadtree, selection)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (editor davranışı & intent)
+---
+
+### B) Editor / Canvas Engine  
+*(Camera, zoom/pan, scene graph, QuadTree, selection)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/02_ARCHITECTURE.md`
 - `.agent/03_CANVAS_ENGINE.md`
 - `.agent/05_RENDERING_PERF_WPF.md`
-- `.agent/07_UNDO_REDO_COMMANDS.md` (canvas operasyonu ekliyorsan)
+- `.agent/00_PRODUCT_VISION.md` (behavior / latency intent)
+- `.agent/07_UNDO_REDO_COMMANDS.md` (if adding canvas mutations)
 
-### C) Ink/Input/Threading (StylusPlugIn, buffer, wet/dry, palm rejection)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (pen+touch intent, latency hedefi)
+---
+
+### C) Ink / Input / Threading  
+*(StylusPlugIn, buffering, wet/dry ink, palm rejection)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/04_INPUT_INK_THREADING.md`
 - `.agent/03_CANVAS_ENGINE.md`
 - `.agent/05_RENDERING_PERF_WPF.md`
+- `.agent/00_PRODUCT_VISION.md` (pen + touch intent)
 
-### D) Text / Tables / Mixed Media (Free Text vs Flow Text, View-to-Edit, text formatting)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (Text Mode, Writing Models, Input Methods)
+---
+
+### D) Text / Tables / Mixed Media  
+*(View-to-Edit, text formatting, hybrid content)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
+- `.agent/00_PRODUCT_VISION.md`
 - `.agent/02_ARCHITECTURE.md`
-- `.agent/03_CANVAS_ENGINE.md` (View-to-Edit overlay kontratı)
+- `.agent/03_CANVAS_ENGINE.md`
 - `.agent/05_RENDERING_PERF_WPF.md`
 - `.agent/07_UNDO_REDO_COMMANDS.md`
 
-### E) Voice / Whisper / Microphone (STT, inline bar, input device, settings)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (Voice intent + behavior)
-- `.agent/01_CONSTITUTION.md`
-- `.agent/02_ARCHITECTURE.md`
-- `.agent/06_PERSISTENCE_DB.md` (ayar/preset saklama gerekiyorsa)
-- `.agent/07_UNDO_REDO_COMMANDS.md` (voice → text insertion undo/redo)
-- `.agent/08_XAML_UI_HIERARCHY.md` (UI component & theming)
+---
 
-### F) Persistence/DB/File Format (SQLite, LZ4, autosave, recovery, chunking, template import)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (Zero Data Loss intent)
+### E) Voice / Microphone  
+*(STT, inline bars, device handling, settings)*
+
+Read:
+- `.agent/01_CONSTITUTION.md`
+- `.agent/00_PRODUCT_VISION.md`
+- `.agent/02_ARCHITECTURE.md`
+- `.agent/06_PERSISTENCE_DB.md` (settings / presets)
+- `.agent/07_UNDO_REDO_COMMANDS.md` (voice → text undo/redo)
+- `.agent/08_XAML_UI_HIERARCHY.md` (UI + theming)
+
+---
+
+### F) Persistence / DB / File Format  
+*(SQLite, LZ4, autosave, recovery, chunking)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/06_PERSISTENCE_DB.md`
-- `.agent/03_CANVAS_ENGINE.md` (bounds/chunk kontratı için)
-- `.agent/07_UNDO_REDO_COMMANDS.md` (persisted operations)
+- `.agent/02_ARCHITECTURE.md` (interfaces / boundaries)
+- `.agent/03_CANVAS_ENGINE.md` (bounds / chunk contracts)
+- `.agent/07_UNDO_REDO_COMMANDS.md`
+- `.agent/00_PRODUCT_VISION.md` (zero data loss intent)
+
+---
 
 ### G) App Shell / Navigation / MVVM / Dialogs
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (Shell intent)
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/02_ARCHITECTURE.md`
 - `.agent/08_XAML_UI_HIERARCHY.md`
+- `.agent/00_PRODUCT_VISION.md` (shell intent)
 
-### H) XAML/UI (Sidebar, layout, components, theming, icons, localization, a11y)
-Oku:
-- `.agent/00_PRODUCT_VISION.md` (UI scale, typography freedom)
+---
+
+### H) XAML / UI  
+*(Sidebar, layout, components, theming, icons, localization, accessibility)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/08_XAML_UI_HIERARCHY.md`
-- `.agent/05_RENDERING_PERF_WPF.md` (virtualization, nested scroll ban)
+- `.agent/02_ARCHITECTURE.md` (folder placement / App root whitelist)
+- `.agent/00_PRODUCT_VISION.md` (UI scale / typography intent)
+- `.agent/05_RENDERING_PERF_WPF.md` (virtualization / nested scroll bans)
 
-### I) Undo/Redo (Command pattern, grouping, atomicity)
-Oku:
+---
+
+### I) Undo / Redo  
+*(Command pattern, grouping, atomicity)*
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/07_UNDO_REDO_COMMANDS.md`
-- `.agent/03_CANVAS_ENGINE.md` (quadtree/bounds update)
-- `.agent/05_RENDERING_PERF_WPF.md` (dirty rect)
-- `.agent/00_PRODUCT_VISION.md` (UX: user expectation, zero data loss)
+- `.agent/03_CANVAS_ENGINE.md`
+- `.agent/05_RENDERING_PERF_WPF.md`
+- `.agent/00_PRODUCT_VISION.md` (user expectations / safety)
 
-### J) Genel Refactoring / Kod Kalitesi / Mimari Değişiklik
-Oku:
+---
+
+### J) General Refactoring / Code Quality / Architectural Change
+
+Read:
 - `.agent/01_CONSTITUTION.md`
 - `.agent/02_ARCHITECTURE.md`
-- İlgili domain dosyası (hangi katmandaysa)
-- `.agent/00_PRODUCT_VISION.md` (davranış/UX etkisi varsa)
+- The relevant layer document (03/04/05/06/07/08)
+- `.agent/00_PRODUCT_VISION.md` (if UX or behavior is affected)
 
 ---
 
-## 3) Dosya Haritası (Quick Reference)
+## 3) Document Map (Quick Reference)
 
-| Dosya | Kapsam |
-|-------|--------|
-| `00_PRODUCT_VISION.md` | Ürün niyeti, UX, modlar, radial, text/voice, non-goals |
-| `01_CONSTITUTION.md` | Master kurallar, RED LINES, tüm projeyi kapsar |
-| `02_ARCHITECTURE.md` | Katman yapısı, bağımlılık yönü, klasör kuralları |
+| File | Scope |
+|-----|------|
+| `00_PRODUCT_VISION.md` | Product intent, UX, modes, radial, text/voice, non-goals |
+| `01_CONSTITUTION.md` | Master rules, RED LINES, project-wide authority |
+| `02_ARCHITECTURE.md` | Layering, dependencies, App root whitelist |
 | `03_CANVAS_ENGINE.md` | Infinite canvas, camera, QuadTree, View-to-Edit |
 | `04_INPUT_INK_THREADING.md` | StylusPlugIn, pen thread, wet/dry pipeline |
-| `05_RENDERING_PERF_WPF.md` | DrawingVisual, dirty rect, virtualization |
-| `06_PERSISTENCE_DB.md` | SQLite, R-Tree, LZ4, autosave, chunking, template storage |
-| `07_UNDO_REDO_COMMANDS.md` | Command pattern, 50 step limit, grouping |
-| `08_XAML_UI_HIERARCHY.md` | Shell UI, theming, icons, dialogs, a11y |
+| `05_RENDERING_PERF_WPF.md` | DrawingVisual, dirty rects, virtualization |
+| `06_PERSISTENCE_DB.md` | SQLite, LZ4, autosave, chunking, templates |
+| `07_UNDO_REDO_COMMANDS.md` | Command pattern, 50-step limit, grouping |
+| `08_XAML_UI_HIERARCHY.md` | Shell UI, theming, icons, dialogs, accessibility |
 
 ---
 
-## 4) Output Contract (Agent çıktısı standardı)
+## 4) Output Contract (Agent Response Standard)
 
-Her görev için agent şu formatta cevap üretmeli:
+For every task, the agent MUST respond using this structure:
 
-1. **Okunan dokümanlar:** (dosya listesi)
-2. **Vision alignment:** (00_PRODUCT_VISION ile uyum kontrolü: Mode/Text/Voice/Radial/Scale/Non-goals)
-3. **Kuralların etkisi:** Her dosyadan 1 somut kural → bu görevde neye zorladı?
-4. **Plan:** 3–8 adım
-5. **Değişecek dosyalar:** path listesi
-6. **Riskler:** perf/thread/persistence/memory/UX regressions
-7. **Test/Doğrulama:** en az 3 madde (ölçüm/visual check dahil)
-
----
-
-## 5) Hard Stops (Yapılmayacaklar)
-
-Agent aşağıdakileri uygulamaz; uyumlu alternatif önerir:
-
-| Yasak | Neden | Alternatif |
-|-------|------|------------|
-| Canvas'ta `ScrollViewer` | Pan/zoom için yanlış | `MatrixTransform` camera |
-| Pen thread'de UI erişimi | Thread-safety | Buffer → UI thread pump |
-| `ItemsControl` ile canvas render | Performans | `DrawingVisual` retained |
-| Canvas'ta kalıcı `DataGrid`/`RichTextBox` | Memory | View-to-Edit overlay |
-| Hardcoded string/color/font | Theming/i18n | `DynamicResource` |
-| Icon `Path`'te fixed `Width/Height` ile yanlış ölçekleme | DPI/layout tutarsız | Wrapper + `Stretch` / geometry-first yaklaşım |
-| UI thread'de sync I/O | Freeze | Background + snapshot |
-| Core'da `System.Windows.*` | Headless | Primitives only |
+1. **Documents read:** (explicit list)
+2. **Vision alignment:** (check against 00_PRODUCT_VISION — if applicable)
+3. **Rule impact:** At least one concrete rule from each document and how it constrained the solution
+4. **Plan:** 3–8 clear steps
+5. **Files to change:** path list (create / modify)
+6. **Risks:** performance / threading / persistence / memory / UX regressions
+7. **Tests / Validation:** at least 3 items (metrics or visual checks included)
 
 ---
 
-## 6) Reference Integrity (Dosya taşındığında)
+## 5) Hard Stops (Non-Negotiable)
 
-- **MUST:** `.agent/` klasörü tek "source of truth" dokümantasyon konumudur.
-- **MUST:** Her move/rename işleminden sonra `.agent/*.md` içinde eski path araması yap ve güncelle.
-- **MUST:** Her migration sonunda "Migration Map" üret: `old path -> new path`
-- **FORBIDDEN:** "see above / previous doc" gibi path'siz referans.
+The agent MUST NOT do the following; instead, propose a compliant alternative:
+
+| Forbidden | Reason | Alternative |
+|---------|--------|-------------|
+| `ScrollViewer` on canvas | Breaks pan/zoom | `MatrixTransform` camera |
+| UI access on pen thread | Thread-safety | Buffer → UI thread pump |
+| `ItemsControl`-based canvas rendering | Performance | Retained `DrawingVisual` |
+| Permanent `DataGrid` / `RichTextBox` on canvas | Memory | View-to-Edit overlay |
+| Hardcoded strings / colors / fonts | Theming & i18n | `DynamicResource` |
+| Fixed `Width/Height` on icon `Path` | DPI/layout issues | Wrapper + `Stretch` |
+| Synchronous I/O on UI thread | Freezes | Background + snapshots |
+| `System.Windows.*` in Core | Breaks headless domain | Primitive-only Core |
 
 ---
 
-## 7) Versiyon
+## 6) Reference Integrity (When Files Move)
 
-- **Tarih:** 2026-02-06
-- **Sürüm:** v1.2
-- **.NET:** 10.0 (target)
+- **MUST:** `.agent/` is the single source of truth for documentation.
+- **MUST:** After any move/rename, search and update old paths in `.agent/*.md`.
+- **MUST:** After migrations, produce a **Migration Map**: `old path -> new path`.
+- **FORBIDDEN:** Path-less references such as “see above” or “previous doc”.
+
+---
+
+## 7) Version
+
+- **Date:** 2026-02-09
+- **Version:** v1.3
+- **.NET Target:** 10.0

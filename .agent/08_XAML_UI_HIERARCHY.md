@@ -1,5 +1,5 @@
 ---
-description: StylusCore Technical Constitution — 08_UI_SHELL_XAML (v1.0)
+description: StylusCore Technical Constitution — 08_UI_SHELL_XAML (v1.3 - Contextual Ribbon Update + App Root Hygiene Sync)
 ---
 
 # 🧩 08 — UI SHELL & XAML HIERARCHY (WPF / .NET 10)
@@ -37,77 +37,50 @@ It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`,
 
 ## 2) Global Shell Layout (MainWindow Grid)
 
-### 2.1 Required Layout
+### 2.1 Required Layout (UPDATED v1.2)
 - **MUST:** MainWindow root is `Grid` with:
-  - Row 0: Header (`Shell.HeaderHeight`)
-  - Row 1: Editor Ribbon (`Auto`, visible only in Editor mode, full width)
-  - Row 2: Content (`*`)
-- **MUST:** Row 2 uses columns:
-  - Column 0: Sidebar (`Shell.SidebarWidth`)
-  - Column 1: Main Content (`*`)
-- **MUST:** Editor Ribbon spans full width (above Sidebar), not inside EditorView.
-- **MUST:** Use star sizing (`*`) for growable areas and `Auto` only for intrinsic sizing.
+  - **Row 0:** App Shell / Custom Window Chrome (Logo, Window Controls). Fixed height (`Shell.HeaderHeight`).
+  - **Row 1:** Workspace (`*`) -> Contains Sidebar and Content.
+- **MUST:** Workspace (Row 1) uses columns:
+  - **Column 0:** Global Sidebar (`Shell.SidebarWidth`).
+  - **Column 1:** Main Content (`*`) -> Hosts `LibraryView` or `EditorView`.
 
-### 2.2 Default Metrics (UI Density = Compact)
+### 2.2 Contextual Ribbon Rule (CRITICAL CHANGE)
+- **MUST:** The Functional Ribbon (Pens, Colors, Tools) is **NOT** a global control in MainWindow.
+- **MUST:** The Ribbon lives inside **`EditorView.xaml`** (Row 0 of the Editor Grid).
+- **FORBIDDEN:** Placing the Ribbon in MainWindow Row 0 or Row 1 (spanning above the sidebar). The Ribbon belongs to the Editor context.
+
+### 2.3 Default Metrics (UI Density = Compact)
 - **MUST:** Default preset values:
   - `Shell.HeaderHeight = 48`
   - `Shell.SidebarCollapsedWidth = 48`
   - `Shell.SidebarExpandedWidth = 240`
 
-### 2.3 No-Jitter Sidebar Implementation
+### 2.4 No-Jitter Sidebar Implementation
 
-#### Temel Prensipler
-- **MUST:** Sidebar UserControl `Width` property'si doğrudan set edilmeli (48 veya 198)
-- **MUST:** MainWindow'da Sidebar column'u sabit `Width` değeri almalı (XAML: `Width="48"`)
-- **MUST:** Toggle event'inde MainWindow `SidebarColumn.Width` güncellemeli
-- **MUST:** Text elemanları `Visibility.Collapsed/Visible` ile göster/gizle (width animasyonu YOK)
+#### Basic Principles
+- **MUST:** Sidebar UserControl `Width` property must be set directly.
+- **MUST:** MainWindow Sidebar column must have a fixed `Width` value (no Auto).
+- **MUST:** Updates happen via Toggle event in Code-behind or ViewModel state.
 
-#### Sidebar.xaml Yapısı
-```
+#### Sidebar.xaml Structure
+```xml
 UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
-└── Border (BorderThickness="0,0,1,0" - sağ kenar divider)
-    └── Grid (3 Row)
-        ├── Row 0: Toggle Button (☰)
-        ├── Row 1: Nav Items (Icon + Text, Horizontal StackPanel)
-        └── Row 2: Settings (Icon + Text, Horizontal StackPanel)
+└── Border (BorderThickness="0,0,1,0" - right divider)
+    └── Grid (3 Rows)
+        ├── Row 0: Toggle Button (Icon: Chevron or Menu)
+        ├── Row 1: Nav Items (Icon + Text)
+        └── Row 2: Settings (Icon + Text)
 ```
-
-#### Sidebar.xaml.cs Mantığı
-```csharp
-private const double CollapsedWidth = 48;
-private const double ExpandedWidth = 198;
-
-private void ApplyState()
-{
-    this.Width = _isExpanded ? ExpandedWidth : CollapsedWidth;
-    LibraryText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
-    SettingsText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
-}
-```
-
-#### MainWindow.xaml.cs Entegrasyonu
-```csharp
-private void Sidebar_ToggleRequested(object sender, EventArgs e)
-{
-    SidebarColumn.Width = new GridLength(Sidebar.Width);
-}
-```
-
-#### ⚠️ YAPILMAMASI GEREKENLER
-- ❌ Column width animasyonu (jitter yaratır)
-- ❌ Auto column (belirsiz genişlik)
-- ❌ Ayrı 1px divider column (gereksiz karmaşıklık)
-- ❌ HorizontalAlignment="Left" + Auto column (çakışma)
-
 
 ---
 
 ## 3) UI Density (Compact / Comfortable / Large)
 
 ### 3.1 Density System Mandate
-- **MUST:** Support user-selectable **UI Density presets** without using global `ScaleTransform` / `LayoutTransform`.
-- **MUST:** Implement density by swapping a **Metrics ResourceDictionary** (token dictionary swap).
-- **MUST:** Density changes affect shell UI only (Header/Sidebar/Lists/Dialogs), **not** the editor canvas engine.
+- **MUST:** Support user-selectable UI Density presets without using global ScaleTransform.
+- **MUST:** Implement density by swapping a Metrics ResourceDictionary.
+- **MUST:** Density changes affect shell UI only, not the editor canvas engine.
 
 ### 3.2 Metric Tokens (Required)
 - **MUST:** Define and use metric tokens:
@@ -116,16 +89,13 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
   - `Shell.SidebarExpandedWidth`
   - `Shell.IconSlotWidth`
   - `Shell.IconSize`
-  - `Shell.PaddingS/M/L` (Thickness)
+  - `Shell.PaddingS/M/L`
   - `Shell.CornerRadiusS/M/L`
-  - `Typography.*` (font sizes)
-- **MUST:** All shell components bind sizes to these tokens (no hardcoded “magic numbers” in controls).
+  - `Typography.*`
+- **MUST:** All shell components bind sizes to these tokens.
 
 ### 3.3 Preset Guidance
-- **MUST:** Provide at least:
-  - Compact (default)
-  - Large (e.g., Header≈64, SidebarCollapsed≈64, Expanded proportionally larger)
-- **SHOULD:** Offer Comfortable as optional midpoint.
+- **MUST:** Provide at least Compact (default) and Large presets.
 
 ---
 
@@ -133,32 +103,36 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 
 ### 4.1 Dictionary Organization
 - **MUST:** Organize dictionaries by responsibility:
-  - `00_Base.xaml` (base styles, resets)
-  - `01_Metrics.xaml` (density tokens)
-  - `02_Colors.xaml` (colors)
-  - `03_Brushes.xaml` (brushes from colors)
-  - `04_Typography.xaml` (font sizes, weights; `App.MainFont`)
-  - `05_Icons.xaml` (StreamGeometry)
-  - `06_Components.xaml` (component styles/templates)
-  - `07_Views.xaml` (view-level styles if needed)
+  - `00_Base.xaml`
+  - `01_Metrics.xaml`
+  - `02_Colors.xaml`
+  - `03_Brushes.xaml`
+  - `04_Typography.xaml`
+  - `05_Icons.xaml`
+  - `06_Components.xaml`
+  - `07_Views.xaml`
+
+> **NOTE:** These dictionaries are typically stored under `Shared/Themes/` (or an equivalent themes root).  
+> Theme and Density swapping must only swap their respective dictionaries (see 4.2).
 
 ### 4.2 Merge Order (STRICT)
 - **MUST:** Merge in this order:
-  1) Base
-  2) Metrics
-  3) Colors
-  4) Brushes
-  5) Typography
-  6) Icons
-  7) Components
-  8) Views (optional)
-- **MUST:** Theme changes swap **Colors/Brushes** dictionaries.
-- **MUST:** Density changes swap **Metrics** dictionary.
+  1. Base
+  2. Metrics
+  3. Colors
+  4. Brushes
+  5. Typography
+  6. Icons
+  7. Components
+  8. Views (optional)
+
+- **MUST:** Theme changes swap Colors/Brushes dictionaries.
+- **MUST:** Density changes swap Metrics dictionary.
 - **FORBIDDEN:** Mixing Metrics into theme dictionaries (keep concerns separate).
 
 ### 4.3 DynamicResource Boundary
-- **MUST:** Shell UI (buttons, text, panels) uses `DynamicResource` for theme/localization.
-- **MUST NOT:** Use `DynamicResource` lookups inside engine hot render loops (covered elsewhere).
+- **MUST:** Shell UI (buttons, text, panels) uses DynamicResource for theme/localization.
+- **MUST NOT:** Use DynamicResource lookups inside engine hot render loops (covered elsewhere).
 
 ---
 
@@ -176,8 +150,8 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
   - `PrimaryBorderBrush`
 
 ### 5.3 No Hardcoding
-- **FORBIDDEN:** Hardcoded colors, brushes, or `FontFamily` in XAML.
-- **MUST:** Font family comes from `DynamicResource App.MainFont`.
+- **FORBIDDEN:** Hardcoded colors, brushes, or FontFamily in XAML.
+- **MUST:** Font family comes from DynamicResource `App.MainFont`.
 
 ---
 
@@ -185,11 +159,11 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 
 ### 6.1 No Hardcoded Strings
 - **FORBIDDEN:** Hardcoded user-facing strings in XAML/code.
-- **MUST:** Use `DynamicResource` string keys for runtime language switching.
+- **MUST:** Use DynamicResource string keys for runtime language switching.
 
 ### 6.2 Formatting Strategy
 - **SHOULD:** For formatted strings, use:
-  - MultiBinding + `StringFormat`, or
+  - MultiBinding + StringFormat, or
   - a dedicated converter that formats using localized templates.
 - **MUST:** Keep localization keys stable and versioned.
 
@@ -198,17 +172,17 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 ## 7) Icons (StreamGeometry) — Clip Protection
 
 ### 7.1 Storage & Format
-- **MUST:** Icons are `StreamGeometry` (path data) stored in `Shared/Themes/Icons.xaml`.
+- **MUST:** Icons are StreamGeometry (path data) stored in `Shared/Themes/Icons.xaml`.
 
 ### 7.2 Fit-to-Box Rule
-- **FORBIDDEN:** Setting explicit `Width`/`Height` on the `Path` itself.
-- **MUST:** Parent container defines size; `Path` uses:
+- **FORBIDDEN:** Setting explicit Width/Height on the Path itself.
+- **MUST:** Parent container defines size; Path uses:
   - `Stretch="Uniform"`
   - centered alignment
 
 ### 7.3 Reference Pattern
 - **MUST:** Use this pattern (size on wrapper, not Path):
-~~~xml
+```xml
 <Grid Width="{DynamicResource Shell.IconSize}" Height="{DynamicResource Shell.IconSize}">
   <Path Data="{StaticResource Icon.Example}"
         Fill="{DynamicResource PrimaryTextBrush}"
@@ -216,25 +190,25 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
         HorizontalAlignment="Center"
         VerticalAlignment="Center"/>
 </Grid>
-~~~
+```
 
 ---
 
 ## 8) Component Architecture Strategy (Templates vs Controls)
 
 ### 8.1 ControlTemplate vs UserControl
-- **MUST:** Use `ControlTemplate` when:
+- **MUST:** Use ControlTemplate when:
   - you need restyling via theme/tokens
   - you need consistent states (hover/pressed/disabled)
   - you want minimal visual tree (template reuse)
-- **MUST:** Use `UserControl` only when:
+- **MUST:** Use UserControl only when:
   - composition is complex and reused as a composite view
   - the visual tree remains shallow and predictable
-- **FORBIDDEN:** Using `UserControl` as a “styling shortcut” for simple buttons/rows.
+- **FORBIDDEN:** Using UserControl as a “styling shortcut” for simple buttons/rows.
 
 ### 8.2 Visual States
 - **SHOULD:** Prefer simple triggers for basic states.
-- **SHOULD:** Use `VisualStateManager` for controls requiring multiple interactive states or stylus/touch nuance.
+- **SHOULD:** Use VisualStateManager for controls requiring multiple interactive states or stylus/touch nuance.
 - **FORBIDDEN:** Trigger storms (many nested triggers) inside item templates for large lists.
 
 ### 8.3 Naming Conventions
@@ -271,7 +245,7 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 - **MUST:** Enable virtualization for list-heavy UI:
   - `VirtualizingPanel.IsVirtualizing="True"`
   - `VirtualizingPanel.VirtualizationMode="Recycling"`
-- **FORBIDDEN:** Placing a `ListBox/ListView` inside a `ScrollViewer` (kills virtualization).
+- **FORBIDDEN:** Placing a ListBox/ListView inside a ScrollViewer (kills virtualization).
 - **SHOULD:** Keep item templates shallow (few borders/grids).
 
 ### 10.2 Search/Filter Inputs
@@ -281,7 +255,7 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 - **SHOULD:** Debounce expensive filtering on background thread and update UI safely.
 
 ### 10.3 DataGrid Guidance
-- **FORBIDDEN:** `Width="Auto"` on large datasets.
+- **FORBIDDEN:** Width="Auto" on large datasets.
 - **SHOULD:** Prefer star widths or fixed widths.
 
 ---
@@ -291,19 +265,19 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 ### 11.1 Binding Storm Avoidance
 - **MUST:** Avoid converters and multi-binding in large repeating templates unless justified.
 - **SHOULD:** Precompute display strings/icons in view models for list rows.
-- **SHOULD:** Prefer `INotifyPropertyChanged` updates that are batched/debounced.
+- **SHOULD:** Prefer INotifyPropertyChanged updates that are batched/debounced.
 
 ### 11.2 Visual Tree Discipline
 - **MUST:** Keep visual tree flat.
 - **FORBIDDEN:** “StackPanel hell” as primary layout.
-- **MUST:** Use `Grid` for major layouts; `Border` for wrapper styling only.
+- **MUST:** Use Grid for major layouts; Border for wrapper styling only.
 
 ---
 
 ## 12) Input UX (Shell) & Hit Targets
 
 ### 12.1 Hit Target Size
-- **MUST:** Interactive hit targets meet a minimum of **40–48 DIP** in both dimensions for touch/stylus friendliness.
+- **MUST:** Interactive hit targets meet a minimum of 40–48 DIP in both dimensions for touch/stylus friendliness.
 
 ### 12.2 Hover/Press Semantics
 - **SHOULD:** Provide consistent hover/pressed visuals.
@@ -315,7 +289,7 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 ## 13) Accessibility (STRICT)
 
 ### 13.1 Automation Properties
-- **MUST:** All interactive controls MUST set `AutomationProperties.Name`.
+- **MUST:** All interactive controls MUST set AutomationProperties.Name.
 
 ### 13.2 Keyboard Navigation
 - **MUST:** Full shell is keyboard navigable (Tab/Arrow).
@@ -334,8 +308,7 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 - **MUST:** Shell UI must remain usable and crisp under Windows DPI scaling and per-monitor DPI changes.
 - **SHOULD:** Enable:
   - `UseLayoutRounding="True"`
-  - `SnapsToDevicePixels="True"`
-  where appropriate on shell roots or key containers.
+  - `SnapsToDevicePixels="True"` where appropriate on shell roots or key containers.
 - **MUST:** Icons remain crisp via vector rendering and proper sizing wrappers.
 
 ---
@@ -363,15 +336,13 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 ## 16) Navigation & State Preservation
 
 ### 16.1 Navigation Implementation
-- **SHOULD:** Prefer `ContentControl` + DataTemplates (ViewModel-driven navigation).
-- **FORBIDDEN (by default):** Using `Frame` navigation unless explicitly justified (it often introduces memory + state quirks).
+- **SHOULD:** Prefer ContentControl + DataTemplates (ViewModel-driven navigation).
+- **FORBIDDEN (by default):** Using Frame navigation unless explicitly justified.
+- **MUST:** NotebookView is renamed to EditorView to reflect its role as the editing workspace.
 
 ### 16.2 Ghost Data Rule
-- **MUST:** On navigation away from a context, clear stale selections and transient state:
-  - library selection
-  - previous notebook/page selection
-  - toolbar state not applicable to the new context
-- **SHOULD:** Preserve only what is explicitly desired (camera, last page) and ensure it is restored deterministically.
+- **MUST:** On navigation away from a context, clear stale selections and transient state.
+- **SHOULD:** Preserve only what is explicitly desired (camera, last page).
 
 ---
 
@@ -383,24 +354,27 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 - **FORBIDDEN:** Excessive triggers in list item templates.
 - **FORBIDDEN:** Heavy bitmap effects (blur/drop shadow everywhere) on large repeating UI.
 - **FORBIDDEN:** Frame navigation unless explicitly justified.
-- **FORBIDDEN:** Creating new root folders under `src/StylusCore.App/`.
+
+### 17.1 App Root Folder Anti-Pattern (REVISED – SYNC WITH 02_ARCHITECTURE)
+- **FORBIDDEN:** creating ad-hoc, undocumented new root folders under `src/StylusCore.App/`.
+- **MUST:** only use the approved root folder categories defined in `02_ARCHITECTURE.md` (App Root whitelist).
+
+- **FORBIDDEN:** Placing Ribbon in MainWindow (Ribbon MUST be inside EditorView).
 
 ---
 
 ## 18) Reference Templates (Copy-Pasteable)
 
-### 18.1 MainWindow Skeleton
-~~~xml
+### 18.1 MainWindow Skeleton (App Shell)
+```xml
 <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
   <Grid.RowDefinitions>
     <RowDefinition Height="{DynamicResource Shell.HeaderHeight}"/>
     <RowDefinition Height="*"/>
   </Grid.RowDefinitions>
 
-  <!-- Header -->
   <ContentControl Grid.Row="0" Content="{Binding HeaderVM}"/>
 
-  <!-- Body -->
   <Grid Grid.Row="1">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="{DynamicResource Shell.SidebarWidth}"/>
@@ -408,42 +382,36 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
     </Grid.ColumnDefinitions>
 
     <ContentControl Grid.Column="0" Content="{Binding SidebarVM}"/>
+
     <ContentControl Grid.Column="1" Content="{Binding ActivePageVM}"/>
   </Grid>
 </Grid>
-~~~
+```
 
-### 18.2 Sidebar Item Template (No-Jitter)
-~~~xml
-<Button Style="{StaticResource Sidebar.ItemButton}">
-  <Grid>
+### 18.2 EditorView Skeleton (Contextual Ribbon)
+```xml
+<Grid>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto"/>
+    <RowDefinition Height="*"/>
+  </Grid.RowDefinitions>
+
+  <controls:RibbonToolbar Grid.Row="0" DataContext="{Binding}"/>
+
+  <Grid Grid.Row="1">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="{DynamicResource Shell.IconSlotWidth}"/>
+      <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
-    <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-      <Grid Width="{DynamicResource Shell.IconSize}" Height="{DynamicResource Shell.IconSize}"
-            HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Path Data="{StaticResource Icon.Example}"
-              Fill="{DynamicResource PrimaryTextBrush}"
-              Stretch="Uniform"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center"/>
-      </Grid>
-    </Grid>
-
-    <TextBlock Grid.Column="1"
-               Text="{Binding Title}"
-               VerticalAlignment="Center"
-               Margin="{DynamicResource Shell.PaddingM}"
-               Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}"/>
+    <Border Grid.Column="0" x:Name="SectionsPanel"/>
+    <controls:CanvasHostControl Grid.Column="1"/>
   </Grid>
-</Button>
-~~~
+</Grid>
+```
 
 ### 18.3 Standard Dialog Layout
-~~~xml
+```xml
 <Grid Margin="{DynamicResource Shell.PaddingL}">
   <Grid.RowDefinitions>
     <RowDefinition Height="Auto"/>
@@ -462,7 +430,7 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
     <Button Content="{DynamicResource String.OK}" Style="{StaticResource Button.Primary}" Margin="12,0,0,0"/>
   </StackPanel>
 </Grid>
-~~~
+```
 
 ---
 
@@ -470,11 +438,11 @@ private void Sidebar_ToggleRequested(object sender, EventArgs e)
 
 - **MUST:** Place reusable shell components in `Shared/Components/`.
 - **MUST:** Place theme dictionaries in `Shared/Themes/`.
-- **MUST:** Keep folder hierarchy clean (no new root folders).
+- **MUST:** Keep folder hierarchy clean:
+  - **FORBIDDEN:** creating ad-hoc, undocumented new root folders under `src/StylusCore.App/`
+  - **MUST:** follow the App Root whitelist in `02_ARCHITECTURE.md`
 - **MUST:** Every new shell component must ship with:
   - a style key
   - token usage (no hardcoded sizes/colors/fonts)
   - accessibility name
   - keyboard navigation behavior
-
----

@@ -4,371 +4,394 @@ description: StylusCore Product Vision, Core Philosophy & Design DNA
 
 # 🌌 StylusCore — Product Vision & Core Philosophy
 
-> **Bu belge StylusCore’un zihnidir.**  
-> Mimari, UI, input sistemi, feature tasarımı ve gelecekte eklenecek her şey  
-> **buradaki prensiplere uyumlu olmak zorundadır**.
+> **This document defines the mind of StylusCore.**  
+> Architecture, UI, input systems, feature design, and all future extensions  
+> **MUST align with the principles defined here**.
 >
-> Bu dosya; geliştirici, tasarımcı ve yapay zekâ agent’lar için  
-> **Tek Kaynak (Single Source of Truth)** olarak kabul edilir.
+> This file is the **Single Source of Truth** for developers, designers,  
+> and all AI agents working on StylusCore.
 
 ---
 
-## 0. Amaç (Why)
+## 0) Purpose (Why)
 
-StylusCore, klasik not alma uygulamalarının ötesine geçen,
-**stylus-first**, **sonsuz tuval** temelli, **aşırı özelleştirilebilir**
-bir üretim ve düşünme alanıdır.
+StylusCore goes beyond traditional note-taking software.  
+It is a **stylus-first**, **infinite-canvas–based**, **deeply customizable**
+space for thinking, producing, and organizing ideas.
 
-Amaç:
-- Kullanıcıyı uygulamaya değil, **uygulamayı kullanıcıya uydurmak**
-- Grafik tablet kullanıcılarının (Wacom / Huion / XP-Pen)
-  not alma, diagram çizme ve düşünce haritalama ihtiyaçlarını **tam verimle** karşılamak
-- Power-user ihtiyaçlarını **kullanıcı dostu** bir şekilde sunmak
+The core goals are:
+- Adapt the application to the user — **not the user to the application**
+- Fully support graphic tablet users (Wacom / Huion / XP-Pen) for:
+  - note-taking
+  - diagramming
+  - freeform thinking
+- Deliver **power-user capabilities** without sacrificing usability
 
-StylusCore:
-- Sadece “not yazılan” bir uygulama değil
-- **Düşünme, üretme ve organize etme alanıdır**
+StylusCore is:
+- not just a “note app”
+- but a **thinking and production environment**
 
 ---
 
-## 1. Temel Felsefe
+## 1) Core Philosophy
 
-### 1.1 Stylus First (Pen-Centric Design)
+### 1.1 Stylus-First (Pen-Centric Design)
 
-StylusCore, fare-klavye merkezli değil, **kalem merkezli** düşünür.
+StylusCore is designed **around the pen**, not mouse or keyboard.
 
-- Pen input bir ek özellik değil, **birincil etkileşim biçimidir**
-- Input gecikmesi kabul edilemez
-- Stylus butonları, basılı tutma ve gesture’lar birinci sınıf vatandaştır
-- Grafik tablet kullanan profesyoneller (Blender, ZBrush vb.)
-  aynı donanımla not alabilmelidir
+- Pen input is **the primary interaction model**
+- Input latency is unacceptable
+- Stylus buttons, holds, pressure, and gestures are first-class citizens
+- Users coming from creative tools (Blender, ZBrush, CAD tools)
+  must be able to use the same hardware naturally
 
 #### Simultaneous Pen & Touch
-- Kalem (Pen) yazı/çizim için kullanılırken
-- El (Touch) **sadece navigasyon** (Pan / Zoom / Rotate) yapar
-- Kusursuz **Palm Rejection** zorunludur
-- Pen ve Touch aynı anda, çakışmadan çalışabilmelidir
+- **Pen** → writing / drawing
+- **Touch** → navigation only (pan / zoom / rotate)
+- **Perfect palm rejection is mandatory**
+- Pen and touch must work **simultaneously without conflict**
 
 ---
 
 ### 1.2 Extreme Customization
 
-> “Kullanıcıya uymayan özellik yoktur, ayarlanmamış özellik vardır.”
+> “There are no wrong features — only unconfigured ones.”
 
-- UI, input, shortcut, mod, menü, ölçek, font… her şey ayarlanabilir olmalıdır
-- Varsayılanlar sadece **başlangıç noktasıdır**
-- Kullanıcı, uygulamayı kendi zihinsel modeline göre şekillendirebilmelidir
-
----
-
-## 2. Canvas & Page Model
-
-StylusCore, kullanıcının düşünme biçimini tek bir tuval türüyle sınırlandırmaz.
-
-### 2.1 Hibrit Tuval Yapısı (Hybrid Canvas)
-
-Kullanıcı proje bazlı olarak farklı tuval türleri seçebilir:
-
-- **Infinite Canvas**
-  - Sınırsız alan
-  - Diagram, mind-map, serbest çizim
-- **Fixed Page Formats**
-  - A4, A5, Letter
-  - **Portrait (Dikey) / Landscape (Yatay)** varyantları
-  - Baskı ve export odaklı kullanım
-
-Tuval sistemi:
-- Sabit bir liste değil
-- **Genişletilebilir bir model** olarak tasarlanmalıdır
+- UI, input, shortcuts, modes, menus, scale, typography — everything is configurable
+- Defaults are **starting points**, not constraints
+- Users must be able to adapt StylusCore to their own mental model
 
 ---
 
-### 2.2 Kağıt & Arka Plan Özelleştirme
+## 2) Canvas & Page Model
 
-Her sayfa aşağıdaki arka plan türlerinden birini kullanabilir:
+StylusCore does **not** force users into a single canvas paradigm.
 
-- Grid (kareli)
-- Lined (çizgili)
-- Dotted (simetrik / asimetrik)
-- Music staff (nota kağıdı)
-- Düz (boş)
+### 2.1 Hybrid Canvas Model
 
-Ek özellikler:
-- Çizgi yoğunluğu ayarlanabilir
-- Arka plan rengi ayarlanabilir
-- Göz konforu önceliklidir
+A project may use different canvas/page models:
+
+#### Infinite Canvas
+- Unbounded world space
+- Ideal for:
+  - diagrams
+  - mind maps
+  - freeform notes
+
+#### Fixed Page Formats
+- A4, A5, Letter
+- Portrait / Landscape variants
+- Optimized for print and export
+
+Rules:
+- Pages are **visual regions**, not hard containers
+- Content may overflow page bounds
+- The page system is **extensible**, not a fixed list
+
+---
+
+### 2.2 Paper & Background Customization
+
+Each page or canvas region may use:
+
+- Grid
+- Lined
+- Dotted (symmetric / asymmetric)
+- Music staff
+- Plain (blank)
+
+Additional controls:
+- Line density
+- Background color
+- Eye comfort is a priority
 
 ---
 
 ### 2.3 Custom Page Templates & Background Import
 
-StylusCore sadece hazır şablonlar sunmaz.
-Kullanıcı **kendi arka planlarını** da sisteme ekleyebilmelidir.
+StylusCore supports **user-defined page templates**.
 
-- Tercih edilen format: **SVG**
-- PNG desteklenebilir (yüksek çözünürlük şartıyla)
+- Preferred format: **SVG**
+- PNG may be supported at sufficiently high resolution
 
-Import edilen şablonlar:
-- Kullanıcıya özel saklanır
-- “Page Template Library” içinde listelenir
-- Yeni projelerde tekrar kullanılabilir
+Imported templates:
+- Are stored per-user
+- Appear in a **Page Template Library**
+- Can be reused across projects
 
-Arka plan ile sayfa rengi birlikte çalışmalıdır:
-- Overlay rengi
+Background composition:
+- Base page color
+- Overlay color
 - Opacity
-- Temel sayfa rengi
-kullanıcı tarafından ayarlanabilir
+must work together and be user-adjustable
 
 ---
 
 ### 2.4 Export & Sharing Vision
 
-StylusCore içindeki veri, uygulama içine **hapsedilmemelidir**.
+User data must **never be locked into the application**.
 
-- Fixed Page → PDF
-- Infinite Canvas →
-  - Yüksek çözünürlüklü PNG
-  - Dilimlenmiş (Sliced) PDF
-  - SVG (diagram odaklı)
+- Fixed pages → PDF
+- Infinite canvas →
+  - high-resolution PNG
+  - sliced PDF
+  - SVG (diagram-oriented)
 
 ---
 
-## 3. UI, Scale & Görsel Tutarlılık
+## 3) UI, Scale & Visual Consistency
 
 ### 3.1 DPI & Scale Awareness
 
-- 1080p / 2K / 4K
-- Windows Scale (%100 / %125 / %150)
+StylusCore must work consistently across:
+- 1080p / 2K / 4K displays
+- Windows scaling (100% / 125% / 150%+)
 
-Kurallar:
-- PNG ikon yasak
-- Sadece vektörel ikonlar (Path / Geometry)
-- Layout’lar deterministik olmalı (jitter yok)
+Rules:
+- Bitmap icons are forbidden
+- Only vector icons (StreamGeometry)
+- Layouts must be deterministic (no jitter)
 
 ---
 
 ### 3.2 Typography Freedom
 
-- UI fontu kullanıcı tarafından seçilebilir
-- UI font boyutu ve yoğunluğu ayarlanabilir
-- Hiçbir font veya size hardcoded olamaz
-- Tüm değerler `DynamicResource` ile gelmelidir
+- UI font is user-selectable
+- Font size and density are configurable
+- No font family or size may be hardcoded
+- All values come from `DynamicResource`
 
 ---
 
-## 4. Shell UI vs Editor Layer
+### 3.3 Fluid UX & Micro-Interactions
+
+- The UI must never feel static or rigid
+- Smooth transitions are encouraged (Fluent-style)
+- Micro-interactions should provide visual feedback:
+  - button press
+  - panel open/close
+  - mode changes
+- Animations must never compromise FPS or latency
+
+---
+
+## 4) Shell UI vs Editor Layer
 
 ### 4.1 Shell UI
+Includes:
 - Sidebar
 - Library
 - Settings
 - Navigation
-- Radial Menu konfigürasyonu
+- Radial menu configuration
 
-Shell UI:
-- Editor performansını asla etkilememelidir
-- Hafif ve modüler olmalıdır
+Rules:
+- Must never affect editor performance
+- Must remain lightweight and modular
+
+---
 
 ### 4.2 Editor Layer
+Includes:
 - Canvas
 - Ink engine
 - Page layout
-- Drawing / writing tools
+- Writing and drawing tools
 
-Editor:
-- Düşük gecikmeli
-- Büyük veri setlerine dayanıklı
-- Uzun süre açık kalabilmelidir
-
----
-
-## 5. Interaction Modes (Mental Model)
-
-StylusCore, **donanım değil davranış** temelli modlar kullanır.
-
-- **Text Mode** → Metin üretimi
-- **Ink Mode** → Kalemle yazma/çizme
-- **Shape / Diagram Mode**
-- **Navigation Mode**
-
-Mode:
-- Bir UI değil
-- **Input’un nasıl yorumlandığını belirleyen davranış setidir**
+Rules:
+- Low latency is mandatory
+- Must scale to large datasets
+- Designed for long-running sessions
 
 ---
 
-## 6. Radial Menu System (Mode-Specific)
+### 4.3 Contextual UI Principle
 
-Radial Menu:
-- Sadece UI değil
-- **Bir etkileşim motorudur**
+> **“Tools belong next to the work they operate on.”**
 
-Her Mode:
-- Kendi radyal menülerine sahiptir
-- Bir modda **birden fazla radial** olabilir
-
-Kullanıcı:
-- İstediği kadar radial oluşturabilir
-- Her radial için:
-  - Eleman sayısı
-  - Sıra
-  - Boyut
-  - Hold / Toggle davranışı
-  - Atanan komutlar
-ayarlar üzerinden belirlenir
+- The **Ribbon/Toolbar** belongs to the **Editor**, not the global window
+- The **Sidebar** handles navigation, not drawing tools
+- When entering the editor, tools appear
+- When returning to the library, tools disappear
 
 ---
 
-## 7. Performance, Stability & Data Safety
+## 5) Interaction Modes (Mental Model)
 
-Performans bir optimizasyon değil, **tasarım gereksinimidir**.
+StylusCore uses **behavior-driven modes**, not hardware-driven modes.
 
-- Low latency input
-- UI thread bloklanmaz
-- RAM kontrollü kullanılır
+Modes include:
+- Text Mode
+- Ink Mode
+- Shape / Diagram Mode
+- Navigation Mode
+
+Rules:
+- A Mode is **not a UI panel**
+- A Mode defines how input is interpreted
+
+---
+
+## 6) Radial Menu System
+
+The Radial Menu is:
+- not just UI
+- but an **interaction system**
+
+Rules:
+- Each Mode may have one or more radials
+- Users may create multiple radials
+- Each radial is configurable:
+  - item count
+  - order
+  - size
+  - hold vs toggle behavior
+  - assigned commands
+
+---
+
+## 7) Performance, Stability & Data Safety
+
+Performance is not an optimization — it is a **design requirement**.
+
+- Low-latency input
+- UI thread must not block
+- Memory usage must be controlled
 
 ### Zero Data Loss
-- Kullanıcı bir çizgi çizdiği an veri güvendedir
-- Crash durumunda **son stroke’a kadar recovery**
-- “Save” butonu psikolojiktir
-- Sistem arka planda sürekli kayıt alır
+- Data is safe the moment a stroke is made
+- Crash recovery must restore **up to the last stroke**
+- “Save” is psychological
+- The system autosaves continuously in the background
 
 ---
 
-## 8. Text Mode, Writing Models & Input Methods
+## 8) Text Mode, Writing Models & Input Methods
 
 ### 8.1 Writing Models
 
-Text Mode iki yazım modeline sahiptir:
+Text Mode supports two writing models:
 
 #### Free Text
-- Tuvalin herhangi bir yerine tıklanır
-- Bağımsız text container oluşur
-- Infinite Canvas için varsayılandır
+- Click anywhere on the canvas
+- Creates an independent text container
+- Default for Infinite Canvas
 
 #### Flow / Linear Text
-- Sadece sabit sayfa formatlarında (A4 / A5 / Letter)
-- Word / OneNote benzeri davranış
-- Satır akışı, paragraph, alignment desteklenir
+- Only for fixed page formats (A4 / A5 / Letter)
+- Word / OneNote–like behavior
+- Paragraph flow and alignment supported
 
-Infinite Canvas’ta Flow Mode **bilinçli olarak devre dışıdır**.
+Rule:
+- Flow Text is **intentionally disabled** on Infinite Canvas
 
 ---
 
 ### 8.2 Text Input Methods
 
-Text üretimi **Input Method** katmanı ile belirlenir:
+Writing models are independent of input methods:
 
-- Physical Keyboard
-- On-Screen Keyboard
-- **Voice (Speech-to-Text)**
-
-Input Method:
-- Writing Model’dan bağımsızdır
-- Aynı yazım modeli farklı inputlarla çalışabilir
+- Physical keyboard
+- On-screen keyboard
+- Voice (speech-to-text)
 
 ---
 
 ### 8.3 Inline Input Bar
 
-Kullanıcı insertion point oluşturduğunda (caret):
+When a caret is created:
+- A small **Inline Input Bar** appears near it
 
-Caret yakınında küçük bir **Inline Input Bar** görünür:
-
+Provides:
 - 🎙️ Voice input
 - ⌨️ Keyboard input
 
-Voice aktifken:
-- Konuşma **anlık olarak** seçili noktaya yazılır
-- Geçici metin (partial) farklı stil ile gösterilebilir
-- Final metin normal forma döner
+Voice behavior:
+- Partial text may appear in a temporary style
+- Final text commits to normal formatting
 
 ---
 
-## 9. Voice Input & Whisper Integration
+## 9) Voice Input & Whisper Integration
 
-### 9.1 Whisper Model Kullanımı
+### 9.1 Whisper Usage
 
-StylusCore, ses → metin için **Whisper** tabanlı bir sistem kullanmayı hedefler.
+StylusCore targets a **Whisper-based** speech-to-text pipeline.
 
-- Çoklu dil desteği
-- Otomatik dil algılama
-- Türkçe + İngilizce + karışık terimler desteklenir
+- Multi-language support
+- Automatic language detection
+- Mixed-language input (e.g., Turkish + English terms)
 
-Varsayılan davranış:
-- Manuel dil seçimi gerekmez
-- Whisper otomatik algılar
+Default behavior:
+- No manual language selection
+- Detection is automatic
 
 ---
 
 ### 9.2 Voice Recording Modes
 
-İki kayıt davranışı desteklenir:
+Supported modes:
+- Push-to-talk (default)
+- Toggle recording
 
-- **Push-to-Talk** (varsayılan)
-- **Toggle Recording**
-
-Bu davranış ayarlardan değiştirilebilir.
+Configurable via settings.
 
 ---
 
-## 10. Settings Philosophy (Input & Voice)
+## 10) Settings Philosophy
 
-Ayarlar ekranı:
-- Sadece “genel ayarlar” değil
-- Kullanıcının **çalışma biçimini** tanımladığı yerdir
+Settings define **how the user works**, not just preferences.
 
-Voice & Input ayarları:
-- Varsayılan input method
-- Kullanılacak mikrofon cihazı
-- Push / Toggle tercihi
-- Auto-stop silence (opsiyonel)
+Includes:
+- Default input method
+- Microphone device
+- Push vs toggle
+- Optional silence auto-stop
 
-Bu ayarlar:
+These settings integrate with:
 - Text Mode
-- Radial Menu
+- Radial menus
 - Inline Input Bar
-ile uyumlu çalışır
 
 ---
 
-## 11. Localization & Accessibility
+## 11) Localization & Accessibility
 
-- Çoklu dil desteği zorunludur
-- UI string’leri hardcoded olamaz
-- Font, scale, contrast ayarlanabilir olmalıdır
-
----
-
-## 12. Non-Goals
-
-StylusCore:
-- Mobile-first değildir
-- Zorunlu cloud bağımlı değildir
-- Sosyal ağ değildir
-- Real-time collaborative editör değildir
+- Multi-language support is mandatory
+- UI strings must never be hardcoded
+- Font, scale, and contrast must be configurable
 
 ---
 
-## 13. Agent’lar İçin Altın Kural
+## 12) Non-Goals
 
-> **Bu belgeye aykırı hiçbir tasarım veya kod kararı kabul edilemez.**
-
-Her agent:
-- Feature eklerken
-- UI tasarlarken
-- Mimari önerirken
-
-**önce bu belgeyi okumak zorundadır.**
+StylusCore is **not**:
+- Mobile-first
+- Cloud-dependent
+- A social network
+- A real-time collaborative editor
 
 ---
 
-## Sonuç
+## 13) Golden Rule for Agents
 
-Bu belge:
-- StylusCore’un karakteridir
-- Geliştirme pusulasıdır
-- Yapay zekâlar için bağlamdır
+> **No design or code decision may violate this document.**
 
-Bu belge güncellenebilir,
-ama **temel felsefe korunmalıdır**.
+All agents:
+- before adding features
+- before designing UI
+- before proposing architecture
+
+**MUST read this file first.**
+
+---
+
+## Final Note
+
+This document defines:
+- StylusCore’s character
+- Its long-term direction
+- The behavioral context for all AI agents
+
+It may evolve,
+but **the core philosophy must remain intact**.

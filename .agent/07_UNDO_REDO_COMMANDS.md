@@ -1,10 +1,11 @@
 ---
-description: StylusCore Technical Constitution — 07_UNDO_REDO_COMMANDS (v1.0)
+description: StylusCore Technical Constitution — 07_UNDO_REDO_COMMANDS
 ---
 
-# 🔁 07 — UNDO / REDO COMMAND SYSTEM (Headless, Deterministic, Fast)
+# 🔁 07 — UNDO / REDO COMMAND SYSTEM  
+(Headless, Deterministic, Fast)
 
-StylusCore’s Undo/Redo is a production-grade command system for a stylus-first infinite canvas editor. It MUST remain headless, deterministic, memory-bounded, and integrated with the Canvas Engine (QuadTree + invalidation), ink pipeline (Wet→Dry), and autosave (snapshot-only).
+StylusCore’s Undo/Redo is a production-grade command system for a stylus-first infinite canvas editor. It MUST remain **headless**, **deterministic**, **memory-bounded**, and integrated with the Canvas Engine (QuadTree + invalidation), the ink pipeline (Wet→Dry), and autosave (snapshot-only).
 
 ---
 
@@ -16,15 +17,15 @@ StylusCore’s Undo/Redo is a production-grade command system for a stylus-first
 
 ---
 
-## 1) Executive Summary (Red Lines)
+## 1) RED LINES (Executive Summary)
 - **MUST:** Every document mutation is performed via **IUndoableCommand** (Command Pattern Mandate).
-- **MUST:** Commands and payloads are **headless** (no `System.Windows.*`, no `UIElement`, no `Brush`, no `Point`).
+- **MUST:** Commands and payloads are **headless** (no `System.Windows.*`, no WPF UI objects).
 - **MUST:** Undo stack has a **hard limit of 50 steps**.
-- **MUST:** A new command after any Undo **clears Redo** immediately.
-- **MUST:** Undo/Redo affects **document content only** (not selection, not camera, not hover/tool overlays).
-- **MUST:** Wet ink is **not undoable** mid-stroke; ink is undoable only after **commit** (pen-up → Dry).
+- **MUST:** A new command after any Undo **clears Redo immediately**.
+- **MUST:** Undo/Redo affects **document content only** (not selection, not camera, not tool overlays).
+- **MUST:** Wet ink is **not undoable** mid-stroke; ink becomes undoable only after **commit** (pen-up → Dry).
 - **MUST:** Rapid ink commits within **500ms** are grouped into one undo unit.
-- **MUST:** Continuous manipulations (drag/resize/rotate) are grouped via **pointer-capture** into one undo unit.
+- **MUST:** Continuous manipulations (drag/resize/rotate) are grouped via **pointer capture** into one undo unit.
 - **MUST:** Commands are **atomic**: Apply/Unapply cannot leave partial state; failures must not corrupt the document.
 - **MUST:** Undo history is **NOT persisted**; crash recovery uses autosaved snapshots only.
 
@@ -56,7 +57,7 @@ Undo/Redo applies to document state:
 ## 3) Core Concepts
 
 ### 3.1 Headless Document Model
-- **MUST:** Domain types use primitives (e.g., `double x,y`, `uint argb`, arrays of points).
+- **MUST:** Domain types use primitives (e.g., `double x,y`, `uint argb`, point arrays).
 - **MUST:** Commands never reference WPF rendering objects.
 
 ### 3.2 Object Identity (Stable IDs)
@@ -89,7 +90,7 @@ public interface IUndoableCommand
 
 ### 4.2 ChangeSet Bridge (Pure Data)
 - **MUST:** Apply/Unapply returns a ChangeSet for Engine integration (QuadTree + invalidation).
-- **MUST:** ChangeSet contains ONLY headless data (IDs + world AABB hints), no WPF types.
+- **MUST:** ChangeSet contains ONLY headless data (IDs + world bounds hints), no WPF types.
 
 ~~~csharp
 public readonly struct ChangeSet
@@ -110,7 +111,7 @@ public readonly struct ChangeItem
 
 ### 4.3 Atomicity Contract (CRITICAL)
 - **MUST:** `TryApply` / `TryUnapply` are atomic:
-  - if returning `false`, DocumentState MUST remain unchanged
+  - if returning `false`, `DocumentState` MUST remain unchanged
 - **MUST:** Validate prerequisites before mutating state
 - **SHOULD:** Use internal two-phase pattern: Validate → ApplyCore
 
@@ -130,7 +131,7 @@ public readonly struct ChangeItem
   - push to undo stack
   - clear redo stack
 - **MUST:** When undo exceeds 50, drop the **oldest** undo unit.
-- **SHOULD:** Implement stacks as fixed-capacity ring buffers to avoid allocations.
+- **SHOULD:** Implement undo stack as a fixed-capacity ring buffer to avoid allocations.
 
 ### 5.3 SavePoint & DirtyFlag
 - **MUST:** Track a SavePoint (stack position at last successful save/autosave).
@@ -150,7 +151,7 @@ public readonly struct ChangeItem
   - RollbackTransaction() → cancels without pushing stack
 
 ### 6.2 Ink Grouping (500ms Rule)
-- **MUST:** After dry stroke commit, if another stroke commits within **500ms**, merge into same undo unit.
+- **MUST:** After dry stroke commit, if another stroke commits within **500ms**, merge into the same undo unit.
 - **MUST:** Grouping applies only to committed dry strokes (never wet points).
 
 ### 6.3 Drag/Resize/Rotate Grouping (Pointer Capture)
@@ -158,16 +159,16 @@ public readonly struct ChangeItem
   - capture “before”
   - update live visuals during drag (not pushed)
   - on release capture “after” and commit one command
-- **MUST:** If before==after, do not push.
+- **MUST:** If before == after, do not push.
 
 ---
 
 ## 7) Undoability Policy Matrix (STRICT)
-- **MUST:** Maintain a policy table (source-of-truth) defining what is undoable.
+- **MUST:** Maintain a policy table (source of truth) defining what is undoable.
 
 ### 7.1 Default Policy
 **Undoable (YES):**
-- Add/Delete objects (strokes, text blocks, tables, images, shapes)
+- Add/Delete objects (strokes, text, tables, images, shapes)
 - Move/Resize/Rotate objects
 - Group/Ungroup
 - Z-order changes
@@ -198,9 +199,9 @@ public readonly struct ChangeItem
 - **MUST:** Pen thread never creates commands.
 
 ### 8.2 Dry Ink Commit (Undoable)
-On pen-up (domain/UI thread):
+On pen-up (authoritative UI/Domain thread):
 - simplify (e.g., RDP)
-- optionally smooth for rendering (render-side only)
+- optionally smooth for rendering (render-side only; not persisted as WPF objects)
 - create headless StrokePayload
 - commit AddStrokeCommand
 
@@ -220,7 +221,7 @@ On pen-up (domain/UI thread):
 
 ### 9.1 Transform Commands
 - **MUST:** Store minimal deltas (before/after transform).
-- **MUST:** Compute AABB before/after for ChangeSet hints.
+- **MUST:** Compute bounds before/after for ChangeSet hints.
 
 ### 9.2 Property Commands
 - **MUST:** Store old + new value (delta), not full object when avoidable.
@@ -232,7 +233,7 @@ On pen-up (domain/UI thread):
 
 ### 9.3 Group/Ungroup
 - **MUST:** Group operations are deterministic:
-  - grouping creates new Group object (new ObjectId)
+  - grouping creates a new Group object (new ObjectId)
   - children keep their ObjectIds
 - **MUST:** Undo restores exact membership and ordering.
 
@@ -250,10 +251,11 @@ On pen-up (domain/UI thread):
 
 ---
 
-## 11) View-to-Edit Overlay Commit Policy (Text / Tables / Rich Objects)
+## 11) View-to-Edit Overlay Commit Policy  
+(Text / Tables / Rich Objects)
 
 ### 11.1 Session-Based Editing (Global Stack)
-- **MUST:** Text/table editing is session-based, not per-keystroke in global undo stack.
+- **MUST:** Text/table editing is session-based, not per-keystroke in the global undo stack.
 - **MUST:** Enter edit captures a baseline snapshot (headless).
 - **MUST:** Exit edit commits one domain command if content changed.
 
@@ -265,7 +267,7 @@ On pen-up (domain/UI thread):
 
 ### 11.3 Autosave with Active Edit Sessions
 - **MUST:** Autosave snapshots must be consistent.
-- **SHOULD:** If edit session is active, request a fast headless snapshot on UI thread; if not quickly available, skip tick rather than blocking UI.
+- **SHOULD:** If an edit session is active, request a fast headless snapshot on the UI thread; if not quickly available, skip the tick rather than blocking UI.
 
 ---
 
@@ -277,7 +279,7 @@ On pen-up (domain/UI thread):
 ### 12.2 Engine Consumes ChangeSet
 - **MUST:** Engine uses ChangeSet to:
   - update QuadTree incrementally (insert/remove/update)
-  - request dirty-rect invalidation from AABB before/after
+  - request dirty-rect invalidation from bounds before/after
 - **SHOULD:** Prefer incremental QuadTree updates; rebuild only as fallback.
 
 ---
@@ -314,7 +316,7 @@ On pen-up (domain/UI thread):
 
 ### 15.2 Delta vs Full-State Rule of Thumb
 - **MUST:** Prefer delta storage for transforms, property changes, z-order, visibility.
-- **MUST:** Use full snapshot when needed for correctness (delete/restore, complex objects when delta is unreliable).
+- **MUST:** Use full snapshots when required for correctness (delete/restore, complex objects where delta is unreliable).
 
 ---
 
@@ -342,7 +344,7 @@ On pen-up (domain/UI thread):
   - same object IDs and properties
   - same post-simplification stroke data
   - same layer membership and z-order
-  - same QuadTree query results for identical viewport
+  - same spatial query results for identical viewport
 
 ### 17.2 Determinism Tests
 - **MUST:** Same snapshot + same command sequence → identical state.
@@ -373,7 +375,6 @@ public sealed class UndoManager
 {
     private readonly RingBuffer<IUndoableCommand> _undo = new(capacity: 50);
     private readonly Stack<IUndoableCommand> _redo = new();
-
     private int _savePointVersion;
 
     public bool TryDo(IUndoableCommand cmd, DocumentState doc, out ChangeSet changes)
@@ -416,7 +417,7 @@ public sealed class UndoManager
 
 ---
 
-## 20) Self-Audit Checklist (Quick “Did we miss anything?”)
+## 20) Self-Audit Checklist
 - [ ] Headless: no WPF types in commands/payloads
 - [ ] 50-step cap enforced + memory bounded
 - [ ] 500ms stroke grouping + pointer-capture grouping implemented
@@ -424,7 +425,7 @@ public sealed class UndoManager
 - [ ] Wet ink not undoable; dry commit generates commands
 - [ ] Delete commands carry restore snapshot
 - [ ] View-to-edit session commit is single undo unit
-- [ ] ChangeSet contract exists (IDs + world AABB)
+- [ ] ChangeSet contract exists (IDs + world bounds)
 - [ ] Autosave uses snapshots; undo history not persisted
 - [ ] Invariant + determinism + fuzz + stress tests exist
 
