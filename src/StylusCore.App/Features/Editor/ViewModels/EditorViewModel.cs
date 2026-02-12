@@ -9,7 +9,7 @@ using StylusCore.Core.Models;
 using StylusCore.Core.Services;
 using StylusCore.Engine.Wpf.Rendering;
 using StylusCore.Engine.Wpf.Tools;
-using StylusCore.App.Core.ViewModels;
+using StylusCore.App.Shell.ViewModels;
 
 namespace StylusCore.App.Features.Editor.ViewModels
 {
@@ -185,9 +185,9 @@ namespace StylusCore.App.Features.Editor.ViewModels
         }
 
         /// <summary>
-        /// Whether the ribbon toolbar should be visible (false in FullScreen mode)
+        /// Whether the ribbon toolbar should be visible (false in Hidden mode)
         /// </summary>
-        public bool IsRibbonVisible => RibbonMode != RibbonMode.FullScreen;
+        public bool IsRibbonVisible => RibbonMode != RibbonMode.Hidden;
 
         /// <summary>
         /// Whether the ribbon should show full content (false in TabsOnly mode)
@@ -196,7 +196,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
 
         private ICommand _cycleRibbonModeCommand;
         /// <summary>
-        /// Command to cycle ribbon mode: Full → TabsOnly → FullScreen → Full
+        /// Command to cycle ribbon mode: Full → TabsOnly → Hidden → Full
         /// </summary>
         public ICommand CycleRibbonModeCommand => _cycleRibbonModeCommand ??=
             new MainViewModel.RelayCommand(o => CycleRibbonMode());
@@ -206,8 +206,8 @@ namespace StylusCore.App.Features.Editor.ViewModels
             RibbonMode = RibbonMode switch
             {
                 RibbonMode.Full => RibbonMode.TabsOnly,
-                RibbonMode.TabsOnly => RibbonMode.FullScreen,
-                RibbonMode.FullScreen => RibbonMode.Full,
+                RibbonMode.TabsOnly => RibbonMode.Hidden,
+                RibbonMode.Hidden => RibbonMode.Full,
                 _ => RibbonMode.Full
             };
         }

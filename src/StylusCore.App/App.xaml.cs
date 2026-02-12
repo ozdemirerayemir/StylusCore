@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 using StylusCore.App.Features.Settings.ViewModels;
-using StylusCore.App.Core.ViewModels;
+using StylusCore.App.Shell.ViewModels;
 
 namespace StylusCore.App
 {

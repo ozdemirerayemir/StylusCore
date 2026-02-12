@@ -117,7 +117,7 @@ Inside `src/StylusCore.App/`:
 
 ### 3.2 Determinism
 - **MUST:** Domain operations are deterministic for the same inputs.
-- **MUST:** Stable IDs exist for all objects (recommended `ulong` monotonic).
+- **MUST:** Stable IDs exist for all objects (type `Guid`, see `03_CANVAS_ENGINE.md` §4).
 - **SHOULD:** Domain exposes pure-state mutation APIs invoked via commands (see 07).
 
 ---

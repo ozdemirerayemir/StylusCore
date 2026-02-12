@@ -1,11 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using StylusCore.App.Core.ViewModels;
+using StylusCore.App.Shell.ViewModels;
 using StylusCore.App.Features.Library.ViewModels;
 using LibraryModel = StylusCore.Core.Models.Library;
 using StylusCore.Core.Enums;
 using StylusCore.App.Dialogs;
+using StylusCore.App.Features.Library.Dialogs;
 using StylusCore.Core.Models;
 using StylusCore.App.Views;
 
@@ -51,11 +52,11 @@ namespace StylusCore.App.Features.Library.Views
                 // BackButton.Visibility = Visibility.Visible; (Removed)
                 NewLibraryButton.Visibility = Visibility.Collapsed;
                 NewNotebookButton.Visibility = Visibility.Visible;
-                
+
                 LibrariesScrollViewer.Visibility = Visibility.Collapsed;
                 NotebooksScrollViewer.Visibility = Visibility.Visible;
                 EmptyLibrariesState.Visibility = Visibility.Collapsed;
-                
+
                 // Show empty state if no notebooks
                 bool hasNotebooks = _viewModel.SelectedLibrary.Notebooks.Count > 0;
                 NotebooksScrollViewer.Visibility = hasNotebooks ? Visibility.Visible : Visibility.Collapsed;
@@ -69,10 +70,10 @@ namespace StylusCore.App.Features.Library.Views
                 // BackButton.Visibility = Visibility.Collapsed; (Removed)
                 NewLibraryButton.Visibility = Visibility.Visible;
                 NewNotebookButton.Visibility = Visibility.Collapsed;
-                
+
                 NotebooksScrollViewer.Visibility = Visibility.Collapsed;
                 EmptyNotebooksState.Visibility = Visibility.Collapsed;
-                
+
                 // Show empty state if no libraries
                 bool hasLibraries = _viewModel.Libraries.Count > 0;
                 LibrariesScrollViewer.Visibility = hasLibraries ? Visibility.Visible : Visibility.Collapsed;
@@ -96,11 +97,11 @@ namespace StylusCore.App.Features.Library.Views
         private void NewNotebook_Click(object sender, RoutedEventArgs e)
         {
             if (_viewModel.SelectedLibrary == null) return;
-            
+
             // Show the new notebook creation dialog
             var dialog = new CreateNotebookDialog();
             dialog.Owner = Window.GetWindow(this);
-            
+
             if (dialog.ShowDialog() == true && dialog.CreatedNotebook != null)
             {
                 // Add the notebook to the current library
@@ -118,7 +119,7 @@ namespace StylusCore.App.Features.Library.Views
                 _viewModel.SelectedLibrary = library;
                 _isViewingNotebooks = true;
                 UpdateViewState();
-                
+
                 // Breadcrumb: Set Global Library
                 if (App.MainViewModel != null) App.MainViewModel.CurrentLibrary = library;
             }
@@ -143,20 +144,20 @@ namespace StylusCore.App.Features.Library.Views
                 _viewModel.OpenNotebook(notebook);
             }
         }
-        
+
         private void OpenNotebook_ContextClick(object sender, RoutedEventArgs e)
         {
             var notebook = GetNotebookFromMenuItem(sender);
             if (notebook != null)
             {
-                 _viewModel.OpenNotebook(notebook);
+                _viewModel.OpenNotebook(notebook);
             }
         }
 
         private LibraryModel GetLibraryFromMenuItem(object sender)
         {
-             if (sender is MenuItem item && item.DataContext is LibraryModel library) return library;
-             return null;
+            if (sender is MenuItem item && item.DataContext is LibraryModel library) return library;
+            return null;
         }
 
         private void RenameLibrary_Click(object sender, RoutedEventArgs e)
@@ -177,11 +178,11 @@ namespace StylusCore.App.Features.Library.Views
             var library = GetLibraryFromMenuItem(sender);
             if (library == null) return;
 
-             var result = MessageBox.Show(
-                $"Are you sure you want to delete '{library.Name}' and all its notebooks?",
-                "Delete Library",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
+            var result = MessageBox.Show(
+               $"Are you sure you want to delete '{library.Name}' and all its notebooks?",
+               "Delete Library",
+               MessageBoxButton.YesNo,
+               MessageBoxImage.Warning);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -206,7 +207,7 @@ namespace StylusCore.App.Features.Library.Views
                 DefaultPageTemplate = notebook.DefaultPageTemplate,
                 LibraryId = notebook.LibraryId
             };
-            
+
             _viewModel.SelectedLibrary.Notebooks.Add(duplicate);
             UpdateViewState();
         }
@@ -240,33 +241,33 @@ namespace StylusCore.App.Features.Library.Views
             var notebook = GetNotebookFromMenuItem(sender);
             if (notebook != null)
             {
-                 var dialog = new ColorPickerDialog();
-                 // Optional: Set owner if possible to ensure it's on top
-                 if (Window.GetWindow(this) is Window owner) dialog.Owner = owner;
+                var dialog = new ColorPickerDialog();
+                // Optional: Set owner if possible to ensure it's on top
+                if (Window.GetWindow(this) is Window owner) dialog.Owner = owner;
 
-                 if (dialog.ShowDialog() == true)
-                 {
-                     // Map selected Media.Color to CoverColor Enum
-                     // Since we only have specific enum values, we find the closest match or simple map.
-                     // The Dialog returns: Red, Orange, Yellow, Green, Blue, Indigo, Violet, etc.
-                     // Enum: Purple, Blue, Green, Yellow, Red, Pink, Orange, Teal.
-                     
-                     var c = dialog.SelectedColor;
-                     CoverColor newColor = CoverColor.Blue; // Default
+                if (dialog.ShowDialog() == true)
+                {
+                    // Map selected Media.Color to CoverColor Enum
+                    // Since we only have specific enum values, we find the closest match or simple map.
+                    // The Dialog returns: Red, Orange, Yellow, Green, Blue, Indigo, Violet, etc.
+                    // Enum: Purple, Blue, Green, Yellow, Red, Pink, Orange, Teal.
 
-                     // Simple heuristic mapping
-                     if (AreColorsSimilar(c, System.Windows.Media.Colors.Red)) newColor = CoverColor.Red;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Orange)) newColor = CoverColor.Orange;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Yellow)) newColor = CoverColor.Yellow;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Green)) newColor = CoverColor.Green;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Blue)) newColor = CoverColor.Blue;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Purple) || AreColorsSimilar(c, System.Windows.Media.Colors.Indigo)) newColor = CoverColor.Purple;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Pink) || AreColorsSimilar(c, System.Windows.Media.Colors.Magenta)) newColor = CoverColor.Pink;
-                     else if (AreColorsSimilar(c, System.Windows.Media.Colors.Teal) || AreColorsSimilar(c, System.Windows.Media.Colors.Cyan)) newColor = CoverColor.Teal;
-                     
-                     notebook.CoverColor = newColor;
-                     UpdateViewState();
-                 }
+                    var c = dialog.SelectedColor;
+                    CoverColor newColor = CoverColor.Blue; // Default
+
+                    // Simple heuristic mapping
+                    if (AreColorsSimilar(c, System.Windows.Media.Colors.Red)) newColor = CoverColor.Red;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Orange)) newColor = CoverColor.Orange;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Yellow)) newColor = CoverColor.Yellow;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Green)) newColor = CoverColor.Green;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Blue)) newColor = CoverColor.Blue;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Purple) || AreColorsSimilar(c, System.Windows.Media.Colors.Indigo)) newColor = CoverColor.Purple;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Pink) || AreColorsSimilar(c, System.Windows.Media.Colors.Magenta)) newColor = CoverColor.Pink;
+                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Teal) || AreColorsSimilar(c, System.Windows.Media.Colors.Cyan)) newColor = CoverColor.Teal;
+
+                    notebook.CoverColor = newColor;
+                    UpdateViewState();
+                }
             }
         }
 
@@ -323,7 +324,7 @@ namespace StylusCore.App.Features.Library.Views
             {
                 dialog.Owner = owner;
             }
-            
+
             if (dialog.ShowDialog() == true)
             {
                 return dialog.InputText;

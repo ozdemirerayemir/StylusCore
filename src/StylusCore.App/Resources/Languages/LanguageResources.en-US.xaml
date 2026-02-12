@@ -16,6 +16,7 @@
     <sys:String x:Key="Str_Settings">Settings</sys:String>
     <sys:String x:Key="Str_User">User</sys:String>
     <sys:String x:Key="Str_Sections">Note Sections</sys:String>
+    <sys:String x:Key="Str_Book">Books</sys:String>
     
     <!-- Library View -->
     <sys:String x:Key="Str_NewLibrary">+ New Library</sys:String>

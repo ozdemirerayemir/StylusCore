@@ -61,15 +61,15 @@ Undo/Redo applies to document state:
 - **MUST:** Commands never reference WPF rendering objects.
 
 ### 3.2 Object Identity (Stable IDs)
-- **MUST:** Every document object has a stable **ObjectId** (recommended `ulong`).
-- **MUST:** IDs are assigned by a monotonic allocator and **never reused** within the document lifetime.
-- **SHOULD:** Keep `DocumentId` as `Guid` for external referencing, but object addressing in commands uses fast `ulong`.
+- **MUST:** Every document object has a stable **ObjectId** of type `Guid`.
+- **MUST:** IDs are generated via `Guid.NewGuid()` (or `Guid.CreateVersion7()` on .NET 9+) and **never reused** within the document lifetime.
+- **MUST:** `DocumentId`, `ObjectId`, and `LayerId` all use `Guid` for consistency with `ICanvasItem.Id` (see `03_CANVAS_ENGINE.md`).
 - **MUST:** Commands reference targets by `(LayerId, ObjectId)` or `(ObjectId)` where layer is derivable.
 - **MUST:** Moving objects across layers/spatial chunks MUST NOT change `ObjectId`.
 
 **Recommended ID strategy**
-- `ObjectId : ulong` monotonic counter persisted in document metadata
-- `LayerId : ulong` monotonic counter
+- `ObjectId : Guid` â€” generated at creation, persisted in document
+- `LayerId : Guid` â€” generated at creation, persisted in document
 - On merge/import, remap incoming IDs into the target document’s ID space
 
 ---
@@ -101,8 +101,8 @@ public readonly struct ChangeSet
 
 public readonly struct ChangeItem
 {
-    public readonly ulong ObjectId;
-    public readonly ulong LayerId;
+    public readonly Guid ObjectId;
+    public readonly Guid LayerId;
     public readonly AabbD BeforeWorldBounds; // optional
     public readonly AabbD AfterWorldBounds;  // optional
     public readonly ChangeKind Kind;         // Added/Removed/Updated/Moved

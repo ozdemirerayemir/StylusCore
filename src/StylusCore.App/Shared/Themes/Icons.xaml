@@ -25,9 +25,12 @@
     <!-- Menu (Hamburger) -->
     <StreamGeometry x:Key="Icon.Menu">M3 12h18M3 6h18M3 18h18</StreamGeometry>
     
-    <!-- Library (Updated from Prototype) -->
-    <StreamGeometry x:Key="Icon.Library">M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z</StreamGeometry>
+    <!-- Library (Updated for Navigation) -->
+    <StreamGeometry x:Key="Icon.Library">m16 6 4 14 M12 6v14 M8 8v12 M4 4v16</StreamGeometry>
 
+    <!-- Books Group (Back to Book List) -->
+    <StreamGeometry x:Key="Icon.BooksGroup">M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20 M8 11h8 M8 7h6</StreamGeometry>
+    
     <!-- Book (New from Prototype) -->
     <StreamGeometry x:Key="Icon.Book">M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z</StreamGeometry>
     

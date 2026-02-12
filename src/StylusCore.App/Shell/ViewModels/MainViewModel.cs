@@ -7,7 +7,7 @@ using StylusCore.Core.Services;
 using StylusCore.Engine.Wpf.Input.Bindings;
 using StylusCore.Engine.Wpf.Input.Devices;
 
-namespace StylusCore.App.Core.ViewModels
+namespace StylusCore.App.Shell.ViewModels
 {
     /// <summary>
     /// Main ViewModel for the application.
@@ -106,9 +106,17 @@ namespace StylusCore.App.Core.ViewModels
             {
                 _currentNotebook = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsEditorActive));
+                OnPropertyChanged(nameof(IsRibbonVisible));
+                OnPropertyChanged(nameof(IsBookTextVisible));
                 NotebookChanged?.Invoke(this, value);
             }
         }
+
+        /// <summary>
+        /// True if a notebook is currently open (Editor Mode)
+        /// </summary>
+        public bool IsEditorActive => CurrentNotebook != null;
 
         private bool _isSidebarExpanded;
         /// <summary>
@@ -121,8 +129,11 @@ namespace StylusCore.App.Core.ViewModels
             {
                 _isSidebarExpanded = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsBookTextVisible));
             }
         }
+
+        public bool IsBookTextVisible => IsEditorActive && IsSidebarExpanded;
 
         private RibbonMode _ribbonMode;
         /// <summary>
@@ -135,8 +146,15 @@ namespace StylusCore.App.Core.ViewModels
             {
                 _ribbonMode = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsRibbonVisible));
+                OnPropertyChanged(nameof(IsRibbonFull));
+                OnPropertyChanged(nameof(IsRibbonTabsOnly));
             }
         }
+
+        public bool IsRibbonVisible => IsEditorActive && RibbonMode != RibbonMode.Hidden;
+        public bool IsRibbonFull => RibbonMode == RibbonMode.Full;
+        public bool IsRibbonTabsOnly => RibbonMode == RibbonMode.TabsOnly;
 
         #endregion
 
@@ -265,18 +283,18 @@ namespace StylusCore.App.Core.ViewModels
         /// <summary>
         /// Global Window Commands
         /// </summary>
-        public RelayCommand MinimizeCommand => new RelayCommand(o => 
+        public RelayCommand MinimizeCommand => new RelayCommand(o =>
             System.Windows.Application.Current.MainWindow.WindowState = System.Windows.WindowState.Minimized);
 
-        public RelayCommand MaximizeCommand => new RelayCommand(o => 
+        public RelayCommand MaximizeCommand => new RelayCommand(o =>
         {
             var win = System.Windows.Application.Current.MainWindow;
-            win.WindowState = win.WindowState == System.Windows.WindowState.Maximized 
-                ? System.Windows.WindowState.Normal 
+            win.WindowState = win.WindowState == System.Windows.WindowState.Maximized
+                ? System.Windows.WindowState.Normal
                 : System.Windows.WindowState.Maximized;
         });
 
-        public RelayCommand CloseCommand => new RelayCommand(o => 
+        public RelayCommand CloseCommand => new RelayCommand(o =>
             System.Windows.Application.Current.Shutdown());
 
 
@@ -314,9 +332,42 @@ namespace StylusCore.App.Core.ViewModels
 
         public RelayCommand NavigateToNotebookListCommand => new RelayCommand(o =>
         {
-             CurrentNotebook = null;
-             // Ensure library is still set, just clear notebook to go back to list
-             NavigationRequested?.Invoke(this, "NotebookList");
+            CurrentNotebook = null;
+            // Ensure library is still set, just clear notebook to go back to list
+            NavigationRequested?.Invoke(this, "NotebookList");
+        });
+
+        /// <summary>
+        /// Command to go back to Book List (Level 2)
+        /// Requested by user prompt. Same logic as NavigateToNotebookListCommand.
+        /// </summary>
+        public RelayCommand MapsToBookListCommand => new RelayCommand(o =>
+        {
+            CurrentNotebook = null;
+            // CRITICAL: Keep SelectedLibrary as is.
+            NavigationRequested?.Invoke(this, "NotebookList");
+        });
+
+        /// <summary>
+        /// Cycle through Ribbon modes: Full -> TabsOnly -> Hidden -> Full
+        /// </summary>
+        public RelayCommand CycleRibbonModeCommand => new RelayCommand(o =>
+        {
+            switch (RibbonMode)
+            {
+                case RibbonMode.Full:
+                    RibbonMode = RibbonMode.TabsOnly;
+                    break;
+                case RibbonMode.TabsOnly:
+                    RibbonMode = RibbonMode.Hidden;
+                    break;
+                case RibbonMode.Hidden:
+                    RibbonMode = RibbonMode.Full;
+                    break;
+                default:
+                    RibbonMode = RibbonMode.Full;
+                    break;
+            }
         });
 
         public event EventHandler<string> NavigationRequested;

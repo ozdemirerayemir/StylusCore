@@ -120,19 +120,22 @@ Modes are not just visual — they define boundaries for ownership, input bindin
 - **MUST:** Active Input Mode must switch to `GraphicsTablet` or `Editor` bindings via `BindingManager`.
 - Input events flow through `StylusCore.Engine.Wpf/Input/*` stack.
 
-**Ribbon rule:** ✅ (Completed 2026-02-10)
-- **MUST:** Functional Ribbon (pen tools) lives inside `EditorView.xaml`
-- **FORBIDDEN:** Ribbon as a global control in `MainWindow`
-
-
-- Never “half move” the Ribbon.
+**Ribbon rule (OneNote-Style Layout Exception):** ✅ (Updated 2026-02-10)
+- **VISUAL EXCEPTION:** To achieve "Full Width" layout (spanning over Sidebar), the Ribbon Container MAY reside in `MainWindow.xaml` (Row 1).
+- **VISIBILITY:** MUST be strictly bound to Editor Mode (Visible) vs Library/Settings (Collapsed).
+- **MODES:** The Ribbon MUST support 3 OneNote-style display modes:
+  1. **Full Ribbon**: Tabs + Toolbar always visible.
+  2. **Tabs Only**: Only tab headers visible; toolbar appears on click (popover).
+  3. **Full Screen**: Ribbon completely hidden; shown via trigger or "3 dots" menu.
+- **LOGIC:** Ribbon buttons MUST bind to `MainViewModel` or `EditorViewModel` commands.
 
 **Editor Sidebar behavior:**
 - **ALLOWED:** Navigation items (e.g., "Back to Library", "Table of Contents", "Export").
 - **STRICTLY FORBIDDEN:** **Canvas Manipulation Tools** (Pen, Eraser, Colors, Lasso) inside Sidebar. These MUST live in the Ribbon/Toolbar.
 
 **Owners:**
-- `src/StylusCore.App/Features/Editor/Views/EditorView.xaml`
+- `src/StylusCore.App/Features/Editor/Views/EditorView.xaml` (Content)
+- `src/StylusCore.App/Views/MainWindow.xaml` (Hosting Ribbon Container)
 - `src/StylusCore.App/Features/Editor/ViewModels/EditorViewModel.cs`
 - Canvas engine host control (WPF bridge):
   - `src/StylusCore.Engine.Wpf/Controls/CanvasHostControl.xaml` (+ code-behind if needed)

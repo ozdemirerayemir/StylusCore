@@ -78,12 +78,12 @@
                 <!-- Book Button (visible only when in Editor surface) -->
                 <Button x:Name="BookButton" 
                         Style="{StaticResource SidebarButtonStyle}" 
-                        Click="Book_Click" 
-                        ToolTip="Book"
-                        Visibility="Collapsed">
+                        Command="{Binding MapsToBookListCommand}"
+                        ToolTip="Books"
+                        Visibility="{Binding IsEditorActive, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
                         <Grid Width="48" Height="48">
-                            <Path Data="{StaticResource Icon.Book}" 
+                            <Path Data="{StaticResource Icon.BooksGroup}" 
                                   Style="{StaticResource IconBase}"
                                   Width="20" Height="20" Stretch="Uniform"
                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -93,7 +93,7 @@
                                    VerticalAlignment="Center"
                                    FontSize="{StaticResource FontSize_Body}"
                                    Foreground="{DynamicResource PrimaryTextBrush}"
-                                   Visibility="Collapsed"
+                                   Visibility="{Binding IsBookTextVisible, Converter={StaticResource BoolToVisibilityConverter}}"
                                    Margin="0,0,16,0"/>
                     </StackPanel>
                 </Button>

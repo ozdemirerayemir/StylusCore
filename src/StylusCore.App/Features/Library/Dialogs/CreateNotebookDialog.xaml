@@ -1,4 +1,4 @@
-<Window x:Class="StylusCore.App.Dialogs.CreateNotebookDialog"
+<Window x:Class="StylusCore.App.Features.Library.Dialogs.CreateNotebookDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="New Notebook"

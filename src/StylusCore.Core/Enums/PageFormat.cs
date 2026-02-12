@@ -62,26 +62,7 @@ namespace StylusCore.Core.Enums
         Cornell
     }
 
-    /// <summary>
-    /// Defines the ribbon/toolbar display mode.
-    /// </summary>
-    public enum RibbonMode
-    {
-        /// <summary>
-        /// Full ribbon - all tabs and tools visible
-        /// </summary>
-        Full,
 
-        /// <summary>
-        /// Tabs only - click to expand
-        /// </summary>
-        TabsOnly,
-
-        /// <summary>
-        /// FullScreen mode - minimal UI, maximum canvas space
-        /// </summary>
-        FullScreen
-    }
 
     /// <summary>
     /// Defines the eraser mode type.

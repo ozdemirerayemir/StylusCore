@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using StylusCore.Core.Enums;
 using StylusCore.Core.Models;
 
-namespace StylusCore.App.Dialogs
+namespace StylusCore.App.Features.Library.Dialogs
 {
     /// <summary>
     /// Dialog for creating a new notebook with customization options.
@@ -34,7 +34,7 @@ namespace StylusCore.App.Dialogs
             var name = NameTextBox.Text.Trim();
             if (string.IsNullOrEmpty(name))
             {
-                MessageBox.Show("Please enter a notebook name.", "Validation Error", 
+                MessageBox.Show("Please enter a notebook name.", "Validation Error",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
                 NameTextBox.Focus();
                 return;
@@ -92,8 +92,8 @@ namespace StylusCore.App.Dialogs
 
         private PageOrientation GetSelectedOrientation()
         {
-            return PortraitRadio.IsChecked == true 
-                ? PageOrientation.Portrait 
+            return PortraitRadio.IsChecked == true
+                ? PageOrientation.Portrait
                 : PageOrientation.Landscape;
         }
 

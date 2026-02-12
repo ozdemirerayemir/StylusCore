@@ -8,7 +8,7 @@ using System.Windows.Input;
 using StylusCore.Core.Models;
 using LibraryModel = StylusCore.Core.Models.Library;
 using StylusCore.Core.Services;
-using StylusCore.App.Core.ViewModels;
+using StylusCore.App.Shell.ViewModels;
 
 namespace StylusCore.App.Features.Library.ViewModels
 {

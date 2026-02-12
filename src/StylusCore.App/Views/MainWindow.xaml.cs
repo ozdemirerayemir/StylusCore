@@ -2,7 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using StylusCore.App.Core.ViewModels;
+using StylusCore.App.Shell.ViewModels;
 using StylusCore.Engine.Wpf.Input.Bindings;
 using StylusCore.App.Shared.Components;
 using StylusCore.App.Features.Library.Views;

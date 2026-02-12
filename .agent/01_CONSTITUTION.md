@@ -143,6 +143,13 @@ StylusCore is layered as:
 - **MUST:** UI is contextual.
 - **MUST:** Ribbon lives inside `EditorView`.
 - **FORBIDDEN:** Ribbon in `MainWindow`.
+
+> **EXCEPTION (V1 Transition):** During the V1 refactoring phase, the Ribbon **Container**
+> is permitted in `MainWindow` (Row 1) to support full-width layout spanning over the
+> Sidebar, as defined in `09_UI_CONTEXT_MAP.md` §3.2. Logical ownership remains with the
+> Editor context. Visibility MUST be strictly bound to Editor Mode.
+> This exception will be removed once a pure-EditorView solution is implemented.
+
 - **MUST:** Sidebar and Ribbon must not overlap.
 - **MUST:** Theme, font, and string usage via `DynamicResource`.
 - **FORBIDDEN:** Hardcoded fonts, colors, or user-facing strings.

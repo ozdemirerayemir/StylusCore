@@ -50,6 +50,12 @@ It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`,
 - **MUST:** The Ribbon lives inside **`EditorView.xaml`** (Row 0 of the Editor Grid).
 - **FORBIDDEN:** Placing the Ribbon in MainWindow Row 0 or Row 1 (spanning above the sidebar). The Ribbon belongs to the Editor context.
 
+> **V1 TRANSITION NOTE:** For the V1 full-width layout, the Ribbon Container
+> MAY reside in `MainWindow.xaml` (Row 1) as specified in `09_UI_CONTEXT_MAP.md` §3.2.
+> This is a sanctioned exception; logical ownership remains with the Editor context,
+> and Visibility MUST be strictly bound to Editor Mode.
+> See `01_CONSTITUTION.md` §9 for the corresponding exception clause.
+
 ### 2.3 Default Metrics (UI Density = Compact)
 - **MUST:** Default preset values:
   - `Shell.HeaderHeight = 48`

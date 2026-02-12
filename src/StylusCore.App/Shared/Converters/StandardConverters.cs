@@ -3,10 +3,10 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace StylusCore.App.Converters
+namespace StylusCore.App.Shared.Converters
 {
     /// <summary>
-    /// Converts boolean to Visibility (true = Visible, false = Collapsed)
+    /// Converts boolean to Visibility (True -> Visible, False -> Collapsed)
     /// </summary>
     public class BoolToVisibilityConverter : IValueConverter
     {
@@ -14,11 +14,6 @@ namespace StylusCore.App.Converters
         {
             if (value is bool boolValue)
             {
-                // If parameter is "Invert", invert the logic
-                if (parameter is string param && param == "Invert")
-                {
-                    return boolValue ? Visibility.Collapsed : Visibility.Visible;
-                }
                 return boolValue ? Visibility.Visible : Visibility.Collapsed;
             }
             return Visibility.Collapsed;
@@ -26,16 +21,12 @@ namespace StylusCore.App.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Visibility visibility)
-            {
-                return visibility == Visibility.Visible;
-            }
-            return false;
+            throw new NotImplementedException();
         }
     }
 
     /// <summary>
-    /// Converts boolean to Visibility (inverted: true = Collapsed, false = Visible)
+    /// Converts boolean to Visibility (True -> Collapsed, False -> Visible)
     /// </summary>
     public class InverseBoolToVisibilityConverter : IValueConverter
     {
@@ -50,29 +41,18 @@ namespace StylusCore.App.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Visibility visibility)
-            {
-                return visibility != Visibility.Visible;
-            }
-            return true;
+            throw new NotImplementedException();
         }
     }
 
     /// <summary>
-    /// Converts null to Visibility (null = Collapsed, not null = Visible)
+    /// Converts null to Visibility (Null -> Collapsed, Not Null -> Visible)
     /// </summary>
     public class NullToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var isNull = value == null;
-
-            // If parameter is "Invert", invert the logic
-            if (parameter is string param && param == "Invert")
-            {
-                return isNull ? Visibility.Visible : Visibility.Collapsed;
-            }
-            return isNull ? Visibility.Collapsed : Visibility.Visible;
+            return value == null ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
