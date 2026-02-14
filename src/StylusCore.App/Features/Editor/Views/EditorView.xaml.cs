@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Automation;
 using StylusCore.App.Features.Editor.ViewModels;
 using StylusCore.Core.Models;
 using ModelPage = StylusCore.Core.Models.Page;
@@ -20,17 +21,15 @@ namespace StylusCore.App.Features.Editor.Views
     {
         private readonly EditorViewModel _viewModel;
 
-        // Panel width constants (Fixed Pixels)
-        private const double DEFAULT_PANEL_WIDTH = 250;
-        private const double MAX_PANEL_WIDTH = 350; // Hard pixel limit
-        private const double MIN_PANEL_WIDTH = 100;
-        private const double COLLAPSED_WIDTH = 48;
+        private double MaxPanelWidth => (double)FindResource("Editor.SectionsPanelMaxWidth");
+        private double MinPanelWidth => (double)FindResource("Editor.SectionsPanelMinWidth");
+        private double DefaultPanelWidth => (double)FindResource("Editor.SectionsPanelDefaultWidth");
+        private double CollapsedWidth => (double)FindResource("Editor.SectionsPanelCollapsedWidth");
 
-        private bool _isPanelCollapsed = false;
-#pragma warning disable CS0414 // Field is assigned but its value is never used
+        // _lastPanelWidth should default to a valid expanded width (e.g. 250)
         private double _lastPanelWidth = 250;
-#pragma warning restore CS0414
-        private Guid? _activeSectionId = null; // Track active section for adding pages
+        private bool _isPanelCollapsed = false;
+        private Guid? _activeSectionId = null;
 
         public EditorView()
         {
@@ -46,21 +45,20 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void EditorView_Loaded(object sender, RoutedEventArgs e)
         {
-            // Wire up CanvasHostControl events
             DrawingCanvas.Renderer = _viewModel.Renderer;
             DrawingCanvas.PointerDown += (p, pressure) => _viewModel.OnPointerDown(p, pressure);
             DrawingCanvas.PointerMove += (p, pressure) => _viewModel.OnPointerMove(p, pressure);
             DrawingCanvas.PointerUp += (p) => _viewModel.OnPointerUp(p);
 
-            // Subscribe to ViewModel page changes
             _viewModel.PageChanged += (s, page) => DrawingCanvas.RenderPage(page);
-
             _viewModel.StartAutoSave();
-            // Start at default fixed width
-            SetPanelWidth(DEFAULT_PANEL_WIDTH);
+
+            // Initialize default state
+            _lastPanelWidth = (double)FindResource("Editor.SectionsPanelDefaultWidth");
+            ExpandPanel(); // Ensure we start expanded with correct constraints
+
             RefreshSectionsUI();
 
-            // Render initial page
             if (_viewModel.CurrentPage != null)
             {
                 DrawingCanvas.RenderPage(_viewModel.CurrentPage);
@@ -79,26 +77,26 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void EditorView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            // With fixed pixels, we only need to care if the WINDOW is smaller than the panel
+            // If window resized, ensure panel respects constraints if expanded
             if (!_isPanelCollapsed)
             {
-                // If user manually resized > MAX, snap back
-                // if (SectionsPanelColumn.Width.Value > MAX_PANEL_WIDTH)
-                // {
-                //     SetPanelWidth(MAX_PANEL_WIDTH);
-                // }
+                var currentWidth = SectionsPanelColumn.ActualWidth;
+                if (currentWidth > MaxPanelWidth)
+                {
+                    SetPanelWidth(MaxPanelWidth);
+                }
+                // We don't forcibly clamp min here as GridSplitter logic handles user interaction, 
+                // and window shrinking shouldn't necessarily break resizing unless critical.
             }
         }
 
         public void LoadNotebook(Notebook notebook)
         {
             _viewModel.Notebook = notebook;
-
             if (notebook.Pages.Count == 0)
             {
                 _viewModel.AddNewPage();
             }
-
             RefreshSectionsUI();
         }
 
@@ -107,18 +105,15 @@ namespace StylusCore.App.Features.Editor.Views
         private void RefreshSectionsUI()
         {
             SectionsContainer.Children.Clear();
-
             if (_viewModel.Notebook == null) return;
 
             var sections = _viewModel.Notebook.Sections.OrderBy(s => s.SortOrder).ToList();
-
             foreach (var section in sections)
             {
                 var sectionUI = CreateSectionRow(section);
                 SectionsContainer.Children.Add(sectionUI);
             }
 
-            // Show pages without sections at the end
             var unsectionedPages = _viewModel.Notebook.Pages
                 .Where(p => p.SectionId == null)
                 .OrderBy(p => p.PageNumber)
@@ -135,12 +130,11 @@ namespace StylusCore.App.Features.Editor.Views
         {
             var container = new StackPanel();
 
-            // Section header row
             var headerRow = new Border
             {
-                Padding = new Thickness(8, 10, 8, 10),
-                Background = Brushes.Transparent,
-                Tag = section
+                Padding = (Thickness)FindResource("Margin_Standard"), // Use resource
+                Tag = section,
+                Background = Brushes.Transparent // Default
             };
             headerRow.SetResourceReference(Border.BorderBrushProperty, "PrimaryBorderBrush");
             headerRow.MouseRightButtonUp += SectionRow_RightClick;
@@ -148,12 +142,7 @@ namespace StylusCore.App.Features.Editor.Views
 
             if (section.Id == _activeSectionId)
             {
-                // Use a theme-aware brush for selection highlight (e.g. TertiaryBackgroundBrush or a specific accent)
                 headerRow.SetResourceReference(Border.BackgroundProperty, "TertiaryBackgroundBrush");
-            }
-            else
-            {
-                headerRow.Background = Brushes.Transparent;
             }
 
             var headerGrid = new Grid();
@@ -162,29 +151,32 @@ namespace StylusCore.App.Features.Editor.Views
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(32) });
 
-            // Drag handle
-            var dragHandle = new System.Windows.Controls.TextBlock
+            // Drag Handle (Icon)
+            var dragHandlePath = new System.Windows.Shapes.Path
             {
-                Text = "⋮",
-                FontSize = 14,
+                Data = (Geometry)FindResource("Icon.DragHandle"),
+                Style = (Style)FindResource("IconBase"),
+                Width = 12,
+                Height = 16,
                 VerticalAlignment = VerticalAlignment.Center,
                 Cursor = Cursors.SizeAll,
-                Tag = section // Tag for drag source
+                Tag = section
             };
-            dragHandle.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
-            dragHandle.MouseMove += SectionDragHandle_MouseMove;
-            dragHandle.PreviewMouseLeftButtonDown += SectionDragHandle_PreviewMouseDown;
+            // Wrap in a transparent border or grid to increase hit target if needed, but Path is fine for now
+            var dragContainer = new Grid { Background = Brushes.Transparent, Cursor = Cursors.SizeAll, Tag = section };
+            dragContainer.Children.Add(dragHandlePath);
+            dragContainer.MouseMove += SectionDragHandle_MouseMove;
+            dragContainer.PreviewMouseLeftButtonDown += SectionDragHandle_PreviewMouseDown;
 
-            Grid.SetColumn(dragHandle, 0);
-            headerGrid.Children.Add(dragHandle);
+            Grid.SetColumn(dragContainer, 0);
+            headerGrid.Children.Add(dragContainer);
 
-            // Enable Drop on section header
+            // Drop targets
             headerRow.AllowDrop = true;
             headerRow.Drop += SectionHeader_Drop;
             headerRow.DragOver += SectionHeader_DragOver;
 
-            // Section color dot + title
-            // Use Grid instead of StackPanel to properly constrain width for TextWrapping
+            // Title + Color
             var titleGrid = new Grid();
             titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             titleGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -194,7 +186,7 @@ namespace StylusCore.App.Features.Editor.Views
             {
                 Width = 8,
                 Height = 8,
-                Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(section.Color ?? "#7C3AED")),
+                Fill = GetSectionColorBrush(section.Color),
                 Margin = new Thickness(0, 0, 6, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
@@ -215,7 +207,7 @@ namespace StylusCore.App.Features.Editor.Views
             Grid.SetColumn(titleGrid, 1);
             headerGrid.Children.Add(titleGrid);
 
-            // Page range
+            // Page Count
             var pageRange = GetPageRangeText(section);
             var rangeText = new System.Windows.Controls.TextBlock
             {
@@ -228,7 +220,7 @@ namespace StylusCore.App.Features.Editor.Views
             Grid.SetColumn(rangeText, 2);
             headerGrid.Children.Add(rangeText);
 
-            // Expand/collapse button
+            // Expand Button
             var expandBtn = new ToggleButton
             {
                 Width = 24,
@@ -236,8 +228,8 @@ namespace StylusCore.App.Features.Editor.Views
                 Tag = section
             };
             expandBtn.SetResourceReference(FrameworkElement.StyleProperty, "ChevronToggleStyle");
+            expandBtn.SetValue(AutomationProperties.NameProperty, (string)FindResource("Str_ToggleSection"));
 
-            // Bind IsChecked to section.IsExpanded
             var expandBinding = new System.Windows.Data.Binding("IsExpanded")
             {
                 Source = section,
@@ -251,7 +243,7 @@ namespace StylusCore.App.Features.Editor.Views
             headerRow.Child = headerGrid;
             container.Children.Add(headerRow);
 
-            // Pages grid (Always create if pages exist, bind Visibility)
+            // Pages
             var pages = _viewModel.Notebook.Pages
                 .Where(p => p.SectionId == section.Id)
                 .OrderBy(p => p.PageNumber)
@@ -260,36 +252,53 @@ namespace StylusCore.App.Features.Editor.Views
             if (pages.Any())
             {
                 var pagesPanel = CreatePagesGrid(pages);
-
-                // Bind Visibility to section.IsExpanded
                 var visibilityBinding = new System.Windows.Data.Binding("IsExpanded")
                 {
                     Source = section,
                     Converter = (System.Windows.Data.IValueConverter)FindResource("BoolToVisibilityConverter")
                 };
                 ((FrameworkElement)pagesPanel).SetBinding(UIElement.VisibilityProperty, visibilityBinding);
-
                 container.Children.Add(pagesPanel);
             }
 
             return container;
         }
 
+        private Brush GetSectionColorBrush(string hexOrName)
+        {
+            // Strict mapping to shared Brush resources
+            var colorMap = new Dictionary<string, string>
+            {
+                { "#7C3AED", "Brush.Section.Purple" },
+                { "#2563EB", "Brush.Section.Blue" },
+                { "#059669", "Brush.Section.Green" },
+                { "#D97706", "Brush.Section.Yellow" },
+                { "#DC2626", "Brush.Section.Red" },
+                { "#DB2777", "Brush.Section.Pink" }
+            };
+
+            if (!string.IsNullOrEmpty(hexOrName) && colorMap.TryGetValue(hexOrName.ToUpper(), out var resourceKey))
+            {
+                return (Brush)FindResource(resourceKey);
+            }
+
+            return (Brush)FindResource("Brush.Section.Purple");
+        }
+
         private UIElement CreateUnsectionedPagesRow(List<ModelPage> pages)
         {
             var container = new StackPanel();
-
             var headerRow = new Border
             {
                 Padding = new Thickness(8, 10, 8, 10),
                 Background = Brushes.Transparent,
-                BorderBrush = (Brush)FindResource("PrimaryBorderBrush"),
                 BorderThickness = new Thickness(0, 0, 0, 1)
             };
+            headerRow.SetResourceReference(Border.BorderBrushProperty, "PrimaryBorderBrush");
 
             var titleText = new System.Windows.Controls.TextBlock
             {
-                Text = $"Unsectioned Pages ({pages.Count})",
+                Text = $"{(string)FindResource("Str_Editor_UnsectionedPages")} ({pages.Count})",
                 FontSize = 13,
                 FontStyle = FontStyles.Italic,
                 Margin = new Thickness(28, 0, 0, 0)
@@ -297,10 +306,7 @@ namespace StylusCore.App.Features.Editor.Views
             titleText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
             headerRow.Child = titleText;
             container.Children.Add(headerRow);
-
-            var pagesPanel = CreatePagesGrid(pages);
-            container.Children.Add(pagesPanel);
-
+            container.Children.Add(CreatePagesGrid(pages));
             return container;
         }
 
@@ -312,12 +318,15 @@ namespace StylusCore.App.Features.Editor.Views
                 HorizontalAlignment = HorizontalAlignment.Center
             };
 
+            var thumbWidth = (double)FindResource("Editor.PageThumbnailWidth");
+            var thumbHeight = (double)FindResource("Editor.PageThumbnailHeight");
+
             foreach (var page in pages)
             {
                 var pageThumbnail = new Border
                 {
-                    Width = 80,
-                    Height = 110,
+                    Width = thumbWidth,
+                    Height = thumbHeight,
                     Margin = new Thickness(4),
                     BorderThickness = new Thickness(1),
                     CornerRadius = new CornerRadius(4),
@@ -331,34 +340,30 @@ namespace StylusCore.App.Features.Editor.Views
                 pageThumbnail.MouseMove += PageThumbnail_MouseMove;
 
                 var grid = new Grid();
-
-                // Page number
                 var pageNumber = new System.Windows.Controls.TextBlock
                 {
                     Text = page.PageNumber.ToString(),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Bottom,
                     Margin = new Thickness(0, 0, 0, 6),
-                    FontSize = 11,
-                    Foreground = (Brush)FindResource("SecondaryTextBrush")
+                    FontSize = 11
                 };
+                pageNumber.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
                 grid.Children.Add(pageNumber);
 
-                // Color bar
                 var colorBar = new Border
                 {
                     HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Stretch,
                     Width = 3,
-                    CornerRadius = new CornerRadius(4, 0, 0, 4),
-                    Background = (Brush)FindResource("PrimaryAccentBrush")
+                    CornerRadius = new CornerRadius(4, 0, 0, 4)
                 };
+                colorBar.SetResourceReference(Border.BackgroundProperty, "PrimaryAccentBrush");
                 grid.Children.Add(colorBar);
 
                 pageThumbnail.Child = grid;
                 wrapPanel.Children.Add(pageThumbnail);
             }
-
             return wrapPanel;
         }
 
@@ -369,12 +374,16 @@ namespace StylusCore.App.Features.Editor.Views
                 .OrderBy(p => p.PageNumber)
                 .ToList();
 
-            if (!pages.Any()) return "(empty)";
+            if (!pages.Any()) return (string)FindResource("Str_Editor_EmptySection");
 
             var first = pages.First().PageNumber;
             var last = pages.Last().PageNumber;
 
-            return first == last ? $"({first})" : $"({first}-{last})";
+            if (first == last)
+            {
+                return string.Format((string)FindResource("Str_Editor_PageSingle_Format"), first);
+            }
+            return string.Format((string)FindResource("Str_Editor_PageRange_Format"), first, last);
         }
 
         #endregion
@@ -393,90 +402,83 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void CollapsePanel()
         {
-            _lastPanelWidth = SectionsPanelColumn.ActualWidth;
+            // Store current width ONLY if we are currently expanded (and valid)
+            if (!_isPanelCollapsed && SectionsPanelColumn.ActualWidth >= MinPanelWidth)
+            {
+                _lastPanelWidth = SectionsPanelColumn.ActualWidth;
+            }
+
             _isPanelCollapsed = true;
 
-            SectionsPanelColumn.Width = new GridLength(COLLAPSED_WIDTH);
-            SectionsPanelColumn.MinWidth = COLLAPSED_WIDTH;
-            SectionsPanelColumn.MaxWidth = COLLAPSED_WIDTH; // Lock at collapsed width
+            // Lock panel visuals
+            SectionsPanelColumn.Width = new GridLength(CollapsedWidth);
+            SectionsPanelColumn.MinWidth = CollapsedWidth;
+            SectionsPanelColumn.MaxWidth = CollapsedWidth;
 
+            // UI State
             CollapsedOverlay.Visibility = Visibility.Visible;
             SectionsTitle.Visibility = Visibility.Collapsed;
             CollapseBtn.Visibility = Visibility.Collapsed;
             if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
+
+            // Disable resizing
+            var splitter = FindGridSplitter();
+            if (splitter != null) splitter.IsEnabled = false;
         }
 
         private void ExpandPanel()
         {
             _isPanelCollapsed = false;
 
-            // Restore to default (250) or last valid width if reasonable
-            var targetWidth = Math.Max(DEFAULT_PANEL_WIDTH, Math.Min(_lastPanelWidth, MAX_PANEL_WIDTH));
+            // Restore logic: Clamp _lastPanelWidth to [Min, Max]
+            var baseWidth = (_lastPanelWidth > 0 && !double.IsNaN(_lastPanelWidth)) ? _lastPanelWidth : DefaultPanelWidth;
+            var targetWidth = Math.Max(MinPanelWidth, Math.Min(baseWidth, MaxPanelWidth));
 
-            SectionsPanelColumn.MinWidth = MIN_PANEL_WIDTH;
-            SectionsPanelColumn.MaxWidth = MAX_PANEL_WIDTH; // Fixed Max Pixel Limit
-            SetPanelWidth(targetWidth);
+            // Set constraints FIRST
+            SectionsPanelColumn.MinWidth = MinPanelWidth;
+            SectionsPanelColumn.MaxWidth = MaxPanelWidth;
+            SectionsPanelColumn.Width = new GridLength(targetWidth);
 
+            // UI State
             CollapsedOverlay.Visibility = Visibility.Collapsed;
             SectionsTitle.Visibility = Visibility.Visible;
             CollapseBtn.Visibility = Visibility.Visible;
             if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
+
+            // Enable resizing
+            var splitter = FindGridSplitter();
+            if (splitter != null) splitter.IsEnabled = true;
+        }
+
+        private GridSplitter FindGridSplitter()
+        {
+            // Helper to find GridSplitter in visual tree or by traversing siblings if not named
+            // It is defined in XAML without a name, but we know it's in Column 1
+            foreach (var child in ((Grid)SectionsPanelColumn.Parent).Children)
+            {
+                if (child is GridSplitter gs) return gs;
+            }
+            return null;
         }
 
         private void SetPanelWidth(double width)
         {
-            var clampedWidth = Math.Max(MIN_PANEL_WIDTH, Math.Min(width, MAX_PANEL_WIDTH));
-            SectionsPanelColumn.Width = new GridLength(clampedWidth);
+            // STRICT clamping
+            var clamped = Math.Max(MinPanelWidth, Math.Min(width, MaxPanelWidth));
+            SectionsPanelColumn.Width = new GridLength(clamped);
         }
 
         private void GridSplitter_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            CheckAndSnapPanel();
-        }
-
-        private void GridSplitter_DragDelta(object sender, DragDeltaEventArgs e)
-        {
-            // Give live visual feedback before releasing
-            var currentWidth = SectionsPanelColumn.ActualWidth;
-
-            if (currentWidth < MIN_PANEL_WIDTH)
+            // Only update stored width if expanded
+            if (!_isPanelCollapsed)
             {
-                // Show collapsed state visuals immediately
-                CollapsedOverlay.Visibility = Visibility.Visible;
-                SectionsTitle.Visibility = Visibility.Collapsed;
-                CollapseBtn.Visibility = Visibility.Collapsed;
-
-                if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                // Show expanded state visuals
-                CollapsedOverlay.Visibility = Visibility.Collapsed;
-                SectionsTitle.Visibility = Visibility.Visible;
-                CollapseBtn.Visibility = Visibility.Visible;
-
-                if (BottomButtonsBorder != null) BottomButtonsBorder.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void CheckAndSnapPanel()
-        {
-            var currentWidth = SectionsPanelColumn.ActualWidth;
-
-            if (currentWidth < MIN_PANEL_WIDTH)
-            {
-                CollapsePanel();
-            }
-            else if (currentWidth > MAX_PANEL_WIDTH)
-            {
-                // Snap back to MAX if exceeded (handle elasticity)
-                SetPanelWidth(MAX_PANEL_WIDTH);
-                _lastPanelWidth = MAX_PANEL_WIDTH;
-            }
-            else
-            {
-                // Remember valid width
-                _lastPanelWidth = currentWidth;
+                var cur = SectionsPanelColumn.ActualWidth;
+                // Just in case it went out of bounds (though MaxWidth/MinWidth should prevent it)
+                if (cur >= MinPanelWidth && cur <= MaxPanelWidth)
+                {
+                    _lastPanelWidth = cur;
+                }
             }
         }
 
@@ -490,17 +492,18 @@ namespace StylusCore.App.Features.Editor.Views
             {
                 var contextMenu = new ContextMenu();
 
-                var renameItem = new MenuItem { Header = "Rename" };
+                var renameItem = new MenuItem { Header = (string)FindResource("Str_Editor_RenameSection") };
                 renameItem.Click += (s, args) => RenameSection(section);
+                // renameItem.SetValue(AutomationProperties.NameProperty, ...); 
                 contextMenu.Items.Add(renameItem);
 
-                var colorItem = new MenuItem { Header = "Change Color" };
+                var colorItem = new MenuItem { Header = (string)FindResource("Str_ChangeColor") };
                 colorItem.Click += (s, args) => ChangeSectionColor(section);
                 contextMenu.Items.Add(colorItem);
 
                 contextMenu.Items.Add(new Separator());
 
-                var deleteItem = new MenuItem { Header = "Delete Section" };
+                var deleteItem = new MenuItem { Header = (string)FindResource("Str_Editor_DeleteSection") };
                 deleteItem.Click += (s, args) => DeleteSection(section);
                 contextMenu.Items.Add(deleteItem);
 
@@ -510,7 +513,7 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void RenameSection(Section section)
         {
-            var dialog = new InputDialog("Rename Section", "New Name:");
+            var dialog = new InputDialog((string)FindResource("Str_Editor_RenameSection"), (string)FindResource("Str_Editor_NewSectionName"));
             dialog.SetInputText(section.Title);
             if (dialog.ShowDialog() == true && !string.IsNullOrWhiteSpace(dialog.InputText))
             {
@@ -521,6 +524,7 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void ChangeSectionColor(Section section)
         {
+            // Cycle through known colors using Resource keys if possible, or just strict Hex from the design
             var colors = new[] { "#7C3AED", "#2563EB", "#059669", "#D97706", "#DC2626", "#DB2777" };
             var currentIndex = Array.IndexOf(colors, section.Color);
             section.Color = colors[(currentIndex + 1) % colors.Length];
@@ -529,9 +533,10 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void DeleteSection(Section section)
         {
+            var confirmFormat = (string)FindResource("Str_Editor_DeleteSectionConfirm");
             var result = MessageBox.Show(
-                $"Are you sure you want to delete section \"{section.Title}\"?\n\nPages will not be deleted, they will become unsectioned.",
-                "Delete Section",
+                string.Format(confirmFormat, section.Title),
+                (string)FindResource("Str_Editor_DeleteSection"),
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Warning);
 
@@ -541,7 +546,6 @@ namespace StylusCore.App.Features.Editor.Views
                 {
                     page.SectionId = null;
                 }
-
                 _viewModel.Notebook.Sections.Remove(section);
                 RefreshSectionsUI();
             }
@@ -549,15 +553,13 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void AddSection_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new InputDialog("New Section", "Section Name:");
+            var dialog = new InputDialog((string)FindResource("Str_Editor_NewSection"), (string)FindResource("Str_Editor_SectionName"));
             if (dialog.ShowDialog() == true && !string.IsNullOrWhiteSpace(dialog.InputText))
             {
                 _viewModel.AddNewSection(dialog.InputText);
                 RefreshSectionsUI();
             }
         }
-
-        #endregion
 
         private void SectionRow_Click(object sender, MouseButtonEventArgs e)
         {
@@ -568,7 +570,9 @@ namespace StylusCore.App.Features.Editor.Views
             }
         }
 
-        // --- Drag & Drop Handlers ---
+        #endregion
+
+        #region Drag & Drop
 
         private void SectionDragHandle_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -579,6 +583,7 @@ namespace StylusCore.App.Features.Editor.Views
 
         private void SectionDragHandle_MouseMove(object sender, MouseEventArgs e)
         {
+            // Standard drag logic...
             if (e.LeftButton == MouseButtonState.Pressed && !_isDragging)
             {
                 Point position = e.GetPosition(null);
@@ -639,25 +644,22 @@ namespace StylusCore.App.Features.Editor.Views
             if (e.Data.GetDataPresent("StylusData") && sender is FrameworkElement element && element.Tag is Section targetSection)
             {
                 var data = e.Data.GetData("StylusData");
-
                 if (data is Section sourceSection && sourceSection.Id != targetSection.Id)
                 {
-                    // Reorder Section
-                    // Find index of target
                     var sections = _viewModel.Notebook.Sections.OrderBy(s => s.SortOrder).ToList();
                     var targetIndex = sections.IndexOf(sections.First(s => s.Id == targetSection.Id));
-
                     _viewModel.ReorderSection(sourceSection, targetIndex);
                     RefreshSectionsUI();
                 }
                 else if (data is ModelPage sourcePage && sourcePage.SectionId != targetSection.Id)
                 {
-                    // Move Page to Section
                     _viewModel.MovePageToSection(sourcePage, targetSection.Id);
                     RefreshSectionsUI();
                 }
             }
         }
+
+        #endregion
 
         #region Page Events
 
@@ -666,25 +668,18 @@ namespace StylusCore.App.Features.Editor.Views
             if (sender is FrameworkElement element && element.Tag is ModelPage page)
             {
                 var index = _viewModel.Notebook.Pages.IndexOf(page);
-                if (index >= 0)
-                {
-                    _viewModel.CurrentPageIndex = index;
-                }
+                if (index >= 0) _viewModel.CurrentPageIndex = index;
             }
         }
 
         private void AddPage_Click(object sender, RoutedEventArgs e)
         {
-            // Add page to active section or first section if none active
             var targetSectionId = _activeSectionId;
-
             if (targetSectionId == null && _viewModel.Notebook.Sections.Count > 0)
             {
                 targetSectionId = _viewModel.Notebook.Sections.First().Id;
             }
-
-            var newPage = _viewModel.AddNewPage(targetSectionId);
-
+            _viewModel.AddNewPage(targetSectionId);
             RefreshSectionsUI();
         }
 

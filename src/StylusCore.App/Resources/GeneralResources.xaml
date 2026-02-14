@@ -50,4 +50,71 @@
     <sys:Double x:Key="Height_Button_Standard">32</sys:Double>
     <sys:Double x:Key="Height_Input_Standard">32</sys:Double>
 
+    <!-- ================================================================== -->
+    <!-- SIDEBAR METRICS                                                     -->
+    <!-- ================================================================== -->
+
+    <sys:Double x:Key="Shell.SidebarCollapsedWidth">48</sys:Double>
+    <sys:Double x:Key="Shell.SidebarExpandedWidth">160</sys:Double>
+    <sys:Double x:Key="Shell.SidebarItemHeight">48</sys:Double>
+    <sys:Double x:Key="Shell.IconSlotWidth">48</sys:Double>
+    <sys:Double x:Key="Shell.IconSize">20</sys:Double>
+    <CornerRadius x:Key="Shell.SidebarCornerRadius">6</CornerRadius>
+
+    <!-- ================================================================== -->
+    <!-- SIDEBAR BUTTON STYLE (Single Source — colors come from theme)       -->
+    <!-- ================================================================== -->
+
+    <Style x:Key="SidebarButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Height" Value="{DynamicResource Shell.SidebarItemHeight}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Bg"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="{DynamicResource Shell.SidebarCornerRadius}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource SidebarHoverBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================== -->
+    <!-- SECTIONS PANEL METRICS                                              -->
+    <!-- ================================================================== -->
+
+    <sys:Double x:Key="Editor.SectionsPanelDefaultWidth">250</sys:Double>
+    <sys:Double x:Key="Editor.SectionsPanelMaxWidth">400</sys:Double>
+    <sys:Double x:Key="Editor.SectionsPanelMinWidth">200</sys:Double>
+    <sys:Double x:Key="Editor.SectionsPanelCollapsedWidth">48</sys:Double>
+    <sys:Double x:Key="Editor.PageThumbnailWidth">80</sys:Double>
+    <sys:Double x:Key="Editor.PageThumbnailHeight">110</sys:Double>
+
+    <!-- ================================================================== -->
+    <!-- SECTION COLORS                                                      -->
+    <!-- ================================================================== -->
+    <Color x:Key="Color.Section.Purple">#7C3AED</Color>
+    <Color x:Key="Color.Section.Blue">#2563EB</Color>
+    <Color x:Key="Color.Section.Green">#059669</Color>
+    <Color x:Key="Color.Section.Yellow">#D97706</Color>
+    <Color x:Key="Color.Section.Red">#DC2626</Color>
+    <Color x:Key="Color.Section.Pink">#DB2777</Color>
+    <Color x:Key="Color.Shadow">#000000</Color>
+    
+    <SolidColorBrush x:Key="Brush.Section.Purple" Color="{StaticResource Color.Section.Purple}"/>
+    <SolidColorBrush x:Key="Brush.Section.Blue" Color="{StaticResource Color.Section.Blue}"/>
+    <SolidColorBrush x:Key="Brush.Section.Green" Color="{StaticResource Color.Section.Green}"/>
+    <SolidColorBrush x:Key="Brush.Section.Yellow" Color="{StaticResource Color.Section.Yellow}"/>
+    <SolidColorBrush x:Key="Brush.Section.Red" Color="{StaticResource Color.Section.Red}"/>
+    <SolidColorBrush x:Key="Brush.Section.Pink" Color="{StaticResource Color.Section.Pink}"/>
+
 </ResourceDictionary>

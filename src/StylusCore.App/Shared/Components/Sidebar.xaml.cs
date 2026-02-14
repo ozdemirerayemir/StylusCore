@@ -10,9 +10,9 @@ namespace StylusCore.App.Shared.Components
         public event EventHandler<string> NavigationRequested;
         public event EventHandler ToggleRequested;
 
-        // Sabit değerler
-        private const double CollapsedWidth = 48;
-        private const double ExpandedWidth = 198;
+        // Width values read from resource tokens (GeneralResources.xaml)
+        private double CollapsedWidth => (double)FindResource("Shell.SidebarCollapsedWidth");
+        private double ExpandedWidth => (double)FindResource("Shell.SidebarExpandedWidth");
 
         // State
         private bool _isExpanded = false;

@@ -10,10 +10,13 @@
     <Color x:Key="TertiaryBackgroundColor">#333337</Color>
     <Color x:Key="SidebarBackgroundColor">#252526</Color>
     <Color x:Key="CanvasBackgroundColor">#1E1E1E</Color>
+    <Color x:Key="CardBackgroundColor">#2D2D30</Color>
+    <Color x:Key="HoverBackgroundColor">#3E3E42</Color>
 
     <!-- Text Colors -->
     <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
     <Color x:Key="SecondaryTextColor">#CCCCCC</Color>
+    <Color x:Key="TertiaryTextColor">#888888</Color>
     <Color x:Key="DisabledTextColor">#666666</Color>
     <Color x:Key="AccentTextColor">#4CC2FF</Color>
 
@@ -40,9 +43,12 @@
     <SolidColorBrush x:Key="TertiaryBackgroundBrush" Color="{StaticResource TertiaryBackgroundColor}"/>
     <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackgroundColor}"/>
     <SolidColorBrush x:Key="CanvasBackgroundBrush" Color="{StaticResource CanvasBackgroundColor}"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
+    <SolidColorBrush x:Key="HoverBackgroundBrush" Color="{StaticResource HoverBackgroundColor}"/>
 
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}"/>
     <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}"/>
+    <SolidColorBrush x:Key="TertiaryTextBrush" Color="{StaticResource TertiaryTextColor}"/>
     <SolidColorBrush x:Key="DisabledTextBrush" Color="{StaticResource DisabledTextColor}"/>
     <SolidColorBrush x:Key="AccentTextBrush" Color="{StaticResource AccentTextColor}"/>
 
@@ -62,9 +68,7 @@
 
     <!-- Typography moved to GeneralResources.xaml -->
 
-    <!-- Sizing (Same as Light) -->
-    <sys:Double x:Key="SidebarWidthExpanded">280</sys:Double>
-    <sys:Double x:Key="SidebarWidthCollapsed">48</sys:Double>
+    <!-- Sizing (Sidebar metrics moved to GeneralResources.xaml) -->
     <sys:Double x:Key="RibbonHeight">120</sys:Double>
     <sys:Double x:Key="RibbonHeightCollapsed">40</sys:Double>
     <Thickness x:Key="DefaultMargin">8</Thickness>
@@ -72,6 +76,12 @@
     <Thickness x:Key="LargeMargin">16</Thickness>
     <CornerRadius x:Key="DefaultCornerRadius">4</CornerRadius>
     <CornerRadius x:Key="LargeCornerRadius">8</CornerRadius>
+
+    <!-- Sidebar Theming Brushes -->
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="#15FFFFFF"/>
+
+    <!-- Icon Stroke (defaults to text color; user can override for accent icons) -->
+    <SolidColorBrush x:Key="IconStrokeBrush" Color="{StaticResource PrimaryTextColor}"/>
     
     <!-- Button Styles (Duplicated structure but pulls new colors) -->
     <!-- Ideally, Styles should be in a separate file (e.g. Styles.xaml) that references these keys. -->

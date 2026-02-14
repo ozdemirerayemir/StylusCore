@@ -123,7 +123,7 @@
 
                         <!-- Ribbon Display Options (Right Aligned) -->
                         <Button Grid.Column="1" 
-                                ToolTip="Der Ribbon-Anzeigemodus ändern" 
+                                ToolTip="{DynamicResource Str_Tooltip_CycleRibbonMode}" 
                                 Style="{DynamicResource IconButtonStyle}"
                                 Width="{DynamicResource Height_Button_Standard}" 
                                 Height="{DynamicResource Height_Button_Standard}"

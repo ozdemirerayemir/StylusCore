@@ -14,7 +14,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Sections Panel (collapsible) -->
-            <ColumnDefinition x:Name="SectionsPanelColumn" Width="250" MinWidth="48" MaxWidth="350"/>
+            <ColumnDefinition x:Name="SectionsPanelColumn" Width="{DynamicResource Editor.SectionsPanelDefaultWidth}" MinWidth="{DynamicResource Editor.SectionsPanelMinWidth}" MaxWidth="{DynamicResource Editor.SectionsPanelMaxWidth}"/>
             <!-- GridSplitter -->
             <ColumnDefinition Width="Auto"/>
             <!-- Canvas -->
@@ -28,7 +28,7 @@
                 BorderBrush="{DynamicResource PrimaryBorderBrush}"
                 BorderThickness="0,0,1,0">
             <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="10" Opacity="0.05" Direction="0" ShadowDepth="2"/>
+                <DropShadowEffect Color="{StaticResource Color.Shadow}" BlurRadius="10" Opacity="0.05" Direction="0" ShadowDepth="2"/>
             </Border.Effect>
 
             <Grid ClipToBounds="False">
@@ -43,29 +43,30 @@
 
                 <!-- Header -->
                 <Border Grid.Row="0"
-                        Padding="16,12"
+                        Padding="{DynamicResource Margin_Large}"
                         Background="{DynamicResource TertiaryBackgroundBrush}"
                         BorderBrush="{DynamicResource PrimaryBorderBrush}"
                         BorderThickness="0,0,0,1">
                     <Grid>
                         <TextBlock x:Name="SectionsTitle"
-                                   Text="Sections"
+                                   Text="{DynamicResource Str_Editor_Sections}"
                                    FontWeight="SemiBold"
-                                   FontSize="14"
+                                   FontSize="{DynamicResource FontSize_Body}"
                                    VerticalAlignment="Center"
                                    Foreground="{DynamicResource PrimaryTextBrush}"/>
                         
                         <!-- Collapse/Expand Button -->
                         <Button x:Name="CollapseBtn"
                                 HorizontalAlignment="Right"
+                                AutomationProperties.Name="{DynamicResource Str_Tooltip_CollapsePanel}"
                                 VerticalAlignment="Center"
                                 Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
                                 Style="{DynamicResource IconButtonStyle}"
                                 ToolTip="{DynamicResource Str_Tooltip_CollapsePanel}"
                                 Padding="0"
                                 Click="CollapsePanel_Click">
-                            <Grid Width="16" Height="16">
-                                <Path Data="{StaticResource Icon.ChevronLeft}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}">
+                                <Path Data="{StaticResource Icon.ChevronLeft}" Style="{DynamicResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
                     </Grid>
@@ -83,7 +84,7 @@
                 <!-- Add Buttons -->
                 <Border x:Name="BottomButtonsBorder"
                         Grid.Row="2"
-                        Padding="8,8"
+                        Padding="{DynamicResource Margin_Standard}"
                         Background="{DynamicResource TertiaryBackgroundBrush}"
                         BorderBrush="{DynamicResource PrimaryBorderBrush}"
                         BorderThickness="0,1,0,0">
@@ -94,12 +95,12 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Grid.Column="0"
-                                Content="+ Section"
+                                Content="{DynamicResource Str_Editor_AddSection}"
                                 Margin="0,0,4,0"
                                 Style="{DynamicResource FlatButtonStyle}"
                                 Click="AddSection_Click"/>
                         <Button Grid.Column="1"
-                                Content="+ Page"
+                                Content="{DynamicResource Str_Editor_AddPage}"
                                 Margin="4,0,0,0"
                                 Style="{DynamicResource FlatButtonStyle}"
                                 Click="AddPage_Click"/>
@@ -116,12 +117,13 @@
                                 Margin="0,16">
                         <Button x:Name="ExpandBtn"
                                 Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
+                                AutomationProperties.Name="{DynamicResource Str_Tooltip_ExpandPanel}"
                                 Style="{DynamicResource IconButtonStyle}"
                                 ToolTip="{DynamicResource Str_Tooltip_ExpandPanel}"
                                 Padding="0"
                                 Click="ExpandPanel_Click">
-                            <Grid Width="16" Height="16">
-                                <Path Data="{StaticResource Icon.ChevronRight}" Style="{StaticResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}">
+                                <Path Data="{StaticResource Icon.ChevronRight}" Style="{DynamicResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
                     </StackPanel>
@@ -137,8 +139,7 @@
                       Background="{DynamicResource PrimaryBorderBrush}"
                       Cursor="SizeWE"
                       ShowsPreview="False"
-                      DragCompleted="GridSplitter_DragCompleted"
-                      DragDelta="GridSplitter_DragDelta"/>
+                      DragCompleted="GridSplitter_DragCompleted"/>
 
         <!-- Drawing Canvas -->
         <engine:CanvasHostControl x:Name="DrawingCanvas"

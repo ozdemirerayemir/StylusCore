@@ -16,10 +16,12 @@
     <sys:String x:Key="Str_Settings">Ayarlar</sys:String>
     <sys:String x:Key="Str_User">Kullanıcı</sys:String>
     <sys:String x:Key="Str_Sections">Not Bölümleri</sys:String>
+    <sys:String x:Key="Str_BackToBookList">Defter Listesine Dön</sys:String>
     
     <!-- Library View -->
     <sys:String x:Key="Str_NewLibrary">+ Yeni Kütüphane</sys:String>
     <sys:String x:Key="Str_NewNotebook">+ Yeni Defter</sys:String>
+    <sys:String x:Key="Str_NewBook">+ Yeni Defter</sys:String>
     <sys:String x:Key="Str_NotebooksCount">defter</sys:String>
     <sys:String x:Key="Str_PagesCount">sayfa</sys:String>
     <sys:String x:Key="Str_NoLibraries">Henüz kütüphane yok</sys:String>
@@ -29,10 +31,12 @@
 
     <!-- Search -->
     <sys:String x:Key="Str_SearchSubjects">Konularda ara...</sys:String>
+    <sys:String x:Key="Str_SearchPlaceholder">Ara...</sys:String>
     <sys:String x:Key="Str_EnterLibraryName">Kütüphane adı girin:</sys:String>
     <sys:String x:Key="Str_EnterNotebookName">Yeni adı girin:</sys:String>
     
     <!-- Context Menus -->
+    <sys:String x:Key="Str_Open">Aç</sys:String>
     <sys:String x:Key="Str_Duplicate">Çoğalt</sys:String>
     <sys:String x:Key="Str_ChangeColor">Renk Değiştir</sys:String>
     <sys:String x:Key="Str_CoverColor">Kapak Rengi</sys:String>
@@ -101,7 +105,25 @@
     <sys:String x:Key="Str_Tooltip_Triangle">Üçgen</sys:String>
     <sys:String x:Key="Str_Tooltip_InkToShape">Mürekkep Şekle Dönüştür</sys:String>
     <sys:String x:Key="Str_Tooltip_RibbonOptions">Şerit Görüntüleme Seçenekleri</sys:String>
+    <sys:String x:Key="Str_Tooltip_CycleRibbonMode">Şerit Görüntüleme Modunu Değiştir</sys:String>
     <sys:String x:Key="Str_Tooltip_BackToLibraries">Kütüphanelere Dön</sys:String>
+    <sys:String x:Key="Str_Tooltip_CollapsePanel">Paneli Daralt</sys:String>
+    <sys:String x:Key="Str_Tooltip_ExpandPanel">Paneli Genişlet</sys:String>
+
+    <!-- Editor Panel -->
+    <sys:String x:Key="Str_Editor_Sections">Bölümler</sys:String>
+    <sys:String x:Key="Str_Editor_AddSection">+ Bölüm</sys:String>
+    <sys:String x:Key="Str_Editor_AddPage">+ Sayfa</sys:String>
+    <sys:String x:Key="Str_Editor_UnsectionedPages">Bölümsüz Sayfalar</sys:String>
+    <sys:String x:Key="Str_Editor_RenameSection">Bölümü Yeniden Adlandır</sys:String>
+    <sys:String x:Key="Str_Editor_NewSectionName">Yeni Ad:</sys:String>
+    <sys:String x:Key="Str_Editor_NewSection">Yeni Bölüm</sys:String>
+    <sys:String x:Key="Str_Editor_SectionName">Bölüm Adı:</sys:String>
+    <sys:String x:Key="Str_Editor_DeleteSection">Bölümü Sil</sys:String>
+    <sys:String x:Key="Str_Editor_DeleteSectionConfirm">"{0}" bölümünü silmek istediğinize emin misiniz?
+
+Sayfalar silinmeyecek, bölümsüz hale gelecektir.</sys:String>
+    <sys:String x:Key="Str_Recent">Son</sys:String>
 
     <!-- Ribbon Menu -->
     <sys:String x:Key="Str_Ribbon_AutoHide">Şeridi Otomatik Gizle</sys:String>

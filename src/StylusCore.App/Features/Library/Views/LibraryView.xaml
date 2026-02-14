@@ -9,8 +9,8 @@
         <DataTemplate x:Key="LibraryTemplate">
             <!-- Removed Button wrapper to kill default hover effects -->
             <Grid Width="200" Height="240" Margin="10">
-                <Border Background="White"
-                        BorderBrush="#E0E0E0"
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource PrimaryBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Cursor="Hand"
@@ -46,27 +46,27 @@
                             <StackPanel VerticalAlignment="Top">
                                 <TextBlock Text="{Binding Name}"
                                            FontWeight="Bold"
-                                           FontSize="16"
-                                           Foreground="#333"
+                                           FontSize="{DynamicResource FontSize_Body}"
+                                           Foreground="{DynamicResource PrimaryTextBrush}"
                                            TextTrimming="CharacterEllipsis"/>
                                 
                                 <TextBlock Text="{Binding Notebooks.Count, StringFormat='{}{0} Notebooks'}"
-                                           FontSize="13"
-                                           Foreground="#888"
+                                           FontSize="{DynamicResource FontSize_Small}"
+                                           Foreground="{DynamicResource SecondaryTextBrush}"
                                            Margin="0,5,0,0"/>
 
                                 <!-- Last Modified simulation -->
-                                <TextBlock Text="Recent" Margin="0,15,0,0" FontSize="{DynamicResource FontSize_Small}" Foreground="#AAA"/>
+                                <TextBlock Text="{DynamicResource Str_Recent}" Margin="0,15,0,0" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource TertiaryTextBrush}"/>
                             </StackPanel>
                             
                             <!-- Options Button -->
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
-                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{DynamicResource IconButtonStyle}" Click="NotebookOptions_Click">
+                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="{DynamicResource SecondaryTextBrush}" Width="16" Height="4" Stretch="Uniform"/>
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Rename" Click="RenameLibrary_Click"/>
+                                        <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameLibrary_Click"/>
                                         <Separator/>
-                                        <MenuItem Header="Delete" Click="DeleteLibrary_Click" Foreground="{DynamicResource ErrorBrush}"/>
+                                        <MenuItem Header="{DynamicResource Str_Delete}" Click="DeleteLibrary_Click" Foreground="{DynamicResource ErrorBrush}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
@@ -90,8 +90,8 @@
         <DataTemplate x:Key="NotebookTemplate">
             <!-- Notebook Card (No Button Wrapper) -->
             <Grid Width="200" Height="240" Margin="10">
-                <Border Background="White"
-                        BorderBrush="#E0E0E0"
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource PrimaryBorderBrush}"
                         BorderThickness="1"
                         CornerRadius="8"
                         Cursor="Hand"
@@ -137,23 +137,23 @@
 
                         <Grid Grid.Row="1" Margin="15">
                             <StackPanel VerticalAlignment="Top">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Foreground="#333" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock FontSize="13" Foreground="#888" Margin="0,5,0,0">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="{DynamicResource FontSize_Body}" Foreground="{DynamicResource PrimaryTextBrush}" TextTrimming="CharacterEllipsis"/>
+                                <TextBlock FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,5,0,0">
                                      <Run Text="{Binding Pages.Count, Mode=OneWay}"/>
                                      <Run Text=" Pages"/>
                                 </TextBlock>
-                                <TextBlock Text="{Binding LastModified, StringFormat='{}Edited: {0:MMM dd}'}" Margin="0,15,0,0" FontSize="11" Foreground="#AAA"/>
+                                <TextBlock Text="{Binding LastModified, StringFormat='{}Edited: {0:MMM dd}'}" Margin="0,15,0,0" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource TertiaryTextBrush}"/>
                             </StackPanel>
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{StaticResource IconButtonStyle}" Click="NotebookOptions_Click">
-                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="#888" Width="16" Height="4" Stretch="Uniform"/>
+                            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-5,-5" Style="{DynamicResource IconButtonStyle}" Click="NotebookOptions_Click">
+                                <Path Data="{StaticResource Icon.MoreHorizontal}" Style="{StaticResource IconBase}" Fill="{DynamicResource SecondaryTextBrush}" Width="16" Height="4" Stretch="Uniform"/>
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Open" Click="OpenNotebook_ContextClick"/>
-                                        <MenuItem Header="Duplicate" Click="DuplicateNotebook_Click"/>
-                                        <MenuItem Header="Change Color" Click="ChangeNotebookColor_Click"/>
-                                        <MenuItem Header="Rename" Click="RenameNotebook_Click"/>
+                                        <MenuItem Header="{DynamicResource Str_Open}" Click="OpenNotebook_ContextClick"/>
+                                        <MenuItem Header="{DynamicResource Str_Duplicate}" Click="DuplicateNotebook_Click"/>
+                                        <MenuItem Header="{DynamicResource Str_ChangeColor}" Click="ChangeNotebookColor_Click"/>
+                                        <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameNotebook_Click"/>
                                         <Separator/>
-                                        <MenuItem Header="Delete" Click="DeleteNotebook_Click" Foreground="{DynamicResource ErrorBrush}"/>
+                                        <MenuItem Header="{DynamicResource Str_Delete}" Click="DeleteNotebook_Click" Foreground="{DynamicResource ErrorBrush}"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
@@ -193,15 +193,15 @@
             <!-- Title -->
             <!-- Title - Centered Vertically -->
             <StackPanel Grid.Column="0" VerticalAlignment="Center" Orientation="Horizontal">
-                <TextBlock x:Name="PageTitle" Text="{DynamicResource Str_Library}" FontSize="32" FontWeight="Bold" Foreground="#333" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock x:Name="PageTitle" Text="{DynamicResource Str_Library}" FontSize="{DynamicResource FontSize_Header}" FontWeight="Bold" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center" Margin="0,0,0,5"/>
                 <!-- Optional subtitle or breadcrumb hint could go here -->
             </StackPanel>
 
             <!-- Search Bar (Centered Pill) -->
             <!-- Reduced Width from (implicit) to fixed smaller width or column constraint -->
-            <Border Grid.Column="1" Height="38" Width="400" Background="#F0F0F0" CornerRadius="19" Margin="30,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Border Grid.Column="1" Height="38" Width="400" Background="{DynamicResource TertiaryBackgroundBrush}" CornerRadius="19" Margin="30,0" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid>
-                    <TextBlock Text="Search..." VerticalAlignment="Center" Margin="15,0" Foreground="#888" IsHitTestVisible="False">
+                    <TextBlock Text="{DynamicResource Str_SearchPlaceholder}" VerticalAlignment="Center" Margin="15,0" Foreground="{DynamicResource SecondaryTextBrush}" IsHitTestVisible="False">
                         <TextBlock.Style>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -213,17 +213,17 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                    <TextBox x:Name="SearchBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0" Foreground="#333"/>
+                    <TextBox x:Name="SearchBox" Background="Transparent" BorderThickness="0" VerticalContentAlignment="Center" Margin="15,0" Foreground="{DynamicResource PrimaryTextBrush}"/>
                 </Grid>
             </Border>
 
             <!-- + Add New Button -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                  <!-- Button for Libraries -->
-                 <Button x:Name="NewLibraryButton" Content="+ New Library" Width="125" Height="38" Style="{StaticResource PrimaryButtonStyle}" Click="NewLibrary_Click"/>
+                 <Button x:Name="NewLibraryButton" Content="{DynamicResource Str_NewLibrary}" Width="125" Height="38" Style="{DynamicResource PrimaryButtonStyle}" Click="NewLibrary_Click"/>
                  
                  <!-- Button for Notebooks (Initially Collapsed) -->
-                 <Button x:Name="NewNotebookButton" Content="+ New Book" Width="125" Height="38" Style="{StaticResource PrimaryButtonStyle}" Click="NewNotebook_Click" Visibility="Collapsed"/>
+                 <Button x:Name="NewNotebookButton" Content="{DynamicResource Str_NewBook}" Width="125" Height="38" Style="{DynamicResource PrimaryButtonStyle}" Click="NewNotebook_Click" Visibility="Collapsed"/>
             </StackPanel>
         </Grid>
 
@@ -343,7 +343,7 @@
                                             <MenuItem Header="{DynamicResource Str_Delete}" 
                                                       Command="{Binding DataContext.DeleteNotebookCommand, Source={x:Reference NotebooksList}}"
                                                       CommandParameter="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                                      Foreground="Red"/>
+                                                      Foreground="{DynamicResource ErrorBrush}"/>
                                         </ContextMenu>
                                     </Button.ContextMenu>
                                 </Button>

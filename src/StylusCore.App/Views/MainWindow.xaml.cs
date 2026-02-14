@@ -128,6 +128,7 @@ namespace StylusCore.App.Views
         /// </summary>
         public void NavigateToNotebook(StylusCore.Core.Models.Notebook notebook)
         {
+            _viewModel.CurrentNotebook = notebook;
             var editorView = new EditorView();
             editorView.LoadNotebook(notebook);
             MainContentFrame.Navigate(editorView);

@@ -13,7 +13,7 @@
     
     <!-- Base Icon Style -->
     <Style x:Key="IconBase" TargetType="Path">
-        <Setter Property="Stroke" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="Stroke" Value="{DynamicResource IconStrokeBrush}"/>
         <Setter Property="StrokeThickness" Value="2"/>
         <Setter Property="StrokeLineJoin" Value="Round"/>
         <Setter Property="StrokeStartLineCap" Value="Round"/>
@@ -160,5 +160,8 @@
     
     <!-- Moon (Dark Mode) -->
     <StreamGeometry x:Key="Icon.Moon">M18 5h4 M20 3v4 M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401</StreamGeometry>
+
+    <!-- Drag Handle (Vertical Dots) -->
+    <StreamGeometry x:Key="Icon.DragHandle">M12 5a2 2 0 1 0 0 4 2 2 0 1 0 0-4zm0 7a2 2 0 1 0 0 4 2 2 0 1 0 0-4zm0 7a2 2 0 1 0 0 4 2 2 0 1 0 0-4z</StreamGeometry>
 
 </ResourceDictionary>

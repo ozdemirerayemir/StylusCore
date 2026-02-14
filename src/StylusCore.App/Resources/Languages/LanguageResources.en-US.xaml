@@ -17,10 +17,12 @@
     <sys:String x:Key="Str_User">User</sys:String>
     <sys:String x:Key="Str_Sections">Note Sections</sys:String>
     <sys:String x:Key="Str_Book">Books</sys:String>
+    <sys:String x:Key="Str_BackToBookList">Back to Book List</sys:String>
     
     <!-- Library View -->
     <sys:String x:Key="Str_NewLibrary">+ New Library</sys:String>
     <sys:String x:Key="Str_NewNotebook">+ New Notebook</sys:String>
+    <sys:String x:Key="Str_NewBook">+ New Book</sys:String>
     <sys:String x:Key="Str_NotebooksCount">notebooks</sys:String>
     <sys:String x:Key="Str_PagesCount">pages</sys:String>
     <sys:String x:Key="Str_NoLibraries">No libraries yet</sys:String>
@@ -30,10 +32,12 @@
     
     <!-- Search -->
     <sys:String x:Key="Str_SearchSubjects">Search subjects...</sys:String>
+    <sys:String x:Key="Str_SearchPlaceholder">Search...</sys:String>
     <sys:String x:Key="Str_EnterLibraryName">Enter library name:</sys:String>
     <sys:String x:Key="Str_EnterNotebookName">Enter new name:</sys:String>
     
     <!-- Context Menus -->
+    <sys:String x:Key="Str_Open">Open</sys:String>
     <sys:String x:Key="Str_Duplicate">Duplicate</sys:String>
     <sys:String x:Key="Str_ChangeColor">Change Color</sys:String>
     <sys:String x:Key="Str_CoverColor">Cover color</sys:String>
@@ -102,7 +106,27 @@
     <sys:String x:Key="Str_Tooltip_Triangle">Triangle</sys:String>
     <sys:String x:Key="Str_Tooltip_InkToShape">Ink to Shape</sys:String>
     <sys:String x:Key="Str_Tooltip_RibbonOptions">Ribbon Display Options</sys:String>
+    <sys:String x:Key="Str_Tooltip_CycleRibbonMode">Change Ribbon Display Mode</sys:String>
     <sys:String x:Key="Str_Tooltip_BackToLibraries">Back to Libraries</sys:String>
+    <sys:String x:Key="Str_Tooltip_CollapsePanel">Collapse Panel</sys:String>
+    <sys:String x:Key="Str_Tooltip_ExpandPanel">Expand Panel</sys:String>
+
+    <!-- Editor Panel -->
+    <sys:String x:Key="Str_Editor_Sections">Sections</sys:String>
+    <sys:String x:Key="Str_Editor_AddSection">+ Section</sys:String>
+    <sys:String x:Key="Str_Editor_AddPage">+ Page</sys:String>
+    <sys:String x:Key="Str_Editor_UnsectionedPages">Unsectioned Pages</sys:String>
+    <sys:String x:Key="Str_Editor_RenameSection">Rename Section</sys:String>
+    <sys:String x:Key="Str_Editor_NewSectionName">New Name:</sys:String>
+    <sys:String x:Key="Str_Editor_NewSection">New Section</sys:String>
+    <sys:String x:Key="Str_Editor_SectionName">Section Name:</sys:String>
+    <sys:String x:Key="Str_Editor_DeleteSection">Delete Section</sys:String>
+    <sys:String x:Key="Str_Editor_DeleteSectionConfirm">Are you sure you want to delete section '{0}'?&#x0a;&#x0a;Pages will not be deleted, they will become unsectioned.</sys:String>
+    <sys:String x:Key="Str_Recent">Recent</sys:String>
+    <sys:String x:Key="Str_Editor_EmptySection">(empty)</sys:String>
+    <sys:String x:Key="Str_Editor_PageRange_Format">({0}-{1})</sys:String>
+    <sys:String x:Key="Str_Editor_PageSingle_Format">({0})</sys:String>
+    <sys:String x:Key="Str_ToggleSection">Toggle Section</sys:String>
 
     <!-- Ribbon Menu -->
     <sys:String x:Key="Str_Ribbon_AutoHide">Auto-hide Ribbon</sys:String>

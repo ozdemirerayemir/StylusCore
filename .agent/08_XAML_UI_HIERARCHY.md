@@ -60,7 +60,7 @@ It does **not** redefine the Canvas Engine rendering (see `03_CANVAS_ENGINE.md`,
 - **MUST:** Default preset values:
   - `Shell.HeaderHeight = 48`
   - `Shell.SidebarCollapsedWidth = 48`
-  - `Shell.SidebarExpandedWidth = 240`
+  - `Shell.SidebarExpandedWidth = 160`
 
 ### 2.4 No-Jitter Sidebar Implementation
 
@@ -140,6 +140,20 @@ UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
 - **MUST:** Shell UI (buttons, text, panels) uses DynamicResource for theme/localization.
 - **MUST NOT:** Use DynamicResource lookups inside engine hot render loops (covered elsewhere).
 
+### 4.4 Static vs Dynamic Decision Matrix
+- **Use `StaticResource` ONLY for:**
+  - Geometry / path data (`Icon.*`) — immutable shape data, never changes
+  - `BooleanToVisibilityConverter` and other value converters — logic objects, not visual
+  - Resources referenced within the **same ResourceDictionary** (e.g., a Color inside a Brush definition in the same theme file)
+- **Use `DynamicResource` for EVERYTHING else:**
+  - All Brushes (colors, backgrounds, foregrounds, borders)
+  - All Font properties (FontSize, FontFamily, FontWeight)
+  - All Sizing tokens (Width, Height, Margin, Padding, CornerRadius)
+  - All Styles (including `IconBase`, `SidebarButtonStyle`, button styles)
+  - All Localization strings (`Str_*`)
+- **FORBIDDEN:** Using `StaticResource` for any Brush, Font, or Size value in Shell UI XAML.
+- **Rationale:** `DynamicResource` enables runtime theme switching, UI density changes, and future preset customization. `StaticResource` freezes the lookup and prevents updates.
+
 ---
 
 ## 5) Theming
@@ -154,10 +168,25 @@ UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
   - `PrimaryTextBrush`
   - `PrimaryAccentBrush`
   - `PrimaryBorderBrush`
+  - `SidebarHoverBrush` — sidebar item hover background (theme-dependent)
+  - `SidebarBackgroundBrush` — sidebar panel background
+  - `IconStrokeBrush` — default icon stroke color (defaults to `PrimaryTextColor`, can be overridden for accent icon customization)
 
 ### 5.3 No Hardcoding
 - **FORBIDDEN:** Hardcoded colors, brushes, or FontFamily in XAML.
 - **MUST:** Font family comes from DynamicResource `App.MainFont`.
+
+### 5.4 Icon Accent Color Architecture
+- **MUST:** Icon stroke color comes from `DynamicResource IconStrokeBrush`, NOT directly from `PrimaryTextBrush`.
+- **MUST:** `IconStrokeBrush` defaults to `PrimaryTextColor` in both Light and Dark themes.
+- **SHOULD:** When user-selectable icon accent colors are implemented, swap `IconStrokeBrush` value at runtime (e.g., purple, orange, teal).
+- **MUST NOT:** Change text colors (`PrimaryTextBrush`) to match icon accent — text stays black/white per theme.
+- **Rationale:** Separating icon stroke from text color enables per-user icon color customization without affecting readability.
+
+### 5.5 Shared Style Location
+- **MUST:** Reusable component styles (e.g., `SidebarButtonStyle`) go in `GeneralResources.xaml`, referencing dynamic brushes.
+- **FORBIDDEN:** Defining component styles locally inside UserControl.Resources — this prevents theming and causes duplicated code.
+- **MUST:** Styles reference brush keys via `DynamicResource` so theme switches apply automatically.
 
 ---
 
