@@ -58,6 +58,7 @@
     <sys:Double x:Key="Shell.SidebarExpandedWidth">160</sys:Double>
     <sys:Double x:Key="Shell.SidebarItemHeight">48</sys:Double>
     <sys:Double x:Key="Shell.IconSlotWidth">48</sys:Double>
+    <sys:Double x:Key="Shell.HeaderHeight">48</sys:Double>
     <sys:Double x:Key="Shell.IconSize">20</sys:Double>
     <CornerRadius x:Key="Shell.SidebarCornerRadius">6</CornerRadius>
 

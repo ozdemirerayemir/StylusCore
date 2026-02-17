@@ -145,6 +145,22 @@
     
     <!-- X (Close) -->
     <StreamGeometry x:Key="Icon.Close">M18 6 L6 18 M6 6 L18 18</StreamGeometry>
+
+    <!-- ═══════════════════════════════ -->
+    <!-- WINDOW ICONS                    -->
+    <!-- ═══════════════════════════════ -->
+
+    <!-- Window Minimize -->
+    <StreamGeometry x:Key="Icon.WindowMinimize">M6 18L18 18</StreamGeometry>
+
+    <!-- Window Maximize -->
+    <StreamGeometry x:Key="Icon.WindowMaximize">M5 5h14v14H5z</StreamGeometry>
+
+    <!-- Window Restore -->
+    <StreamGeometry x:Key="Icon.WindowRestore">M5 19H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2M15 5h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4</StreamGeometry>
+
+    <!-- Window Close (UI) -->
+    <StreamGeometry x:Key="Icon.WindowClose">M18 6L6 18M6 6l12 12</StreamGeometry>
     
     <!-- Check -->
     <StreamGeometry x:Key="Icon.Check">M20 6 L9 17 L4 12</StreamGeometry>

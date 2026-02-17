@@ -4,7 +4,7 @@
         xmlns:controls="clr-namespace:StylusCore.App.Shared.Components"
         xmlns:views="clr-namespace:StylusCore.App.Features.Library.Views"
         xmlns:converters="clr-namespace:StylusCore.App.Shared.Converters"
-        Title="StylusCore"
+        Title="{DynamicResource Str_AppName}"
         Width="1280" Height="800"
         MinWidth="800" MinHeight="600"
         WindowStartupLocation="CenterScreen"
@@ -12,11 +12,10 @@
         WindowStyle="None"
         AllowsTransparency="False"
         ResizeMode="CanResize"
-        MouseDown="Window_MouseDown"
         StateChanged="Window_StateChanged">
 
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32"  
+        <WindowChrome CaptionHeight="{DynamicResource Shell.HeaderHeight}"  
                       ResizeBorderThickness="5"
                       GlassFrameThickness="0"
                       CornerRadius="0"

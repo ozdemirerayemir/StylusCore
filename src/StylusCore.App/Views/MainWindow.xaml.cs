@@ -41,6 +41,9 @@ namespace StylusCore.App.Views
             // Wire up Sidebar
             Sidebar.NavigationRequested += Sidebar_NavigationRequested;
             Sidebar.ToggleRequested += Sidebar_ToggleRequested;
+
+            // Subscribe to Close request
+            _viewModel.CloseRequested += (s, e) => Close();
         }
 
         private void Sidebar_ToggleRequested(object sender, EventArgs e)
@@ -74,22 +77,6 @@ namespace StylusCore.App.Views
                 {
                     // Force refresh/update state
                     (MainContentFrame.Content as LibraryView)?.UpdateViewState();
-                }
-            }
-        }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                // Logic: If click is on the window background (not handled by controls), allow drag.
-                try
-                {
-                    this.DragMove();
-                }
-                catch
-                {
-                    // DragMove can throw if called while not pressed, double safety.
                 }
             }
         }

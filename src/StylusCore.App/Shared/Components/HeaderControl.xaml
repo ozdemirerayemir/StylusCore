@@ -5,90 +5,106 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:StylusCore.App.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="45" d:DesignWidth="800">
-             
-    <UserControl.Resources>
-        <!-- Window Control Styles (Local or from StandardControls) -->
-        <Style TargetType="Button" x:Key="CaptionButtonStyle">
-            <Setter Property="Width" Value="46"/>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#1A000000"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#33000000"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+             d:DesignHeight="48" d:DesignWidth="800"
+             Height="{DynamicResource Shell.HeaderHeight}">
 
-        <Style TargetType="Button" x:Key="CloseButtonStyle" BasedOn="{StaticResource CaptionButtonStyle}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#E81123"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" Value="#CC0E1D"/>
-                    <Setter Property="Foreground" Value="White"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
+    <!-- Main Header Grid -->
+    <Grid Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/> <!-- 0: Identity (Icon + Title) -->
+            <ColumnDefinition Width="*"/>    <!-- 1: Drag Region -->
+            <ColumnDefinition Width="Auto"/> <!-- 2: Window Controls -->
+        </Grid.ColumnDefinitions>
 
-    <Border Background="{DynamicResource PrimaryBackgroundBrush}" BorderBrush="{DynamicResource PrimaryBorderBrush}" BorderThickness="0,0,0,1">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- 1. HOME BUTTON ("StylusCore") -->
-            <Button Grid.Column="0" 
-                    Background="Transparent" 
-                    BorderThickness="0" 
-                    Padding="12,0" 
+        <!-- COL 0: IDENTITY (No Drag) -->
+        <!-- Visible in Library, App Name Hidden in Editor -->
+        <StackPanel Grid.Column="0" 
+                    Orientation="Horizontal" 
                     WindowChrome.IsHitTestVisibleInChrome="True"
-                    Command="{Binding NavigateToLibraryRootCommand}"> <!-- Binding to ViewModel -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Width="22" Height="22" Background="#0078D4" CornerRadius="4" Margin="0,0,8,0">
-                        <TextBlock Text="S" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
-                    </Border>
-                    <TextBlock Text="StylusCore" FontWeight="SemiBold" FontSize="14" Foreground="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Center"/>
-                </StackPanel>
+                    Margin="12,0,0,0">
+            
+            <!-- Home/Library Button -->
+            <Button Command="{Binding NavigateToLibraryRootCommand}"
+                    Style="{DynamicResource IconButtonStyle}"
+                    Height="32" Width="32"
+                    VerticalAlignment="Center"
+                    ToolTip="{DynamicResource Str_Library}">
+                <!-- App Icon / Logo Placeholder -->
+                <!-- Using a simple rectangle/path for now if no dedicated Icon.Logo exists, or just S text -->
+                <Grid>
+                    <Path Data="{StaticResource Icon.Library}" 
+                          Style="{StaticResource IconBase}"
+                          Stroke="{DynamicResource PrimaryAccentBrush}"
+                          StrokeThickness="2.5"/>
+                </Grid>
             </Button>
 
-            <!-- 2. SPACER / BREADCRUMBS (Removed as per request) -->
-            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0" WindowChrome.IsHitTestVisibleInChrome="True">
-                 <!-- Breadcrumbs removed -->
-            </StackPanel>
+            <!-- App Name (Visible ONLY when IsEditorActive is FALSE) -->
+            <TextBlock Text="{DynamicResource Str_AppName}" 
+                       FontSize="14"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       Margin="12,0,0,0"
+                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       Visibility="{Binding IsEditorActive, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+        </StackPanel>
 
-            <!-- 3. WINDOW CONTROLS -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button Command="{Binding MinimizeCommand}" Style="{StaticResource CaptionButtonStyle}" ToolTip="Minimize">
-                    <Path Data="M0,7 L10,7 M0,7" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>
-                <!-- Maximize (Optional, maybe hidden in prototype but good to have) -->
-                <Button Command="{Binding MaximizeCommand}" Style="{StaticResource CaptionButtonStyle}" ToolTip="Maximize">
-                    <Path Data="M1,1 L9,1 L9,9 L1,9 Z" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>
-                <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButtonStyle}" ToolTip="Close">
-                    <Path Data="M0,0 L10,10 M0,10 L10,0" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" StrokeThickness="1" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>
-            </StackPanel>
-        </Grid>
-    </Border>
+        <!-- COL 1: DRAG REGION (Allow Drag) -->
+        <!-- WindowChrome.IsHitTestVisibleInChrome="False" means "Hit test goes to WindowChrome", which handles dragging.
+             If we set it to True, the element eats the click and prevents drag.
+             So for dragging, we generally want IsHitTestVisibleInChrome="False" on the background/container,
+             or just ensure NO element with IsHitTestVisibleInChrome="True" is blocking it.
+             Since the WindowChrome declaration in MainWindow covers the whole caption height, 
+             clicks on transparent areas fall through to the WindowChrome (Drag).
+             The only thing we need to be careful of is NOT putting a "True" element here. 
+             We leave this empty or explicitly False. -->
+        <Grid Grid.Column="1" Background="Transparent" WindowChrome.IsHitTestVisibleInChrome="False"/>
+
+        <!-- COL 2: WINDOW CONTROLS (No Drag) -->
+        <StackPanel Grid.Column="2" 
+                    Orientation="Horizontal" 
+                    WindowChrome.IsHitTestVisibleInChrome="True"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right">
+
+            <!-- Minimize -->
+            <Button Command="{Binding MinimizeCommand}" 
+                    Style="{DynamicResource CaptionButtonStyle}"
+                    ToolTip="{DynamicResource Str_Tooltip_Minimize}">
+                <Path Data="{StaticResource Icon.WindowMinimize}" 
+                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                      StrokeThickness="1" 
+                      SnapsToDevicePixels="True"/>
+            </Button>
+
+            <!-- Maximize / Restore -->
+            <Button Command="{Binding MaximizeCommand}" 
+                    Style="{DynamicResource CaptionButtonStyle}">
+                <Button.ToolTip>
+                     <ToolTip Content="{DynamicResource Str_Tooltip_Maximize}"/>
+                </Button.ToolTip>
+                <Grid>
+                    <!-- Maximize Icon (Show when Normal) -->
+                    <Path Data="{StaticResource Icon.WindowMaximize}" 
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                          StrokeThickness="1" 
+                          SnapsToDevicePixels="True"
+                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource NullToVisibilityConverter}}"/>
+                          <!-- TODO: Accurate WindowState binding requires a converter comparing to 'Maximized'. 
+                               For now static Maximize icon is acceptable for MVP compliance, 
+                               or we rely on the button command to toggle. -->
+                </Grid>
+            </Button>
+
+            <!-- Close -->
+            <Button Command="{Binding CloseCommand}" 
+                    Style="{DynamicResource CaptionCloseButtonStyle}"
+                    ToolTip="{DynamicResource Str_Tooltip_Close}">
+                <Path Data="{StaticResource Icon.WindowClose}" 
+                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                      StrokeThickness="1" 
+                      SnapsToDevicePixels="True"/>
+            </Button>
+        </StackPanel>
+    </Grid>
 </UserControl>

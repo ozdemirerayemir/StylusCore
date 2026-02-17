@@ -294,8 +294,19 @@ namespace StylusCore.App.Shell.ViewModels
                 : System.Windows.WindowState.Maximized;
         });
 
+        public RelayCommand RestoreCommand => new RelayCommand(o =>
+        {
+             var win = System.Windows.Application.Current.MainWindow;
+             if (win != null) win.WindowState = System.Windows.WindowState.Normal;
+        });
+
         public RelayCommand CloseCommand => new RelayCommand(o =>
-            System.Windows.Application.Current.Shutdown());
+        {
+             // MVVM-safe shutdown: Request view to close
+             CloseRequested?.Invoke(this, EventArgs.Empty);
+        });
+
+        public event EventHandler CloseRequested;
 
 
         public class RelayCommand : System.Windows.Input.ICommand

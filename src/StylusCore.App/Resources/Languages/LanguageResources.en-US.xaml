@@ -3,7 +3,13 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     
     <!-- General -->
-    <sys:String x:Key="Str_AppName">Stylus Core</sys:String>
+    <sys:String x:Key="Str_AppName">StylusCore</sys:String>
+
+    <!-- Window Controls -->
+    <sys:String x:Key="Str_Tooltip_Minimize">Minimize</sys:String>
+    <sys:String x:Key="Str_Tooltip_Maximize">Maximize</sys:String>
+    <sys:String x:Key="Str_Tooltip_Restore">Restore</sys:String>
+    <sys:String x:Key="Str_Tooltip_Close">Close</sys:String>
     <sys:String x:Key="Str_Cancel">Cancel</sys:String>
     <sys:String x:Key="Str_Save">Save</sys:String>
     <sys:String x:Key="Str_Delete">Delete</sys:String>
