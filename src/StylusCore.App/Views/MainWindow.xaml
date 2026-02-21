@@ -24,12 +24,21 @@
 
     <!-- Main Window Border (Rounded Corners) -->
     <Border Background="{DynamicResource PrimaryBackgroundBrush}"
-            CornerRadius="12"
+            CornerRadius="0"
             BorderBrush="{DynamicResource PrimaryBorderBrush}"
             BorderThickness="1">
 
             <!-- GLOBAL GRID STRUCTURE (Clean Shell) -->
             <Grid>
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                                <Setter Property="Margin" Value="8"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/> <!-- Row 0: Header -->
                     <RowDefinition Height="Auto"/> <!-- Row 1: Ribbon (Editor Only) -->

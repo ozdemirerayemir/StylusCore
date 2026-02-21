@@ -60,4 +60,35 @@ namespace StylusCore.App.Shared.Converters
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// Converts WindowState to Visibility.
+    /// Visible when Maximized by default, otherwise Collapsed.
+    /// Pass "Inverse" parameter to invert behavior.
+    /// </summary>
+    public class WindowStateToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is not WindowState windowState)
+            {
+                return Visibility.Collapsed;
+            }
+
+            var isInverse = string.Equals(parameter as string, "Inverse", StringComparison.OrdinalIgnoreCase);
+            var isVisible = windowState == WindowState.Maximized;
+
+            if (isInverse)
+            {
+                isVisible = !isVisible;
+            }
+
+            return isVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

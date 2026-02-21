@@ -621,6 +621,7 @@
         <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Width" Value="46"/> <!-- Standard windows caption width -->
+        <Setter Property="Height" Value="32"/> <!-- Standard windows caption height -->
         <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>

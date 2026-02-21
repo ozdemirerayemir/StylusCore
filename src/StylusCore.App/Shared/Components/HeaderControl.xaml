@@ -64,17 +64,18 @@
         <StackPanel Grid.Column="2" 
                     Orientation="Horizontal" 
                     WindowChrome.IsHitTestVisibleInChrome="True"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Stretch"
                     HorizontalAlignment="Right">
-
             <!-- Minimize -->
             <Button Command="{Binding MinimizeCommand}" 
                     Style="{DynamicResource CaptionButtonStyle}"
                     ToolTip="{DynamicResource Str_Tooltip_Minimize}">
-                <Path Data="{StaticResource Icon.WindowMinimize}" 
-                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                      StrokeThickness="1" 
-                      SnapsToDevicePixels="True"/>
+                <Grid Width="12" Height="12">
+                    <Path Data="{StaticResource Icon.WindowMinimize}" 
+                          Style="{StaticResource IconBase}"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                          StrokeThickness="1" />
+                </Grid>
             </Button>
 
             <!-- Maximize / Restore -->
@@ -83,16 +84,20 @@
                 <Button.ToolTip>
                      <ToolTip Content="{DynamicResource Str_Tooltip_Maximize}"/>
                 </Button.ToolTip>
-                <Grid>
+                <Grid Width="12" Height="12">
                     <!-- Maximize Icon (Show when Normal) -->
                     <Path Data="{StaticResource Icon.WindowMaximize}" 
+                          Style="{StaticResource IconBase}"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
                           StrokeThickness="1" 
-                          SnapsToDevicePixels="True"
-                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource NullToVisibilityConverter}}"/>
-                          <!-- TODO: Accurate WindowState binding requires a converter comparing to 'Maximized'. 
-                               For now static Maximize icon is acceptable for MVP compliance, 
-                               or we rely on the button command to toggle. -->
+                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToVisibilityConverter}, ConverterParameter=Normal}"/>
+                    
+                    <!-- Restore Icon (Show when Maximized) -->
+                    <Path Data="{StaticResource Icon.WindowRestore}" 
+                          Style="{StaticResource IconBase}"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                          StrokeThickness="1" 
+                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToVisibilityConverter}, ConverterParameter=Maximized}"/>
                 </Grid>
             </Button>
 
@@ -100,10 +105,12 @@
             <Button Command="{Binding CloseCommand}" 
                     Style="{DynamicResource CaptionCloseButtonStyle}"
                     ToolTip="{DynamicResource Str_Tooltip_Close}">
-                <Path Data="{StaticResource Icon.WindowClose}" 
-                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                      StrokeThickness="1" 
-                      SnapsToDevicePixels="True"/>
+                <Grid Width="12" Height="12">
+                    <Path Data="{StaticResource Icon.WindowClose}" 
+                          Style="{StaticResource IconBase}"
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
+                          StrokeThickness="1" />
+                </Grid>
             </Button>
         </StackPanel>
     </Grid>
