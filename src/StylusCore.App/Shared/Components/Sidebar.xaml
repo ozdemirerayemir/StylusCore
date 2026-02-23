@@ -9,9 +9,8 @@
     <!-- SidebarButtonStyle is now in GeneralResources.xaml (no local style needed) -->
 
     <!-- Ana Container: Border ile sağ çizgi -->
-    <Border Background="{DynamicResource SidebarBackgroundBrush}"
-            BorderBrush="{DynamicResource PrimaryBorderBrush}"
-            BorderThickness="0,0,1,0">
+    <Border Background="{DynamicResource AppShellBackgroundBrush}"
+            BorderThickness="0">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -43,10 +42,11 @@
 
             <!-- ROW 1: Navigation Items -->
             <StackPanel Grid.Row="1" Margin="0,8,0,0">
-                <!-- Library Button -->
-                <Button Style="{DynamicResource SidebarButtonStyle}"
+                <!-- Library Button (Active by default on Library screen) -->
+                <Button x:Name="LibraryButton"
+                        Style="{DynamicResource SidebarActiveButtonStyle}"
                         Click="Library_Click"
-                        ToolTip="Library"
+                        ToolTip="{DynamicResource Str_Library}"
                         AutomationProperties.Name="Navigate to Library">
                     <StackPanel Orientation="Horizontal">
                         <Grid Width="{DynamicResource Shell.IconSlotWidth}"
@@ -55,8 +55,10 @@
                                   Height="{DynamicResource Shell.IconSize}"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
-                                <Path Data="{StaticResource Icon.Library}" 
+                                <Path x:Name="LibraryIcon"
+                                      Data="{StaticResource Icon.Library}" 
                                       Style="{DynamicResource IconBase}"
+                                      Stroke="{DynamicResource SidebarActiveTextBrush}"
                                       Stretch="Uniform"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
@@ -65,7 +67,8 @@
                                    Text="{DynamicResource Str_Library}"
                                    VerticalAlignment="Center"
                                    FontSize="{DynamicResource FontSize_Body}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource SidebarActiveTextBrush}"
                                    Visibility="Collapsed"
                                    Margin="0,0,16,0"/>
                     </StackPanel>
@@ -75,7 +78,7 @@
                 <Button x:Name="BookButton" 
                         Style="{DynamicResource SidebarButtonStyle}" 
                         Command="{Binding MapsToBookListCommand}"
-                        ToolTip="Books"
+                        ToolTip="{DynamicResource Str_Book}"
                         AutomationProperties.Name="Navigate to Book List"
                         Visibility="{Binding IsEditorActive, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
@@ -106,7 +109,7 @@
             <StackPanel Grid.Row="2">
                 <Button Style="{DynamicResource SidebarButtonStyle}"
                         Click="Settings_Click"
-                        ToolTip="Settings"
+                        ToolTip="{DynamicResource Str_Settings}"
                         AutomationProperties.Name="Navigate to Settings">
                     <StackPanel Orientation="Horizontal">
                         <Grid Width="{DynamicResource Shell.IconSlotWidth}"

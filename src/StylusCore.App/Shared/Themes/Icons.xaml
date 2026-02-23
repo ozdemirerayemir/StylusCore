@@ -154,10 +154,10 @@
     <StreamGeometry x:Key="Icon.WindowMinimize">M2 13h20</StreamGeometry>
 
     <!-- Window Maximize (Square) -->
-    <StreamGeometry x:Key="Icon.WindowMaximize">M4 4h16v16H4V4zm2 2v12h12V6H6z</StreamGeometry>
+    <StreamGeometry x:Key="Icon.WindowMaximize">M4 4h16v16H4Z</StreamGeometry>
 
     <!-- Window Restore (Double Squares) -->
-    <StreamGeometry x:Key="Icon.WindowRestore">M4 8H2v14h14v-2h6V4H8v4zm2 12V10h10v10H6zm4-12V6h10v10h-2V8h-8z</StreamGeometry>
+    <StreamGeometry x:Key="Icon.WindowRestore">M8 4h12v12h-4v4H4V8h4V4z M8 8h8v8</StreamGeometry>
 
     <!-- Window Close (UI - Cross) -->
     <StreamGeometry x:Key="Icon.WindowClose">M5 5l14 14M19 5L5 19</StreamGeometry>
@@ -179,5 +179,27 @@
 
     <!-- Drag Handle (Vertical Dots) -->
     <StreamGeometry x:Key="Icon.DragHandle">M12 5a2 2 0 1 0 0 4 2 2 0 1 0 0-4zm0 7a2 2 0 1 0 0 4 2 2 0 1 0 0-4zm0 7a2 2 0 1 0 0 4 2 2 0 1 0 0-4z</StreamGeometry>
+
+    <!-- ═══════════════════════════════ -->
+    <!-- LIBRARY VIEW ICONS              -->
+    <!-- ═══════════════════════════════ -->
+
+    <!-- Clock (Time / Recently Updated) -->
+    <StreamGeometry x:Key="Icon.Clock">M12 12 m-10 0 a10 10 0 1 0 20 0 a10 10 0 1 0-20 0 M12 6v6l4 2</StreamGeometry>
+
+    <!-- Layout Grid (Grid View) -->
+    <StreamGeometry x:Key="Icon.LayoutGrid">M3 3h7v7H3z M14 3h7v7h-7z M14 14h7v7h-7z M3 14h7v7H3z</StreamGeometry>
+
+    <!-- List (List View) -->
+    <StreamGeometry x:Key="Icon.List">M3 5h.01 M3 12h.01 M3 19h.01 M8 5h13 M8 12h13 M8 19h13</StreamGeometry>
+
+    <!-- Arrow Up Down (Sort) -->
+    <StreamGeometry x:Key="Icon.ArrowUpDown">M21 16l-4 4-4-4 M17 20V4 M3 8l4-4 4 4 M7 4v16</StreamGeometry>
+
+    <!-- More Vertical (3-dots vertical) -->
+    <StreamGeometry x:Key="Icon.MoreVertical">M12 5a1 1 0 1 0 0 2 1 1 0 1 0 0-2z M12 11a1 1 0 1 0 0 2 1 1 0 1 0 0-2z M12 17a1 1 0 1 0 0 2 1 1 0 1 0 0-2z</StreamGeometry>
+
+    <!-- File Text (Document) -->
+    <StreamGeometry x:Key="Icon.FileText">M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z M14 2v5a1 1 0 0 0 1 1h5 M10 9H8 M16 13H8 M16 17H8</StreamGeometry>
 
 </ResourceDictionary>

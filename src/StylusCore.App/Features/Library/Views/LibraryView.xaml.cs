@@ -48,7 +48,6 @@ namespace StylusCore.App.Features.Library.Views
             {
                 // Viewing notebooks inside a library
                 PageTitle.Text = _viewModel.SelectedLibrary.Name;
-                PageTitle.Text = _viewModel.SelectedLibrary.Name;
                 // BackButton.Visibility = Visibility.Visible; (Removed)
                 NewLibraryButton.Visibility = Visibility.Collapsed;
                 NewNotebookButton.Visibility = Visibility.Visible;
@@ -65,8 +64,7 @@ namespace StylusCore.App.Features.Library.Views
             else
             {
                 // Viewing libraries
-                PageTitle.Text = "Library";
-                PageTitle.Text = "Library";
+                PageTitle.Text = TryFindResource("Str_Library") as string ?? "Library";
                 // BackButton.Visibility = Visibility.Collapsed; (Removed)
                 NewLibraryButton.Visibility = Visibility.Visible;
                 NewNotebookButton.Visibility = Visibility.Collapsed;
@@ -86,7 +84,9 @@ namespace StylusCore.App.Features.Library.Views
         private async void NewLibrary_Click(object sender, RoutedEventArgs e)
         {
             // Show input dialog for library name
-            var name = ShowInputDialog("New Library", "Enter library name:");
+            var dialogTitle = TryFindResource("Str_CreateNewLibrary") as string ?? "Create New Library";
+            var dialogPrompt = TryFindResource("Str_LibraryName") as string ?? "Library Name";
+            var name = ShowInputDialog(dialogTitle, dialogPrompt);
             if (!string.IsNullOrWhiteSpace(name))
             {
                 await _viewModel.CreateLibraryAsync(name);
@@ -156,7 +156,17 @@ namespace StylusCore.App.Features.Library.Views
 
         private LibraryModel GetLibraryFromMenuItem(object sender)
         {
-            if (sender is MenuItem item && item.DataContext is LibraryModel library) return library;
+            if (sender is FrameworkElement element)
+            {
+                // Retrieve the library from the Menu/Button's Tag
+                if (element.Tag is LibraryModel tagLibrary) return tagLibrary;
+
+                // Retrieve the library from the ContextMenu PlacementTarget
+                if (element is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
+                {
+                    if (contextMenu.PlacementTarget is FrameworkElement target && target.Tag is LibraryModel targetLibrary) return targetLibrary;
+                }
+            }
             return null;
         }
 
@@ -165,7 +175,9 @@ namespace StylusCore.App.Features.Library.Views
             var library = GetLibraryFromMenuItem(sender);
             if (library == null) return;
 
-            var newName = ShowInputDialog("Rename Library", "Enter new name:");
+            var dialogTitle = TryFindResource("Str_Rename") as string ?? "Rename";
+            var dialogPrompt = TryFindResource("Str_NewName") as string ?? "New Name";
+            var newName = ShowInputDialog(dialogTitle, dialogPrompt);
             if (!string.IsNullOrWhiteSpace(newName))
             {
                 library.Name = newName;
@@ -238,35 +250,50 @@ namespace StylusCore.App.Features.Library.Views
 
         private void ChangeNotebookColor_Click(object sender, RoutedEventArgs e)
         {
-            var notebook = GetNotebookFromMenuItem(sender);
-            if (notebook != null)
+            if (sender is FrameworkElement fe && fe.DataContext is CoverColor selectedColor)
             {
-                var dialog = new ColorPickerDialog();
-                // Optional: Set owner if possible to ensure it's on top
-                if (Window.GetWindow(this) is Window owner) dialog.Owner = owner;
-
-                if (dialog.ShowDialog() == true)
+                var notebook = GetNotebookFromMenuItem(sender);
+                if (notebook != null)
                 {
-                    // Map selected Media.Color to CoverColor Enum
-                    // Since we only have specific enum values, we find the closest match or simple map.
-                    // The Dialog returns: Red, Orange, Yellow, Green, Blue, Indigo, Violet, etc.
-                    // Enum: Purple, Blue, Green, Yellow, Red, Pink, Orange, Teal.
-
-                    var c = dialog.SelectedColor;
-                    CoverColor newColor = CoverColor.Blue; // Default
-
-                    // Simple heuristic mapping
-                    if (AreColorsSimilar(c, System.Windows.Media.Colors.Red)) newColor = CoverColor.Red;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Orange)) newColor = CoverColor.Orange;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Yellow)) newColor = CoverColor.Yellow;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Green)) newColor = CoverColor.Green;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Blue)) newColor = CoverColor.Blue;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Purple) || AreColorsSimilar(c, System.Windows.Media.Colors.Indigo)) newColor = CoverColor.Purple;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Pink) || AreColorsSimilar(c, System.Windows.Media.Colors.Magenta)) newColor = CoverColor.Pink;
-                    else if (AreColorsSimilar(c, System.Windows.Media.Colors.Teal) || AreColorsSimilar(c, System.Windows.Media.Colors.Cyan)) newColor = CoverColor.Teal;
-
-                    notebook.CoverColor = newColor;
+                    notebook.CoverColor = selectedColor;
                     UpdateViewState();
+
+                    var parent = fe.Parent;
+                    while (parent != null)
+                    {
+                        if (parent is ContextMenu cm)
+                        {
+                            cm.IsOpen = false;
+                            break;
+                        }
+                        parent = System.Windows.Media.VisualTreeHelper.GetParent(parent);
+                    }
+                }
+            }
+        }
+
+        private void ChangeLibraryColor_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe && fe.DataContext is CoverColor selectedColor)
+            {
+                // We need to find which library's context menu was open. We can pass the library via the Button's Tag.
+                var library = GetLibraryFromMenuItem(sender);
+                if (library != null)
+                {
+                    library.CoverColor = selectedColor;
+                    UpdateViewState();
+
+                    // Close the context menu
+                    var parent = fe.Parent;
+                    while (parent != null)
+                    {
+                        if (parent is ContextMenu cm)
+                        {
+                            cm.IsOpen = false;
+                            break;
+                        }
+                        parent = System.Windows.Media.VisualTreeHelper.GetParent(parent);
+                    }
                 }
             }
         }
@@ -298,10 +325,16 @@ namespace StylusCore.App.Features.Library.Views
 
         private Notebook GetNotebookFromMenuItem(object sender)
         {
-            if (sender is MenuItem menuItem)
+            if (sender is FrameworkElement element)
             {
-                var contextMenu = menuItem.Parent as ContextMenu;
-                return (contextMenu?.PlacementTarget as FrameworkElement)?.Tag as Notebook;
+                // Retrieve the notebook from the Menu/Button's Tag
+                if (element.Tag is Notebook tagNotebook) return tagNotebook;
+
+                // Retrieve the notebook from the ContextMenu PlacementTarget
+                if (element is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu)
+                {
+                    if (contextMenu.PlacementTarget is FrameworkElement target && target.Tag is Notebook targetNotebook) return targetNotebook;
+                }
             }
             return null;
         }

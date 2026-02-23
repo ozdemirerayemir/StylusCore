@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using StylusCore.Core.Enums;
 
 namespace StylusCore.Core.Models
 {
@@ -48,7 +49,7 @@ namespace StylusCore.Core.Models
         }
 
         /// <summary>
-        /// Library icon or color identifier
+        /// Library icon or color identifier (Legacy)
         /// </summary>
         public string IconId
         {
@@ -56,6 +57,20 @@ namespace StylusCore.Core.Models
             set
             {
                 _iconId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private CoverColor _coverColor;
+        /// <summary>
+        /// Cover color for the library card
+        /// </summary>
+        public CoverColor CoverColor
+        {
+            get => _coverColor;
+            set
+            {
+                _coverColor = value;
                 OnPropertyChanged();
             }
         }
@@ -108,6 +123,7 @@ namespace StylusCore.Core.Models
             _name = string.Empty;
             _description = string.Empty;
             _iconId = string.Empty;
+            _coverColor = CoverColor.Orange; // Default gradient
             CreatedAt = DateTime.Now;
             ModifiedAt = DateTime.Now;
             Notebooks = new ObservableCollection<Notebook>();

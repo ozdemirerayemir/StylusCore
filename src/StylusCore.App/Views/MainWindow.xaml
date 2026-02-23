@@ -8,7 +8,7 @@
         Width="1280" Height="800"
         MinWidth="800" MinHeight="600"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource PrimaryBackgroundBrush}"
+        Background="{DynamicResource AppShellBackgroundBrush}"
         WindowStyle="None"
         AllowsTransparency="False"
         ResizeMode="CanResize"
@@ -23,7 +23,7 @@
     </WindowChrome.WindowChrome>
 
     <!-- Main Window Border (Rounded Corners) -->
-    <Border Background="{DynamicResource PrimaryBackgroundBrush}"
+    <Border Background="{DynamicResource AppShellBackgroundBrush}"
             CornerRadius="0"
             BorderBrush="{DynamicResource PrimaryBorderBrush}"
             BorderThickness="1">
@@ -41,109 +41,14 @@
                 </Grid.Style>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/> <!-- Row 0: Header -->
-                    <RowDefinition Height="Auto"/> <!-- Row 1: Ribbon (Editor Only) -->
-                    <RowDefinition Height="*"/>    <!-- Row 2: Body (Sidebar + Content) -->
+                    <RowDefinition Height="*"/>    <!-- Row 1: Body (Sidebar + Content) -->
                 </Grid.RowDefinitions>
     
                 <!-- ROW 0: GLOBAL HEADER -->
                 <controls:HeaderControl Grid.Row="0" Panel.ZIndex="1000"/>
 
-                <!-- ROW 1: RIBBON (Visible only in Editor Mode) -->
-                <Border Grid.Row="1"
-                        Background="{DynamicResource TertiaryBackgroundBrush}"
-                        BorderBrush="{DynamicResource PrimaryBorderBrush}"
-                        BorderThickness="0,0,0,1"
-                        Padding="8,4"
-                        Visibility="{Binding IsRibbonVisible, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Ribbon Content -->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal"
-                                    Visibility="{Binding IsRibbonFull, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <!-- Group: Selection -->
-                            <StackPanel Orientation="Horizontal" Margin="0,0,16,0">
-                                <!-- Select Tool -->
-                                <Button ToolTip="{DynamicResource Str_Tooltip_Select}" Style="{DynamicResource IconButtonStyle}" 
-                                        Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                        Command="{Binding SelectToolCommand}">
-                                    <Path Data="{StaticResource Icon.Select}" Style="{StaticResource IconBase}"/>
-                                </Button>
-                                <!-- Lasso Select -->
-                                <Button ToolTip="{DynamicResource Str_Tooltip_Lasso}" Style="{DynamicResource IconButtonStyle}" 
-                                        Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                        Margin="{DynamicResource Margin_Small}">
-                                    <Path Data="{StaticResource Icon.Lasso}" Style="{StaticResource IconBase}"/>
-                                </Button>
-                            </StackPanel>
-
-                            <!-- Divider -->
-                            <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="8,8,16,8"/>
-
-                            <!-- Group: Tools -->
-                            <StackPanel Orientation="Horizontal">
-                                <!-- Pen -->
-                                <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
-                                    <Grid>
-                                        <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}"/>
-                                        <!-- Color Indicator (TODO: Make Dynamic) -->
-                                        <Ellipse Width="8" Height="8" Fill="{DynamicResource PrimaryTextBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
-                                    </Grid>
-                                </Button>
-                                <!-- Pen (Red) -->
-                                <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
-                                    <Grid>
-                                        <Path Data="{StaticResource Icon.Pen}" Style="{StaticResource IconBase}" Stroke="{DynamicResource AccentBrush}"/>
-                                        <Ellipse Width="8" Height="8" Fill="{DynamicResource AccentBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
-                                    </Grid>
-                                </Button>
-                                <!-- Highlighter -->
-                                <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
-                                    <Path Data="{StaticResource Icon.Highlighter}" Style="{StaticResource IconBase}" Stroke="{DynamicResource HighlightBrush}" Fill="{DynamicResource HighlightFillBrush}"/>
-                                </Button>
-                                <!-- Eraser -->
-                                <Button Width="40" Height="40" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
-                                    <Path Data="{StaticResource Icon.Eraser}" Style="{StaticResource IconBase}"/>
-                                </Button>
-                            </StackPanel>
-
-                            <!-- Divider -->
-                            <Rectangle Width="1" Fill="{DynamicResource PrimaryBorderBrush}" Margin="16,8,16,8"/>
-
-                            <!-- Group: Shapes -->
-                            <StackPanel Orientation="Horizontal">
-                                <!-- Rect -->
-                                <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                        Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
-                                    <Path Data="{StaticResource Icon.Rectangle}" Style="{StaticResource IconBase}"/>
-                                </Button>
-                            </StackPanel>
-
-                            <!-- Group: Ink to Shape -->
-                            <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                    Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
-                                <Path Data="{StaticResource Icon.InkToShape}" Style="{StaticResource IconBase}"/>
-                            </Button>
-                        </StackPanel>
-
-                        <!-- Ribbon Display Options (Right Aligned) -->
-                        <Button Grid.Column="1" 
-                                ToolTip="{DynamicResource Str_Tooltip_CycleRibbonMode}" 
-                                Style="{DynamicResource IconButtonStyle}"
-                                Width="{DynamicResource Height_Button_Standard}" 
-                                Height="{DynamicResource Height_Button_Standard}"
-                                Command="{Binding CycleRibbonModeCommand}"
-                                Margin="0,0,8,0">
-                            <Path Data="{StaticResource Icon.ChevronDown}" Style="{StaticResource IconBase}"/>
-                        </Button>
-                    </Grid>
-                </Border>
-    
-                <!-- ROW 2: MAIN BODY (Sidebar + Content) -->
-                <Grid Grid.Row="2">
+                <!-- ROW 1: MAIN BODY (Sidebar + Content) -->
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition x:Name="SidebarColumn" Width="48"/> <!-- Sabit, code-behind'dan güncellenir -->
                         <ColumnDefinition Width="*"/>
@@ -152,9 +57,19 @@
                     <!-- SIDEBAR -->
                     <controls:Sidebar x:Name="Sidebar" Grid.Column="0" Loaded="Sidebar_Loaded"/>
     
-                    <!-- MAIN CONTENT -->
-                    <Border Grid.Column="1" Background="{DynamicResource SecondaryBackgroundBrush}">
-                        <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
+                    <!-- MAIN CONTENT (Rounded top-left corner) -->
+                    <Border Grid.Column="1"
+                            Background="{DynamicResource ContentAreaBackgroundBrush}"
+                            CornerRadius="{DynamicResource Library.ContentCornerRadius}"
+                            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                            BorderThickness="1,1,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="Black" Direction="135" ShadowDepth="2" Opacity="0.04" BlurRadius="8"/>
+                        </Border.Effect>
+                        <Border CornerRadius="{DynamicResource Library.ContentCornerRadius}"
+                                ClipToBounds="True">
+                            <Frame x:Name="MainContentFrame" NavigationUIVisibility="Hidden"/>
+                        </Border>
                     </Border>
                 </Grid>
             </Grid>

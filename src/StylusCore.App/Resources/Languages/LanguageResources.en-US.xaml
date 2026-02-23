@@ -29,8 +29,8 @@
     <sys:String x:Key="Str_NewLibrary">+ New Library</sys:String>
     <sys:String x:Key="Str_NewNotebook">+ New Notebook</sys:String>
     <sys:String x:Key="Str_NewBook">+ New Book</sys:String>
-    <sys:String x:Key="Str_NotebooksCount">notebooks</sys:String>
-    <sys:String x:Key="Str_PagesCount">pages</sys:String>
+    <sys:String x:Key="Str_NotebooksCount">Notebooks</sys:String>
+    <sys:String x:Key="Str_PagesCount">Pages</sys:String>
     <sys:String x:Key="Str_NoLibraries">No libraries yet</sys:String>
     <sys:String x:Key="Str_CreateFirstLibrary">Create Your First Library</sys:String>
     <sys:String x:Key="Str_NoNotebooks">No notebooks in this library</sys:String>
@@ -39,6 +39,8 @@
     <!-- Search -->
     <sys:String x:Key="Str_SearchSubjects">Search subjects...</sys:String>
     <sys:String x:Key="Str_SearchPlaceholder">Search...</sys:String>
+    <sys:String x:Key="Str_SearchLibraries">Search libraries...</sys:String>
+    <sys:String x:Key="Str_SearchNotebooks">Search notebooks...</sys:String>
     <sys:String x:Key="Str_EnterLibraryName">Enter library name:</sys:String>
     <sys:String x:Key="Str_EnterNotebookName">Enter new name:</sys:String>
     
@@ -73,6 +75,11 @@
     <!-- Dialogs -->
     <sys:String x:Key="Str_SelectColor">Select Color</sys:String>
     <sys:String x:Key="Str_Name">Name</sys:String>
+    <sys:String x:Key="Str_CreateNewLibrary">Create New Library</sys:String>
+    <sys:String x:Key="Str_CreateNewNotebook">Create New Notebook</sys:String>
+    <sys:String x:Key="Str_NewName">New Name</sys:String>
+    <sys:String x:Key="Str_LibraryName">Library Name</sys:String>
+    <sys:String x:Key="Str_NotebookName">Notebook Name</sys:String>
     <sys:String x:Key="Str_PageFormat">Page Format</sys:String>
     <sys:String x:Key="Str_Orientation">Orientation</sys:String>
     <sys:String x:Key="Str_Portrait">Portrait</sys:String>
@@ -88,6 +95,19 @@
     <sys:String x:Key="Str_Format_A3">A3 (297 × 420 mm)</sys:String>
     <sys:String x:Key="Str_Format_Letter">Letter (8.5 × 11 in)</sys:String>
     <sys:String x:Key="Str_Format_Infinite">Infinite (No boundaries)</sys:String>
+
+    <!-- Sort Options -->
+    <sys:String x:Key="Str_SortBy">Sort By</sys:String>
+    <sys:String x:Key="Str_Sort_MostUsed">Most used</sys:String>
+    <sys:String x:Key="Str_Sort_RecentlyOpened">Recently opened</sys:String>
+    <sys:String x:Key="Str_Sort_RecentlyUpdated">Recently updated</sys:String>
+    <sys:String x:Key="Str_Sort_Newest">Newest</sys:String>
+    <sys:String x:Key="Str_Sort_NameAsc">A → Z</sys:String>
+    <sys:String x:Key="Str_Sort_NameDesc">Z → A</sys:String>
+
+    <!-- View Modes -->
+    <sys:String x:Key="Str_GridView">Grid View</sys:String>
+    <sys:String x:Key="Str_ListView">List View</sys:String>
 
     <!-- Settings View -->
     <sys:String x:Key="Str_AutoSave">Auto-Save</sys:String>
@@ -129,6 +149,7 @@
     <sys:String x:Key="Str_Editor_DeleteSection">Delete Section</sys:String>
     <sys:String x:Key="Str_Editor_DeleteSectionConfirm">Are you sure you want to delete section '{0}'?&#x0a;&#x0a;Pages will not be deleted, they will become unsectioned.</sys:String>
     <sys:String x:Key="Str_Recent">Recent</sys:String>
+    <sys:String x:Key="Str_JustNow">Just now</sys:String>
     <sys:String x:Key="Str_Editor_EmptySection">(empty)</sys:String>
     <sys:String x:Key="Str_Editor_PageRange_Format">({0}-{1})</sys:String>
     <sys:String x:Key="Str_Editor_PageSingle_Format">({0})</sys:String>

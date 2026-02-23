@@ -75,6 +75,12 @@ namespace StylusCore.App.Shared.Converters
                 return Visibility.Collapsed;
             }
 
+            if (parameter is string targetStateStr && Enum.TryParse<WindowState>(targetStateStr, out var targetState))
+            {
+                return windowState == targetState ? Visibility.Visible : Visibility.Collapsed;
+            }
+
+            // Fallback legacy Inverse logic
             var isInverse = string.Equals(parameter as string, "Inverse", StringComparison.OrdinalIgnoreCase);
             var isVisible = windowState == WindowState.Maximized;
 

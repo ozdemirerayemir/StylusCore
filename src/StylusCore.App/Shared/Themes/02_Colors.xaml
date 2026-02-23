@@ -1,0 +1,79 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================================================================== -->
+    <!-- SECTION COLORS                                                      -->
+    <!-- ================================================================== -->
+    
+    <Color x:Key="Color.Section.Purple">#7C3AED</Color>
+    <Color x:Key="Color.Section.Blue">#2563EB</Color>
+    <Color x:Key="Color.Section.Green">#059669</Color>
+    <Color x:Key="Color.Section.Yellow">#D97706</Color>
+    <Color x:Key="Color.Section.Red">#DC2626</Color>
+    <Color x:Key="Color.Section.Pink">#DB2777</Color>
+    <Color x:Key="Color.Shadow">#000000</Color>
+    
+    <SolidColorBrush x:Key="Brush.Section.Purple" Color="{StaticResource Color.Section.Purple}"/>
+    <SolidColorBrush x:Key="Brush.Section.Blue" Color="{StaticResource Color.Section.Blue}"/>
+    <SolidColorBrush x:Key="Brush.Section.Green" Color="{StaticResource Color.Section.Green}"/>
+    <SolidColorBrush x:Key="Brush.Section.Yellow" Color="{StaticResource Color.Section.Yellow}"/>
+    <SolidColorBrush x:Key="Brush.Section.Red" Color="{StaticResource Color.Section.Red}"/>
+    <SolidColorBrush x:Key="Brush.Section.Pink" Color="{StaticResource Color.Section.Pink}"/>
+
+    <!-- ================================================================== -->
+    <!-- LIBRARY / NOTEBOOK COVER GRADIENTS                                  -->
+    <!-- ================================================================== -->
+
+    <LinearGradientBrush x:Key="Gradient.Cover.Orange" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FB923C" Offset="0"/>
+        <GradientStop Color="#F43F5E" Offset="0.5"/>
+        <GradientStop Color="#EC4899" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Gradient.Cover.Blue" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#60A5FA" Offset="0"/>
+        <GradientStop Color="#6366F1" Offset="0.5"/>
+        <GradientStop Color="#A855F7" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Gradient.Cover.Emerald" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#34D399" Offset="0"/>
+        <GradientStop Color="#2DD4BF" Offset="0.5"/>
+        <GradientStop Color="#06B6D4" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Gradient.Cover.Purple" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#A855F7" Offset="0"/>
+        <GradientStop Color="#7C3AED" Offset="0.5"/>
+        <GradientStop Color="#4F46E5" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="Gradient.Cover.Dark" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#374151" Offset="0"/>
+        <GradientStop Color="#1F2937" Offset="0.5"/>
+        <GradientStop Color="#111827" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- ================================================================== -->
+    <!-- STATIC UTILITY BRUSHES                                             -->
+    <!-- ================================================================== -->
+    <SolidColorBrush x:Key="Solid.White" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="Solid.White33" Color="#33FFFFFF"/>
+    <SolidColorBrush x:Key="Solid.White50" Color="#80FFFFFF"/>
+    <SolidColorBrush x:Key="Solid.White15" Color="#26FFFFFF"/>
+    <SolidColorBrush x:Key="Solid.Black" Color="#000000"/>
+    <SolidColorBrush x:Key="Solid.Black05" Color="#0D000000"/>
+
+    <!-- ================================================================== -->
+    <!-- NOTEBOOK COVER BRUSHES                                             -->
+    <!-- ================================================================== -->
+    <SolidColorBrush x:Key="NotebookCoverBrush_Purple" Color="{StaticResource Color.Section.Purple}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Blue" Color="{StaticResource Color.Section.Blue}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Green" Color="{StaticResource Color.Section.Green}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Yellow" Color="{StaticResource Color.Section.Yellow}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Red" Color="{StaticResource Color.Section.Red}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Pink" Color="{StaticResource Color.Section.Pink}"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Orange" Color="#FB923C"/>
+    <SolidColorBrush x:Key="NotebookCoverBrush_Teal" Color="#2DD4BF"/>
+
+</ResourceDictionary>

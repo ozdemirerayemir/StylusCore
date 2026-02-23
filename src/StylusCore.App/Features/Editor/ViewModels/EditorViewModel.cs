@@ -199,7 +199,7 @@ namespace StylusCore.App.Features.Editor.ViewModels
         /// Command to cycle ribbon mode: Full → TabsOnly → Hidden → Full
         /// </summary>
         public ICommand CycleRibbonModeCommand => _cycleRibbonModeCommand ??=
-            new MainViewModel.RelayCommand(o => CycleRibbonMode());
+            new RelayCommand(o => CycleRibbonMode());
 
         private void CycleRibbonMode()
         {
@@ -212,12 +212,44 @@ namespace StylusCore.App.Features.Editor.ViewModels
             };
         }
 
+        private ICommand _selectToolCommand;
+        public ICommand SelectToolCommand => _selectToolCommand ??=
+             new RelayCommand(o =>
+             {
+                 // Handle SelectTool logic when the Select button is clicked
+                 CurrentToolMode = ToolMode.Selection;
+             });
+
         #endregion
 
         #region Events
 
         public event EventHandler<Page> PageChanged;
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Command Implementation
+
+        public class RelayCommand : ICommand
+        {
+            private readonly Action<object> _execute;
+            private readonly Predicate<object> _canExecute;
+
+            public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
+            {
+                _execute = execute;
+                _canExecute = canExecute;
+            }
+
+            public bool CanExecute(object parameter) => _canExecute == null || _canExecute(parameter);
+            public void Execute(object parameter) => _execute(parameter);
+            public event EventHandler CanExecuteChanged
+            {
+                add { CommandManager.RequerySuggested += value; }
+                remove { CommandManager.RequerySuggested -= value; }
+            }
+        }
 
         #endregion
 

@@ -83,100 +83,16 @@
     <!-- Icon Stroke (defaults to text color; user can override for accent icons) -->
     <SolidColorBrush x:Key="IconStrokeBrush" Color="{StaticResource PrimaryTextColor}"/>
 
-    <!-- Button Style -->
-    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource PrimaryAccentBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource HoverAccentBrush}"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource PressedAccentBrush}"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource DisabledTextBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- Secondary Button Style -->
-    <Style x:Key="SecondaryButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily_Main}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize_Body}"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBorderBrush}"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- Icon Button Style (for toolbar) -->
-    <Style x:Key="IconButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-        <Setter Property="Width" Value="36"/>
-        <Setter Property="Height" Value="36"/>
-        <Setter Property="Padding" Value="6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource SecondaryBorderBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
+    <!-- LIBRARY UI BRUSHES -->
+    <SolidColorBrush x:Key="AppShellBackgroundBrush" Color="#F5F6F8"/>
+    <SolidColorBrush x:Key="ContentAreaBackgroundBrush" Color="#FAFAFA"/>
+    <SolidColorBrush x:Key="SidebarActiveBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="#1D4ED8"/>
+    <SolidColorBrush x:Key="SidebarActiveBorderBrush" Color="#F3F4F6"/>
+    <SolidColorBrush x:Key="SearchBoxBackgroundBrush" Color="#F5F6F8"/>
+    <SolidColorBrush x:Key="FocusRingBrush" Color="#1A3B82F6"/>
+    <SolidColorBrush x:Key="TonalButtonBackgroundBrush" Color="#EFF6FF"/>
+    <SolidColorBrush x:Key="TonalButtonTextBrush" Color="#1D4ED8"/>
+    <SolidColorBrush x:Key="TonalButtonBorderBrush" Color="#DBEAFE"/>
 
 </ResourceDictionary>

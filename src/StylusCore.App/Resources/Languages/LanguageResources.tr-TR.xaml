@@ -4,6 +4,10 @@
     
     <!-- General -->
     <sys:String x:Key="Str_AppName">Stylus Core</sys:String>
+    <sys:String x:Key="Str_Tooltip_Minimize">Simge Durumuna Küçült</sys:String>
+    <sys:String x:Key="Str_Tooltip_Maximize">Büyüt</sys:String>
+    <sys:String x:Key="Str_Tooltip_Restore">Geri Yükle</sys:String>
+    <sys:String x:Key="Str_Tooltip_Close">Kapat</sys:String>
     <sys:String x:Key="Str_Cancel">İptal</sys:String>
     <sys:String x:Key="Str_Save">Kaydet</sys:String>
     <sys:String x:Key="Str_Delete">Sil</sys:String>
@@ -16,14 +20,15 @@
     <sys:String x:Key="Str_Settings">Ayarlar</sys:String>
     <sys:String x:Key="Str_User">Kullanıcı</sys:String>
     <sys:String x:Key="Str_Sections">Not Bölümleri</sys:String>
+    <sys:String x:Key="Str_Book">Defterler</sys:String>
     <sys:String x:Key="Str_BackToBookList">Defter Listesine Dön</sys:String>
     
     <!-- Library View -->
     <sys:String x:Key="Str_NewLibrary">+ Yeni Kütüphane</sys:String>
     <sys:String x:Key="Str_NewNotebook">+ Yeni Defter</sys:String>
     <sys:String x:Key="Str_NewBook">+ Yeni Defter</sys:String>
-    <sys:String x:Key="Str_NotebooksCount">defter</sys:String>
-    <sys:String x:Key="Str_PagesCount">sayfa</sys:String>
+    <sys:String x:Key="Str_NotebooksCount">Defter</sys:String>
+    <sys:String x:Key="Str_PagesCount">Sayfa</sys:String>
     <sys:String x:Key="Str_NoLibraries">Henüz kütüphane yok</sys:String>
     <sys:String x:Key="Str_CreateFirstLibrary">İlk Kütüphaneni Oluştur</sys:String>
     <sys:String x:Key="Str_NoNotebooks">Bu kütüphanede defter yok</sys:String>
@@ -32,6 +37,8 @@
     <!-- Search -->
     <sys:String x:Key="Str_SearchSubjects">Konularda ara...</sys:String>
     <sys:String x:Key="Str_SearchPlaceholder">Ara...</sys:String>
+    <sys:String x:Key="Str_SearchLibraries">Kütüphanelerde ara...</sys:String>
+    <sys:String x:Key="Str_SearchNotebooks">Defterlerde ara...</sys:String>
     <sys:String x:Key="Str_EnterLibraryName">Kütüphane adı girin:</sys:String>
     <sys:String x:Key="Str_EnterNotebookName">Yeni adı girin:</sys:String>
     
@@ -66,6 +73,11 @@
     <!-- Dialogs -->
     <sys:String x:Key="Str_SelectColor">Renk Seç</sys:String>
     <sys:String x:Key="Str_Name">Ad</sys:String>
+    <sys:String x:Key="Str_CreateNewLibrary">Yeni Kütüphane Oluştur</sys:String>
+    <sys:String x:Key="Str_CreateNewNotebook">Yeni Defter Oluştur</sys:String>
+    <sys:String x:Key="Str_NewName">Yeni Ad</sys:String>
+    <sys:String x:Key="Str_LibraryName">Kütüphane Adı</sys:String>
+    <sys:String x:Key="Str_NotebookName">Defter Adı</sys:String>
     <sys:String x:Key="Str_PageFormat">Sayfa Formatı</sys:String>
     <sys:String x:Key="Str_Orientation">Yönlendirme</sys:String>
     <sys:String x:Key="Str_Portrait">Dikey</sys:String>
@@ -81,6 +93,19 @@
     <sys:String x:Key="Str_Format_A3">A3 (297 × 420 mm)</sys:String>
     <sys:String x:Key="Str_Format_Letter">Letter (8.5 × 11 in)</sys:String>
     <sys:String x:Key="Str_Format_Infinite">Sonsuz (Sınırsız)</sys:String>
+
+    <!-- Sort Options -->
+    <sys:String x:Key="Str_SortBy">Sıralama</sys:String>
+    <sys:String x:Key="Str_Sort_MostUsed">En çok kullanılan</sys:String>
+    <sys:String x:Key="Str_Sort_RecentlyOpened">Son açılan</sys:String>
+    <sys:String x:Key="Str_Sort_RecentlyUpdated">Son güncellenen</sys:String>
+    <sys:String x:Key="Str_Sort_Newest">En yeni</sys:String>
+    <sys:String x:Key="Str_Sort_NameAsc">A → Z</sys:String>
+    <sys:String x:Key="Str_Sort_NameDesc">Z → A</sys:String>
+
+    <!-- View Modes -->
+    <sys:String x:Key="Str_GridView">Kart Görünümü</sys:String>
+    <sys:String x:Key="Str_ListView">Liste Görünümü</sys:String>
 
     <!-- Settings View -->
     <sys:String x:Key="Str_AutoSave">Otomatik Kayıt</sys:String>
@@ -124,6 +149,11 @@
 
 Sayfalar silinmeyecek, bölümsüz hale gelecektir.</sys:String>
     <sys:String x:Key="Str_Recent">Son</sys:String>
+    <sys:String x:Key="Str_JustNow">Şimdi</sys:String>
+    <sys:String x:Key="Str_Editor_EmptySection">(boş)</sys:String>
+    <sys:String x:Key="Str_Editor_PageRange_Format">({0}-{1})</sys:String>
+    <sys:String x:Key="Str_Editor_PageSingle_Format">({0})</sys:String>
+    <sys:String x:Key="Str_ToggleSection">Bölümü Aç/Kapat</sys:String>
 
     <!-- Ribbon Menu -->
     <sys:String x:Key="Str_Ribbon_AutoHide">Şeridi Otomatik Gizle</sys:String>

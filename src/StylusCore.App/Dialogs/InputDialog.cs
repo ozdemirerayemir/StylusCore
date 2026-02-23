@@ -1,12 +1,13 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 
 namespace StylusCore.App.Dialogs
 {
     /// <summary>
-    /// Simple custom input dialog that supports Dark Mode and theming.
-    /// Replaces standard MessageBox or VB InputBox.
+    /// Modern input dialog matching the React "Create New Library" design.
+    /// Features: rounded corners, styled title, placeholder textbox, Cancel/Create buttons.
     /// </summary>
     public class InputDialog : Window
     {
@@ -16,90 +17,158 @@ namespace StylusCore.App.Dialogs
         public InputDialog(string title, string prompt)
         {
             Title = title;
-            Width = 400;
+            Width = 460;
             SizeToContent = SizeToContent.Height;
             WindowStartupLocation = WindowStartupLocation.CenterOwner;
             ResizeMode = ResizeMode.NoResize;
             ShowInTaskbar = false;
-            
-            // Apply modern WindowChrome
-            var chrome = new System.Windows.Shell.WindowChrome
+            WindowStyle = WindowStyle.None;
+            AllowsTransparency = true;
+            Background = Brushes.Transparent;
+
+            // ────────────── OUTER CARD ──────────────
+            var outerBorder = new Border
             {
-                CaptionHeight = 32,
-                ResizeBorderThickness = new Thickness(0),
-                GlassFrameThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(0),
-                UseAeroCaptionButtons = true
+                CornerRadius = new CornerRadius(16),
+                Padding = new Thickness(0),
+                Margin = new Thickness(24), // space for drop shadow
+                Effect = new DropShadowEffect
+                {
+                    Color = Colors.Black,
+                    Direction = 270,
+                    ShadowDepth = 4,
+                    Opacity = 0.15,
+                    BlurRadius = 24
+                }
             };
-            System.Windows.Shell.WindowChrome.SetWindowChrome(this, chrome);
-            
-            // Use DynamicResource for background to support theme switching
-            this.SetResourceReference(BackgroundProperty, "PrimaryBackgroundBrush");
+            outerBorder.SetResourceReference(Border.BackgroundProperty, "PrimaryBackgroundBrush");
 
-            var grid = new Grid { Margin = new Thickness(24) };
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            var mainStack = new StackPanel { Margin = new Thickness(28, 24, 28, 24) };
 
+            // ── HEADER ROW (Title + Close) ──
+            var headerGrid = new Grid();
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            var titleBlock = new TextBlock
+            {
+                Text = title,
+                FontSize = 18,
+                FontWeight = FontWeights.SemiBold,
+                Margin = new Thickness(0, 0, 0, 20)
+            };
+            titleBlock.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryTextBrush");
+            Grid.SetColumn(titleBlock, 0);
+            headerGrid.Children.Add(titleBlock);
+
+            // Close (X) button
+            var closeBtn = new Button
+            {
+                Content = "✕",
+                Width = 28,
+                Height = 28,
+                Background = Brushes.Transparent,
+                BorderThickness = new Thickness(0),
+                FontSize = 14,
+                Cursor = System.Windows.Input.Cursors.Hand,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                VerticalContentAlignment = VerticalAlignment.Center,
+                IsCancel = true
+            };
+            closeBtn.SetResourceReference(Control.ForegroundProperty, "TertiaryTextBrush");
+            closeBtn.Click += (s, e) => { DialogResult = false; };
+            Grid.SetColumn(closeBtn, 1);
+            headerGrid.Children.Add(closeBtn);
+            mainStack.Children.Add(headerGrid);
+
+            // ── LABEL ──
             var label = new TextBlock
             {
                 Text = prompt,
+                FontSize = 13,
                 Margin = new Thickness(0, 0, 0, 8)
             };
-            label.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryTextBrush");
-            
-            Grid.SetRow(label, 0);
-            grid.Children.Add(label);
+            label.SetResourceReference(TextBlock.ForegroundProperty, "SecondaryTextBrush");
+            mainStack.Children.Add(label);
 
+            // ── INPUT TEXTBOX ──
             _inputBox = new TextBox
             {
-                Height = 32,
-                Padding = new Thickness(8, 6, 8, 6),
+                Height = 42,
+                Padding = new Thickness(12, 8, 12, 8),
                 VerticalContentAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 16),
-                FontSize = 14
+                Margin = new Thickness(0, 0, 0, 24),
+                FontSize = 14,
+                BorderThickness = new Thickness(1.5)
             };
-            // TextBox style is now handled by StandardControls.xaml via implicit style
-            
-            Grid.SetRow(_inputBox, 1);
-            grid.Children.Add(_inputBox);
+            _inputBox.SetResourceReference(Control.BorderBrushProperty, "PrimaryAccentBrush");
+            mainStack.Children.Add(_inputBox);
 
-            var buttonPanel = new StackPanel { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Right };
-            Grid.SetRow(buttonPanel, 2);
-
-            var okButton = new Button
+            // ── BUTTON ROW ──
+            var buttonPanel = new StackPanel
             {
-                Content = "OK",
-                Width = 80,
-                Height = 32,
-                Margin = new Thickness(0, 0, 8, 0),
-                IsDefault = true
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Right
             };
-            okButton.SetResourceReference(StyleProperty, "PrimaryButtonStyle");
-            okButton.Click += (s, e) => { DialogResult = true; };
-            buttonPanel.Children.Add(okButton);
 
+            // Cancel button (Ghost style)
             var cancelButton = new Button
             {
-                Content = "Cancel",
-                Width = 80,
-                Height = 32,
-                IsCancel = true
+                Content = FindResource("Str_Cancel") ?? "Cancel",
+                MinWidth = 80,
+                Height = 36,
+                Margin = new Thickness(0, 0, 10, 0),
+                FontSize = 14,
+                Cursor = System.Windows.Input.Cursors.Hand
             };
-            cancelButton.SetResourceReference(StyleProperty, "SecondaryButtonStyle");
+            cancelButton.SetResourceReference(StyleProperty, "GhostButtonStyle");
             cancelButton.Click += (s, e) => { DialogResult = false; };
             buttonPanel.Children.Add(cancelButton);
 
-            grid.Children.Add(buttonPanel);
-            Content = grid;
+            // Create button (Primary style)
+            var createButton = new Button
+            {
+                Content = FindResource("Str_Create") ?? "Create",
+                MinWidth = 90,
+                Height = 36,
+                FontSize = 14,
+                Cursor = System.Windows.Input.Cursors.Hand,
+                IsDefault = true
+            };
+            createButton.SetResourceReference(StyleProperty, "PrimaryButtonStyle");
+            createButton.Click += (s, e) =>
+            {
+                if (!string.IsNullOrWhiteSpace(_inputBox.Text))
+                    DialogResult = true;
+            };
+            buttonPanel.Children.Add(createButton);
 
+            mainStack.Children.Add(buttonPanel);
+            outerBorder.Child = mainStack;
+            Content = outerBorder;
+
+            // Focus the textbox
             Loaded += (s, e) => _inputBox.Focus();
+
+            // Allow dragging the dialog
+            MouseLeftButtonDown += (s, e) =>
+            {
+                if (e.ButtonState == System.Windows.Input.MouseButtonState.Pressed)
+                    DragMove();
+            };
         }
 
         public void SetInputText(string text)
         {
             _inputBox.Text = text;
             _inputBox.SelectAll();
+        }
+
+        private object FindResource(string key)
+        {
+            try { return Application.Current.FindResource(key); }
+            catch { return null; }
         }
     }
 }

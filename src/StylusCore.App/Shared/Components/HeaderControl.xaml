@@ -85,19 +85,10 @@
                      <ToolTip Content="{DynamicResource Str_Tooltip_Maximize}"/>
                 </Button.ToolTip>
                 <Grid Width="12" Height="12">
-                    <!-- Maximize Icon (Show when Normal) -->
-                    <Path Data="{StaticResource Icon.WindowMaximize}" 
+                    <Path Data="{StaticResource Icon.WindowMaximize}"
                           Style="{StaticResource IconBase}"
                           Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                          StrokeThickness="1" 
-                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToVisibilityConverter}, ConverterParameter=Normal}"/>
-                    
-                    <!-- Restore Icon (Show when Maximized) -->
-                    <Path Data="{StaticResource Icon.WindowRestore}" 
-                          Style="{StaticResource IconBase}"
-                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                          StrokeThickness="1" 
-                          Visibility="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource WindowStateToVisibilityConverter}, ConverterParameter=Maximized}"/>
+                          StrokeThickness="1" />
                 </Grid>
             </Button>
 

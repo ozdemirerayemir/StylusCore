@@ -6,12 +6,17 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Styles (Base) -->
-                <ResourceDictionary Source="Resources/GeneralResources.xaml"/>
+                <!-- 1. Theming Foundations (Order Matters) -->
+                <ResourceDictionary Source="Shared/Themes/01_Metrics.xaml"/>
+                <ResourceDictionary Source="Shared/Themes/02_Colors.xaml"/>
+                <ResourceDictionary Source="Shared/Themes/04_Typography.xaml"/>
+                
+                <!-- 2. Components & Icons -->
                 <ResourceDictionary Source="Shared/Themes/Icons.xaml"/>
                 <ResourceDictionary Source="Shared/Themes/StandardControls.xaml"/>
+                <ResourceDictionary Source="Shared/Themes/06_Components.xaml"/>
                 
-                <!-- Services will inject Theme and Language dictionaries here at runtime -->
+                <!-- 3. Services will inject Theme and Language dictionaries here at runtime -->
                 <!-- Defaults for Design Time (Optional, but good for XAML Designer) -->
                 <ResourceDictionary Source="Shared/Themes/LightTheme.xaml"/>
                 <ResourceDictionary Source="Resources/Languages/LanguageResources.en-US.xaml"/>

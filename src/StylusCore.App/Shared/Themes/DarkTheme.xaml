@@ -82,105 +82,17 @@
 
     <!-- Icon Stroke (defaults to text color; user can override for accent icons) -->
     <SolidColorBrush x:Key="IconStrokeBrush" Color="{StaticResource PrimaryTextColor}"/>
-    
-    <!-- Button Styles (Duplicated structure but pulls new colors) -->
-    <!-- Ideally, Styles should be in a separate file (e.g. Styles.xaml) that references these keys. -->
-    <!-- But since current structure has them in Theme file, we duplicate them here OR we refactor styles out later. -->
-    <!-- For robust architecture, I normally split "Colors" and "Styles". -->
-    <!-- For now, adhering to user's "Theme File" structure request, I will copy the Style definitions. -->
-    <!-- Since Styles use {StaticResource ...Brush} inside the same dictionary, they will resolve correctly here. -->
 
-    <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource PrimaryAccentBrush}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="FontFamily" Value="{StaticResource PrimaryFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource HoverAccentBrush}"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource PressedAccentBrush}"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-                <Setter Property="Foreground" Value="{StaticResource DisabledTextBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="SecondaryButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-        <Setter Property="MinHeight" Value="32"/>
-        <Setter Property="FontFamily" Value="{StaticResource FontFamily_Main}"/>
-        <Setter Property="FontSize" Value="{StaticResource FontSize_Body}"/>
-        <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBorderBrush}"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="IconButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-        <Setter Property="Width" Value="36"/>
-        <Setter Property="Height" Value="36"/>
-        <Setter Property="Padding" Value="6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{StaticResource SecondaryBorderBrush}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
+    <!-- LIBRARY UI BRUSHES -->
+    <SolidColorBrush x:Key="AppShellBackgroundBrush" Color="#1A1A1E"/>
+    <SolidColorBrush x:Key="ContentAreaBackgroundBrush" Color="#202024"/>
+    <SolidColorBrush x:Key="SidebarActiveBrush" Color="#2D2D30"/>
+    <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="#60A5FA"/>
+    <SolidColorBrush x:Key="SidebarActiveBorderBrush" Color="#3F3F46"/>
+    <SolidColorBrush x:Key="SearchBoxBackgroundBrush" Color="#2D2D30"/>
+    <SolidColorBrush x:Key="FocusRingBrush" Color="#1A60A5FA"/>
+    <SolidColorBrush x:Key="TonalButtonBackgroundBrush" Color="#1E3A5F"/>
+    <SolidColorBrush x:Key="TonalButtonTextBrush" Color="#93C5FD"/>
+    <SolidColorBrush x:Key="TonalButtonBorderBrush" Color="#1E40AF"/>
 
 </ResourceDictionary>
