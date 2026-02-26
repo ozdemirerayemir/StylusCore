@@ -9,14 +9,14 @@
     <!-- SidebarButtonStyle is now in GeneralResources.xaml (no local style needed) -->
 
     <!-- Ana Container: Border ile sağ çizgi -->
-    <Border Background="{DynamicResource AppShellBackgroundBrush}"
+    <Border Background="{DynamicResource Brush.SidebarBg}"
             BorderThickness="0">
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>  <!-- Toggle (matches Shell.SidebarItemHeight) -->
+                <RowDefinition Height="{DynamicResource Shell.SidebarItemHeight.GL}"/>  <!-- Toggle (matches Shell.SidebarItemHeight) -->
                 <RowDefinition Height="*"/>   <!-- Nav Items -->
-                <RowDefinition Height="48"/>  <!-- Settings (matches Shell.SidebarItemHeight) -->
+                <RowDefinition Height="{DynamicResource Shell.SidebarItemHeight.GL}"/>  <!-- Settings (matches Shell.SidebarItemHeight) -->
             </Grid.RowDefinitions>
 
             <!-- ROW 0: Toggle Button -->
@@ -37,14 +37,22 @@
                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
                     </Grid>
+                    <TextBlock x:Name="MenuText"
+                               Text="{DynamicResource Str_Menu}"
+                               VerticalAlignment="Center"
+                               FontSize="{DynamicResource FontSize_Body}"
+                               FontWeight="{DynamicResource FontWeight_SemiBold}"
+                               Foreground="{DynamicResource Brush.TextPrimary}"
+                               Visibility="Collapsed"
+                               Margin="{DynamicResource Sidebar.TextMargin}"/>
                 </StackPanel>
             </Button>
 
             <!-- ROW 1: Navigation Items -->
-            <StackPanel Grid.Row="1" Margin="0,8,0,0">
-                <!-- Library Button (Active by default on Library screen) -->
+            <StackPanel Grid.Row="1" Margin="{DynamicResource Sidebar.ItemsMargin}">
+                <!-- Library Button -->
                 <Button x:Name="LibraryButton"
-                        Style="{DynamicResource SidebarActiveButtonStyle}"
+                        Style="{DynamicResource SidebarButtonStyle}"
                         Click="Library_Click"
                         ToolTip="{DynamicResource Str_Library}"
                         AutomationProperties.Name="Navigate to Library">
@@ -58,7 +66,6 @@
                                 <Path x:Name="LibraryIcon"
                                       Data="{StaticResource Icon.Library}" 
                                       Style="{DynamicResource IconBase}"
-                                      Stroke="{DynamicResource SidebarActiveTextBrush}"
                                       Stretch="Uniform"
                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
@@ -67,10 +74,10 @@
                                    Text="{DynamicResource Str_Library}"
                                    VerticalAlignment="Center"
                                    FontSize="{DynamicResource FontSize_Body}"
-                                   FontWeight="SemiBold"
-                                   Foreground="{DynamicResource SidebarActiveTextBrush}"
+                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    Visibility="Collapsed"
-                                   Margin="0,0,16,0"/>
+                                   Margin="{DynamicResource Sidebar.TextMargin}"/>
                     </StackPanel>
                 </Button>
 
@@ -98,9 +105,10 @@
                                    Text="{DynamicResource Str_Book}"
                                    VerticalAlignment="Center"
                                    FontSize="{DynamicResource FontSize_Body}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    Visibility="{Binding IsBookTextVisible, Converter={StaticResource BoolToVisibilityConverter}}"
-                                   Margin="0,0,16,0"/>
+                                   Margin="{DynamicResource Sidebar.TextMargin}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -128,9 +136,10 @@
                                    Text="{DynamicResource Str_Settings}"
                                    VerticalAlignment="Center"
                                    FontSize="{DynamicResource FontSize_Body}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    Visibility="Collapsed"
-                                   Margin="0,0,16,0"/>
+                                   Margin="{DynamicResource Sidebar.TextMargin}"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

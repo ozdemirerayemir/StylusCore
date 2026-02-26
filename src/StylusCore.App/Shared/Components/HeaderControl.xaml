@@ -23,29 +23,23 @@
                     WindowChrome.IsHitTestVisibleInChrome="True"
                     Margin="12,0,0,0">
             
-            <!-- Home/Library Button -->
-            <Button Command="{Binding NavigateToLibraryRootCommand}"
-                    Style="{DynamicResource IconButtonStyle}"
-                    Height="32" Width="32"
-                    VerticalAlignment="Center"
-                    ToolTip="{DynamicResource Str_Library}">
-                <!-- App Icon / Logo Placeholder -->
-                <!-- Using a simple rectangle/path for now if no dedicated Icon.Logo exists, or just S text -->
-                <Grid>
-                    <Path Data="{StaticResource Icon.Library}" 
-                          Style="{StaticResource IconBase}"
-                          Stroke="{DynamicResource PrimaryAccentBrush}"
-                          StrokeThickness="2.5"/>
-                </Grid>
-            </Button>
+            <!-- App Icon / Logo Placeholder (Non-Interactive) -->
+            <Grid Height="32" Width="32" VerticalAlignment="Center">
+                <Path Data="{StaticResource Icon.Library}" 
+                      Style="{DynamicResource IconBase}"
+                      Stretch="Uniform"
+                      Width="16" Height="16"
+                      Stroke="{DynamicResource Brush.Accent}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
 
             <!-- App Name (Visible ONLY when IsEditorActive is FALSE) -->
             <TextBlock Text="{DynamicResource Str_AppName}" 
-                       FontSize="14"
-                       FontWeight="SemiBold"
+                       FontSize="{DynamicResource FontSize_Body}"
+                       FontWeight="{DynamicResource FontWeight_SemiBold}"
                        VerticalAlignment="Center"
                        Margin="12,0,0,0"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Visibility="{Binding IsEditorActive, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
         </StackPanel>
 
@@ -70,11 +64,10 @@
             <Button Command="{Binding MinimizeCommand}" 
                     Style="{DynamicResource CaptionButtonStyle}"
                     ToolTip="{DynamicResource Str_Tooltip_Minimize}">
-                <Grid Width="12" Height="12">
+                <Grid Width="12" Height="12" IsHitTestVisible="False">
                     <Path Data="{StaticResource Icon.WindowMinimize}" 
                           Style="{StaticResource IconBase}"
-                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                          StrokeThickness="1" />
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Grid>
             </Button>
 
@@ -84,11 +77,10 @@
                 <Button.ToolTip>
                      <ToolTip Content="{DynamicResource Str_Tooltip_Maximize}"/>
                 </Button.ToolTip>
-                <Grid Width="12" Height="12">
+                <Grid Width="12" Height="12" IsHitTestVisible="False">
                     <Path Data="{StaticResource Icon.WindowMaximize}"
                           Style="{StaticResource IconBase}"
-                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                          StrokeThickness="1" />
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Grid>
             </Button>
 
@@ -96,11 +88,10 @@
             <Button Command="{Binding CloseCommand}" 
                     Style="{DynamicResource CaptionCloseButtonStyle}"
                     ToolTip="{DynamicResource Str_Tooltip_Close}">
-                <Grid Width="12" Height="12">
+                <Grid Width="12" Height="12" IsHitTestVisible="False">
                     <Path Data="{StaticResource Icon.WindowClose}" 
                           Style="{StaticResource IconBase}"
-                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" 
-                          StrokeThickness="1" />
+                          Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </Grid>
             </Button>
         </StackPanel>

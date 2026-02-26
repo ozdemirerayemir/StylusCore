@@ -41,7 +41,7 @@ namespace StylusCore.App.Dialogs
                     BlurRadius = 24
                 }
             };
-            outerBorder.SetResourceReference(Border.BackgroundProperty, "PrimaryBackgroundBrush");
+            outerBorder.SetResourceReference(Border.BackgroundProperty, "Brush.AppBg");
 
             var mainStack = new StackPanel { Margin = new Thickness(28, 24, 28, 24) };
 
@@ -57,7 +57,7 @@ namespace StylusCore.App.Dialogs
                 FontWeight = FontWeights.SemiBold,
                 Margin = new Thickness(0, 0, 0, 20)
             };
-            titleBlock.SetResourceReference(TextBlock.ForegroundProperty, "PrimaryTextBrush");
+            titleBlock.SetResourceReference(TextBlock.ForegroundProperty, "Brush.TextPrimary");
             Grid.SetColumn(titleBlock, 0);
             headerGrid.Children.Add(titleBlock);
 
@@ -76,7 +76,7 @@ namespace StylusCore.App.Dialogs
                 VerticalContentAlignment = VerticalAlignment.Center,
                 IsCancel = true
             };
-            closeBtn.SetResourceReference(Control.ForegroundProperty, "TertiaryTextBrush");
+            closeBtn.SetResourceReference(Control.ForegroundProperty, "Brush.TextTertiary");
             closeBtn.Click += (s, e) => { DialogResult = false; };
             Grid.SetColumn(closeBtn, 1);
             headerGrid.Children.Add(closeBtn);
@@ -89,7 +89,7 @@ namespace StylusCore.App.Dialogs
                 FontSize = 13,
                 Margin = new Thickness(0, 0, 0, 8)
             };
-            label.SetResourceReference(TextBlock.ForegroundProperty, "SecondaryTextBrush");
+            label.SetResourceReference(TextBlock.ForegroundProperty, "Brush.TextSecondary");
             mainStack.Children.Add(label);
 
             // ── INPUT TEXTBOX ──
@@ -102,7 +102,7 @@ namespace StylusCore.App.Dialogs
                 FontSize = 14,
                 BorderThickness = new Thickness(1.5)
             };
-            _inputBox.SetResourceReference(Control.BorderBrushProperty, "PrimaryAccentBrush");
+            _inputBox.SetResourceReference(Control.BorderBrushProperty, "Brush.Accent");
             mainStack.Children.Add(_inputBox);
 
             // ── BUTTON ROW ──

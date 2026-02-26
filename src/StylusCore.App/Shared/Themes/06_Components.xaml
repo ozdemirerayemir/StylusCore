@@ -20,7 +20,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource SidebarHoverBrush}"/>
+                            <Setter TargetName="Bg" Property="Background" Value="{DynamicResource Brush.ContentBg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -33,7 +33,7 @@
     <!-- ================================================================== -->
 
     <Style x:Key="SidebarActiveButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource SidebarActiveBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource Brush.Surface}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Height" Value="{DynamicResource Shell.SidebarItemHeight}"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -43,7 +43,7 @@
                     <Border x:Name="Bg"
                             Background="{TemplateBinding Background}"
                             CornerRadius="{DynamicResource Shell.SidebarCornerRadius}"
-                            BorderBrush="{DynamicResource SidebarActiveBorderBrush}"
+                            BorderBrush="{DynamicResource Brush.BorderSoft}"
                             BorderThickness="1">
                         <Border.Effect>
                             <DropShadowEffect Color="Black" Direction="270" ShadowDepth="1" Opacity="0.06" BlurRadius="4"/>
@@ -61,33 +61,70 @@
     <!-- ================================================================== -->
 
     <Style x:Key="TonalButtonStyle" TargetType="Button">
-        <Setter Property="Background" Value="{DynamicResource TonalButtonBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource TonalButtonTextBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource TonalButtonBorderBrush}"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{DynamicResource Brush.Primary}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Primary}"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="16,8"/>
         <Setter Property="FontSize" Value="{DynamicResource FontSize_Small}"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_SemiBold}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
+                    <Grid>
+                        <!-- Background with Opacity -->
+                        <Border x:Name="bgBorder"
+                                Background="{TemplateBinding Background}"
+                                Opacity="0.1"
+                                CornerRadius="{DynamicResource CornerRadius_XLarge}"/>
+                        
+                        <!-- Content Presenter Overlay -->
+                        <Border Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bgBorder" Property="Opacity" Value="0.2"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="bgBorder" Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================================================================== -->
+    <!-- SECONDARY BUTTON STYLE (Outline + Neutral Text)                    -->
+    <!-- Used for: Dialog Cancel or minor alternative actions               -->
+    <!-- ================================================================== -->
+
+    <Style x:Key="SecondaryButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderHard}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="15,0"/>
+        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_Medium}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" 
+                            Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{DynamicResource CornerRadius_XLarge}"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            CornerRadius="8">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.AppBg}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PressedAccentBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.BorderSoft}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -100,8 +137,8 @@
     <!-- ================================================================== -->
 
     <Style x:Key="SearchBoxStyle" TargetType="TextBox">
-        <Setter Property="Background" Value="{DynamicResource SearchBoxBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource Brush.AppBg}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Height" Value="{DynamicResource SearchBox.Height}"/>
@@ -127,7 +164,7 @@
                               IsHitTestVisible="False">
                             <Path Data="{StaticResource Icon.Search}"
                                   Style="{DynamicResource IconBase}"
-                                  Stroke="{DynamicResource TertiaryTextBrush}"
+                                  Stroke="{DynamicResource Brush.TextTertiary}"
                                   StrokeThickness="1.5"
                                   Stretch="Uniform"
                                   Width="14" Height="14"/>
@@ -142,7 +179,7 @@
                         <!-- Placeholder -->
                         <TextBlock x:Name="placeholder"
                                    Text="{TemplateBinding Tag}"
-                                   Foreground="{DynamicResource TertiaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextTertiary}"
                                    IsHitTestVisible="False"
                                    VerticalAlignment="Center"
                                    Margin="34,0,0,0"
@@ -158,8 +195,8 @@
                         </DataTrigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
                             <Setter TargetName="placeholder" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryBackgroundBrush}"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.Surface}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -180,7 +217,7 @@
 
     <Style x:Key="SegmentedToggleStyle" TargetType="RadioButton">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Width" Value="32"/>
@@ -196,11 +233,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource HoverBackgroundBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.Surface}"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.AppBg}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
                             <Setter TargetName="border" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect ShadowDepth="1" BlurRadius="3" Opacity="0.1" Color="Black"/>
@@ -219,7 +256,7 @@
 
     <Style x:Key="SortToggleButtonStyle" TargetType="ToggleButton">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource SecondaryTextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush.TextSecondary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Height" Value="32"/>
         <Setter Property="Padding" Value="8,4"/>
@@ -235,10 +272,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource HoverBackgroundBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.Surface}"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource TertiaryBackgroundBrush}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Brush.AppBg}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

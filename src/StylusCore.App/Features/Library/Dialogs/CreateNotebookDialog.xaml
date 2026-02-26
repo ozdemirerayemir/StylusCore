@@ -7,7 +7,7 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
-        Background="{DynamicResource PrimaryBackgroundBrush}">
+        Background="{DynamicResource Brush.AppBg}">
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" 
@@ -30,10 +30,10 @@
                         <Grid>
                             <Ellipse x:Name="ColorCircle"
                                      Fill="{TemplateBinding Background}"
-                                     Stroke="{DynamicResource PrimaryBorderBrush}"
+                                     Stroke="{DynamicResource Brush.BorderSoft}"
                                      StrokeThickness="1"/>
                             <Ellipse x:Name="SelectionRing"
-                                     Stroke="{DynamicResource PrimaryAccentBrush}"
+                                     Stroke="{DynamicResource Brush.Accent}"
                                      StrokeThickness="3"
                                      Visibility="Collapsed"/>
                             <Path x:Name="Checkmark"
@@ -68,8 +68,8 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
                         <Border x:Name="Border"
-                                Background="{DynamicResource SecondaryBackgroundBrush}"
-                                BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                                Background="{DynamicResource Brush.ContentBg}"
+                                BorderBrush="{DynamicResource Brush.BorderSoft}"
                                 BorderThickness="2"
                                 CornerRadius="6">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -77,12 +77,12 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="Border" Property="BorderBrush"
-                                        Value="{DynamicResource PrimaryAccentBrush}"/>
+                                        Value="{DynamicResource Brush.Accent}"/>
                                 <Setter TargetName="Border" Property="BorderThickness" Value="3"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Border" Property="Background"
-                                        Value="{DynamicResource TertiaryBackgroundBrush}"/>
+                                        Value="{DynamicResource Brush.Surface}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -104,7 +104,7 @@
             <TextBlock Text="{DynamicResource Str_NewNotebook}"
                        FontSize="{DynamicResource FontSize_Header}"
                        FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        VerticalAlignment="Center"/>
         </StackPanel>
 
@@ -115,20 +115,20 @@
                 <!-- Name -->
                 <TextBlock Text="{DynamicResource Str_Name}"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
                            Margin="0,0,0,8"/>
                 <TextBox x:Name="NameTextBox"
                          Padding="12,10"
                          FontSize="14"
                          MaxLength="100"
-                         Background="{DynamicResource SecondaryBackgroundBrush}"
-                         Foreground="{DynamicResource PrimaryTextBrush}"
-                         BorderBrush="{DynamicResource PrimaryBorderBrush}"/>
+                         Background="{DynamicResource Brush.ContentBg}"
+                         Foreground="{DynamicResource Brush.TextPrimary}"
+                         BorderBrush="{DynamicResource Brush.BorderSoft}"/>
 
                 <!-- Cover Color -->
                 <TextBlock Text="{DynamicResource Str_CoverColor}"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
                            Margin="0,20,0,8"/>
                 <WrapPanel x:Name="ColorPanel">
                     <RadioButton x:Name="ColorPurple" Background="#9B59B6" Style="{StaticResource ColorButtonStyle}" IsChecked="True" Tag="Purple"/>
@@ -144,7 +144,7 @@
                 <!-- Page Format -->
                 <TextBlock Text="{DynamicResource Str_PageFormat}"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
                            Margin="0,20,0,8"/>
                 <ComboBox x:Name="FormatComboBox"
                           SelectedIndex="0"
@@ -160,7 +160,7 @@
                 <!-- Orientation -->
                 <TextBlock Text="{DynamicResource Str_Orientation}"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
                            Margin="0,20,0,8"/>
                 <StackPanel Orientation="Horizontal">
                     <!-- Portrait -->
@@ -184,7 +184,7 @@
                             <TextBlock Text="{DynamicResource Str_Portrait}" 
                                        FontSize="11" 
                                        FontWeight="Medium"
-                                       Foreground="{DynamicResource SecondaryTextBrush}" 
+                                       Foreground="{DynamicResource Brush.TextSecondary}" 
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
@@ -210,7 +210,7 @@
                             <TextBlock Text="{DynamicResource Str_Landscape}" 
                                        FontSize="11" 
                                        FontWeight="Medium"
-                                       Foreground="{DynamicResource SecondaryTextBrush}" 
+                                       Foreground="{DynamicResource Brush.TextSecondary}" 
                                        HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
@@ -219,14 +219,14 @@
                 <!-- Template -->
                 <TextBlock Text="{DynamicResource Str_PageTemplate}"
                            FontWeight="SemiBold"
-                           Foreground="{DynamicResource PrimaryTextBrush}"
+                           Foreground="{DynamicResource Brush.TextPrimary}"
                            Margin="0,20,0,8"/>
                 <WrapPanel>
                     <!-- Blank -->
                     <RadioButton x:Name="TemplateBlank" Style="{StaticResource TemplateCardStyle}" IsChecked="True" Tag="Blank">
                         <StackPanel HorizontalAlignment="Center">
                             <Border Width="40" Height="50" Background="White" CornerRadius="2" Margin="0,0,0,4"/>
-                            <TextBlock Text="{DynamicResource Str_Template_Blank}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Blank}" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource Brush.TextSecondary}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -241,7 +241,7 @@
                                     <Border Height="1" Background="#CCC" Margin="0,4"/>
                                 </StackPanel>
                             </Border>
-                            <TextBlock Text="{DynamicResource Str_Template_Lined}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Lined}" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource Brush.TextSecondary}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -265,7 +265,7 @@
                                     <Border Grid.Row="4" Grid.ColumnSpan="4" Height="1" Background="#CCC"/>
                                 </Grid>
                             </Border>
-                            <TextBlock Text="{DynamicResource Str_Template_Grid}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Grid}" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource Brush.TextSecondary}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -288,7 +288,7 @@
                                     <Ellipse Width="2" Height="2" Fill="#CCC" Canvas.Left="28" Canvas.Top="40"/>
                                 </Canvas>
                             </Border>
-                            <TextBlock Text="{DynamicResource Str_Template_Dotted}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Dotted}" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource Brush.TextSecondary}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
 
@@ -301,7 +301,7 @@
                                     <Border Height="1" Background="#CCC" VerticalAlignment="Bottom" Margin="0,0,0,10"/>
                                 </Grid>
                             </Border>
-                            <TextBlock Text="{DynamicResource Str_Template_Cornell}" FontSize="10" Foreground="{DynamicResource SecondaryTextBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{DynamicResource Str_Template_Cornell}" FontSize="{DynamicResource FontSize_Small}" Foreground="{DynamicResource Brush.TextSecondary}" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </RadioButton>
                 </WrapPanel>
@@ -313,12 +313,12 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
             <Button Content="{DynamicResource Str_Cancel}"
                     Style="{DynamicResource SecondaryButtonStyle}"
-                    Width="100"
+                    Height="{DynamicResource ControlHeightMD}"
                     Margin="0,0,12,0"
                     Click="Cancel_Click"/>
             <Button Content="{DynamicResource Str_Create}"
                     Style="{DynamicResource PrimaryButtonStyle}"
-                    Width="100"
+                    Height="{DynamicResource ControlHeightMD}"
                     Click="Create_Click"/>
         </StackPanel>
     </Grid>

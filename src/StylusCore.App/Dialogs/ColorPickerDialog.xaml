@@ -12,8 +12,8 @@
         AllowsTransparency="True"
         Background="Transparent">
 
-    <Border Background="{DynamicResource SecondaryBackgroundBrush}"
-            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+    <Border Background="{DynamicResource Brush.ContentBg}"
+            BorderBrush="{DynamicResource Brush.BorderSoft}"
             BorderThickness="1"
             CornerRadius="8"
             Padding="16">
@@ -33,7 +33,7 @@
                        Grid.Row="0"
                        FontSize="18" 
                        FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
             <!-- Color Grid -->
@@ -53,7 +53,7 @@
                                 Click="ColorButton_Click">
                              <Border Width="40" Height="40"
                                      CornerRadius="20"
-                                     BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                                     BorderBrush="{DynamicResource Brush.BorderSoft}"
                                      BorderThickness="1">
                                  <Border.Background>
                                      <SolidColorBrush Color="{Binding}"/>
@@ -71,7 +71,7 @@
                         Width="80" Height="30"
                         Style="{DynamicResource FlatButtonStyle}"
                         Background="Transparent"
-                        Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        Foreground="{DynamicResource Brush.TextPrimary}"/>
             </StackPanel>
         </Grid>
     </Border>

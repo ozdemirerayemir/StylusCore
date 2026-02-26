@@ -6,19 +6,36 @@
     <!-- GLOBAL DIMENSIONS & LAYOUT                                          -->
     <!-- ================================================================== -->
 
-    <!-- Corner Radii -->
+    <!-- Corner Radii (Canonical Set) -->
+    <CornerRadius x:Key="RadiusSM">8</CornerRadius>
+    <CornerRadius x:Key="RadiusMD">12</CornerRadius>
+    <CornerRadius x:Key="RadiusLG">16</CornerRadius>
+    
+    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
     <CornerRadius x:Key="CornerRadius_Small">4</CornerRadius>
     <CornerRadius x:Key="CornerRadius_Standard">8</CornerRadius>
     <CornerRadius x:Key="CornerRadius_Large">16</CornerRadius>
 
-    <!-- Margins / Paddings -->
+    <!-- Margins / Paddings (Spacing Tokens) -->
+    <Thickness x:Key="Spacing8">8</Thickness>
+    <Thickness x:Key="Spacing12">12</Thickness>
+    <Thickness x:Key="Spacing16">16</Thickness>
+    <Thickness x:Key="Spacing24">24</Thickness>
+    <Thickness x:Key="Spacing32">32</Thickness>
+    <Thickness x:Key="Spacing24_Horizontal">24,0</Thickness>
+    
+    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
     <Thickness x:Key="Margin_Small">4</Thickness>
     <Thickness x:Key="Margin_Standard">8</Thickness>
     <Thickness x:Key="Margin_Large">16</Thickness>
     <Thickness x:Key="Margin_XLarge">24</Thickness>
-    <Thickness x:Key="Padding_Input">10,6</Thickness>
+    <Thickness x:Key="Padding_Input">12,8</Thickness>
 
     <!-- Sizing -->
+    <sys:Double x:Key="ControlHeightSM">36</sys:Double>
+    <sys:Double x:Key="ControlHeightMD">40</sys:Double>
+    <sys:Double x:Key="ControlHeightLG">48</sys:Double>
+    
     <sys:Double x:Key="Size_Icon_Small">16</sys:Double>
     <sys:Double x:Key="Size_Icon_Standard">24</sys:Double>
     <sys:Double x:Key="Size_Icon_Large">32</sys:Double>
@@ -30,13 +47,27 @@
     <!-- SHELL / SIDEBAR METRICS                                             -->
     <!-- ================================================================== -->
 
+    <!-- Window Sizing -->
+    <sys:Double x:Key="Shell.MainWindowWidth">1280</sys:Double>
+    <sys:Double x:Key="Shell.MainWindowHeight">800</sys:Double>
+    <sys:Double x:Key="Shell.MainWindowMinWidth">800</sys:Double>
+    <sys:Double x:Key="Shell.MainWindowMinHeight">600</sys:Double>
+    <Thickness x:Key="Shell.ResizeBorderThickness">5</Thickness>
+    <Thickness x:Key="Shell.MainWindowContentBorderThickness">1,1,0,0</Thickness>
+
+    <!-- Sidebar & Header -->
     <sys:Double x:Key="Shell.SidebarCollapsedWidth">48</sys:Double>
+    <GridLength x:Key="Shell.SidebarCollapsedWidth.GL">48</GridLength>
     <sys:Double x:Key="Shell.SidebarExpandedWidth">160</sys:Double>
     <sys:Double x:Key="Shell.SidebarItemHeight">48</sys:Double>
+    <GridLength x:Key="Shell.SidebarItemHeight.GL">48</GridLength>
     <sys:Double x:Key="Shell.IconSlotWidth">48</sys:Double>
-    <sys:Double x:Key="Shell.HeaderHeight">36</sys:Double>
+    <sys:Double x:Key="Shell.HeaderHeight">48</sys:Double>
     <sys:Double x:Key="Shell.IconSize">20</sys:Double>
     <CornerRadius x:Key="Shell.SidebarCornerRadius">6</CornerRadius>
+    <CornerRadius x:Key="Shell.CloseButtonHoverRadius">0,8,0,0</CornerRadius>
+    <Thickness x:Key="Sidebar.TextMargin">0,0,16,0</Thickness>
+    <Thickness x:Key="Sidebar.ItemsMargin">0,8,0,0</Thickness>
 
     <!-- ================================================================== -->
     <!-- SECTIONS PANEL METRICS                                              -->
@@ -58,6 +89,7 @@
     <sys:Double x:Key="RibbonHeight">120</sys:Double>
     <sys:Double x:Key="RibbonHeightCollapsed">40</sys:Double>
 
+    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
     <!-- These were formally DefaultMargin, SmallMargin, DefaultCornerRadius etc -->
     <!-- Mapped to standard naming internally where used -->
     <Thickness x:Key="DefaultMargin">8</Thickness>
@@ -71,6 +103,7 @@
     <!-- LIBRARY VIEW METRICS                                                -->
     <!-- ================================================================== -->
 
+    <Thickness x:Key="Library.PageMargin">32,16,32,32</Thickness>
     <sys:Double x:Key="Library.CardWidth">280</sys:Double>
     <sys:Double x:Key="Library.CardMinHeight">220</sys:Double>
     <sys:Double x:Key="Library.CoverHeight">96</sys:Double>

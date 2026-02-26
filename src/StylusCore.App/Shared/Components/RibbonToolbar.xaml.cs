@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using StylusCore.Core.Enums;
 
-namespace StylusCore.App.Controls
+namespace StylusCore.App.Shared.Components
 {
     /// <summary>
     /// Ribbon toolbar with PowerPoint-style collapsible content panel.
@@ -13,7 +13,7 @@ namespace StylusCore.App.Controls
     {
         private bool _isContentExpanded = false;
         private const double ContentHeight = 84;
-        
+
         public event EventHandler ContentExpandedChanged;
 
         public RibbonToolbar()
@@ -100,7 +100,7 @@ namespace StylusCore.App.Controls
 
             ContentPanel.BeginAnimation(HeightProperty, animation);
             IsContentExpanded = false;
-            
+
             // Uncheck all tabs when collapsing
             FileTab.IsChecked = false;
             EditTab.IsChecked = false;

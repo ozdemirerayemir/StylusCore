@@ -18,6 +18,7 @@
     <!-- Sidebar -->
     <sys:String x:Key="Str_Library">Kütüphane</sys:String>
     <sys:String x:Key="Str_Settings">Ayarlar</sys:String>
+    <sys:String x:Key="Str_Menu">Menü</sys:String>
     <sys:String x:Key="Str_User">Kullanıcı</sys:String>
     <sys:String x:Key="Str_Sections">Not Bölümleri</sys:String>
     <sys:String x:Key="Str_Book">Defterler</sys:String>
@@ -162,8 +163,13 @@ Sayfalar silinmeyecek, bölümsüz hale gelecektir.</sys:String>
     <sys:String x:Key="Str_Ribbon_File">Dosya</sys:String>
     <sys:String x:Key="Str_Ribbon_Home">Giriş</sys:String>
     <sys:String x:Key="Str_Ribbon_Insert">Ekle</sys:String>
+    <sys:String x:Key="Str_Ribbon_Edit">Düzenle</sys:String>
     <sys:String x:Key="Str_Ribbon_Draw">Çiz</sys:String>
     <sys:String x:Key="Str_Ribbon_View">Görünüm</sys:String>
+    <sys:String x:Key="Str_Ribbon_Tools">Araçlar</sys:String>
     <sys:String x:Key="Str_Ribbon_Help">Yardım</sys:String>
+    
+    <sys:String x:Key="Str_New">Yeni</sys:String>
+    <sys:String x:Key="Str_ExportPDF">PDF Aktar</sys:String>
     
 </ResourceDictionary>

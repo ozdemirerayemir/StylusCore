@@ -136,13 +136,13 @@ namespace StylusCore.App.Features.Editor.Views
                 Tag = section,
                 Background = Brushes.Transparent // Default
             };
-            headerRow.SetResourceReference(Border.BorderBrushProperty, "PrimaryBorderBrush");
+            headerRow.SetResourceReference(Border.BorderBrushProperty, "Brush.BorderSoft");
             headerRow.MouseRightButtonUp += SectionRow_RightClick;
             headerRow.MouseLeftButtonDown += SectionRow_Click;
 
             if (section.Id == _activeSectionId)
             {
-                headerRow.SetResourceReference(Border.BackgroundProperty, "TertiaryBackgroundBrush");
+                headerRow.SetResourceReference(Border.BackgroundProperty, "Brush.Surface");
             }
 
             var headerGrid = new Grid();
@@ -200,7 +200,7 @@ namespace StylusCore.App.Features.Editor.Views
                 FontSize = 13,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            titleText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "PrimaryTextBrush");
+            titleText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "Brush.TextPrimary");
             Grid.SetColumn(titleText, 1);
             titleGrid.Children.Add(titleText);
 
@@ -216,7 +216,7 @@ namespace StylusCore.App.Features.Editor.Views
                 VerticalAlignment = VerticalAlignment.Center,
                 Margin = new Thickness(0, 0, 8, 0)
             };
-            rangeText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
+            rangeText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "Brush.TextSecondary");
             Grid.SetColumn(rangeText, 2);
             headerGrid.Children.Add(rangeText);
 
@@ -294,7 +294,7 @@ namespace StylusCore.App.Features.Editor.Views
                 Background = Brushes.Transparent,
                 BorderThickness = new Thickness(0, 0, 0, 1)
             };
-            headerRow.SetResourceReference(Border.BorderBrushProperty, "PrimaryBorderBrush");
+            headerRow.SetResourceReference(Border.BorderBrushProperty, "Brush.BorderSoft");
 
             var titleText = new System.Windows.Controls.TextBlock
             {
@@ -303,7 +303,7 @@ namespace StylusCore.App.Features.Editor.Views
                 FontStyle = FontStyles.Italic,
                 Margin = new Thickness(28, 0, 0, 0)
             };
-            titleText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
+            titleText.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "Brush.TextSecondary");
             headerRow.Child = titleText;
             container.Children.Add(headerRow);
             container.Children.Add(CreatePagesGrid(pages));
@@ -333,8 +333,8 @@ namespace StylusCore.App.Features.Editor.Views
                     Cursor = Cursors.Hand,
                     Tag = page
                 };
-                pageThumbnail.SetResourceReference(Border.BackgroundProperty, "CanvasBackgroundBrush");
-                pageThumbnail.SetResourceReference(Border.BorderBrushProperty, "PrimaryBorderBrush");
+                pageThumbnail.SetResourceReference(Border.BackgroundProperty, "Brush.AppBg");
+                pageThumbnail.SetResourceReference(Border.BorderBrushProperty, "Brush.BorderSoft");
                 pageThumbnail.MouseLeftButtonDown += PageThumbnail_Click;
                 pageThumbnail.PreviewMouseLeftButtonDown += PageThumbnail_PreviewMouseDown;
                 pageThumbnail.MouseMove += PageThumbnail_MouseMove;
@@ -348,7 +348,7 @@ namespace StylusCore.App.Features.Editor.Views
                     Margin = new Thickness(0, 0, 0, 6),
                     FontSize = 11
                 };
-                pageNumber.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "SecondaryTextBrush");
+                pageNumber.SetResourceReference(System.Windows.Controls.TextBlock.ForegroundProperty, "Brush.TextSecondary");
                 grid.Children.Add(pageNumber);
 
                 var colorBar = new Border
@@ -358,7 +358,7 @@ namespace StylusCore.App.Features.Editor.Views
                     Width = 3,
                     CornerRadius = new CornerRadius(4, 0, 0, 4)
                 };
-                colorBar.SetResourceReference(Border.BackgroundProperty, "PrimaryAccentBrush");
+                colorBar.SetResourceReference(Border.BackgroundProperty, "Brush.Accent");
                 grid.Children.Add(colorBar);
 
                 pageThumbnail.Child = grid;

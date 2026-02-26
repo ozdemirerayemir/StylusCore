@@ -43,6 +43,7 @@ namespace StylusCore.App.Shared.Components
             // Text visibility güncelle
             LibraryText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
             SettingsText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
+            MenuText.Visibility = _isExpanded ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Toggle_Click(object sender, RoutedEventArgs e)

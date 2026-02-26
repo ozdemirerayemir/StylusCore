@@ -65,6 +65,14 @@ StylusCore is layered as:
 
 ---
 
+### 2.2 Phase 2 Evolution: Document-Centric Architecture (The 'Anti-Drift' Mandate)
+As the toolset grows (AI tools, Markdown, Smart Shapes), the architecture MUST shift from Engine-centric to **Document-centric** to avoid God-Engine anti-patterns.
+- **MUST:** Tools DO NOT render directly. Tools mutate state (produce Commands).
+- **MUST:** The true center of the application is the **Document State**, not the Editor Engine. `Tool -> Command -> Document -> Renderer`.
+- **MUST:** Implement a **Tool Lifecycle Contract** (e.g., `ITool` with `OnActivate`, `OnInput`, `OnCommit`). New features MUST plug into this contract rather than inventing bespoke input/render flows. This prevents 'Cognitive Drift' and reduces decision fatigue for developers.
+
+---
+
 ## 3) Editor Canvas Fundamentals (RED LINES)
 
 - **FORBIDDEN:** `ScrollViewer` on the Editor surface.

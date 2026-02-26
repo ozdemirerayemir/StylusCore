@@ -2,29 +2,29 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Settings"
-      Background="{DynamicResource PrimaryBackgroundBrush}">
+      Background="{DynamicResource Brush.ContentBg}">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="24">
+        <StackPanel Margin="{DynamicResource Spacing24}">
 
             <!-- Header -->
             <TextBlock Text="{DynamicResource Str_Settings}"
                        FontSize="{DynamicResource FontSize_Header}"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,24"/>
 
             <!-- Appearance Section -->
             <TextBlock Text="{DynamicResource Str_Appearance}"
                        FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
-            <Border Background="{DynamicResource SecondaryBackgroundBrush}"
-                    CornerRadius="{DynamicResource LargeCornerRadius}"
-                    Padding="16"
+            <Border Background="{DynamicResource Brush.AppBg}"
+                    CornerRadius="{DynamicResource RadiusLG}"
+                    Padding="{DynamicResource Spacing16}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- Theme -->
@@ -35,7 +35,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{DynamicResource Str_Theme}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    VerticalAlignment="Center"/>
 
                         <ComboBox Grid.Column="1"
@@ -54,7 +54,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{DynamicResource Str_Language}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    VerticalAlignment="Center"/>
 
                         <ComboBox Grid.Column="1"
@@ -71,13 +71,13 @@
             <!-- Auto-Save Section -->
             <TextBlock Text="{DynamicResource Str_AutoSave}"
                        FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
-            <Border Background="{DynamicResource SecondaryBackgroundBrush}"
-                    CornerRadius="{DynamicResource LargeCornerRadius}"
-                    Padding="16"
+            <Border Background="{DynamicResource Brush.AppBg}"
+                    CornerRadius="{DynamicResource RadiusLG}"
+                    Padding="{DynamicResource Spacing16}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- Interval -->
@@ -88,7 +88,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{DynamicResource Str_SaveInterval}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    VerticalAlignment="Center"/>
 
                         <TextBox Grid.Column="1"
@@ -105,7 +105,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{DynamicResource Str_ShowSaveIndicator}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    VerticalAlignment="Center"/>
 
                         <CheckBox Grid.Column="1"
@@ -117,13 +117,13 @@
             <!-- Key Bindings Section -->
             <TextBlock Text="{DynamicResource Str_KeyBindings}"
                        FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="SemiBold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
+                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
-            <Border Background="{DynamicResource SecondaryBackgroundBrush}"
-                    CornerRadius="{DynamicResource LargeCornerRadius}"
-                    Padding="16"
+            <Border Background="{DynamicResource Brush.AppBg}"
+                    CornerRadius="{DynamicResource RadiusLG}"
+                    Padding="{DynamicResource Spacing16}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- KeyBindings Table Header -->
@@ -133,15 +133,15 @@
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{DynamicResource Str_Input}" FontWeight="SemiBold" 
-                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource Str_Action}" FontWeight="SemiBold"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
-                        <TextBlock Grid.Column="2" Text="{DynamicResource Str_Modifiers}" FontWeight="SemiBold"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"/>
+                        <TextBlock Text="{DynamicResource Str_Input}" FontWeight="{DynamicResource FontWeight_SemiBold}" 
+                                   Foreground="{DynamicResource Brush.TextPrimary}"/>
+                        <TextBlock Grid.Column="1" Text="{DynamicResource Str_Action}" FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"/>
+                        <TextBlock Grid.Column="2" Text="{DynamicResource Str_Modifiers}" FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"/>
                     </Grid>
                     
-                    <Border Height="1" Background="{DynamicResource PrimaryBorderBrush}" Margin="0,0,0,8"/>
+                    <Border Height="1" Background="{DynamicResource Brush.BorderHard}" Margin="0,0,0,8"/>
                     
                     <!-- KeyBindings List -->
                     <ItemsControl ItemsSource="{Binding KeyBindings}" MaxHeight="300">
@@ -154,11 +154,11 @@
                                         <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Text="{Binding InputId}" 
-                                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                               Foreground="{DynamicResource Brush.TextPrimary}"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Action}"
-                                               Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                               Foreground="{DynamicResource Brush.TextPrimary}"/>
                                     <TextBlock Grid.Column="2" Text="{Binding GetDescription}"
-                                               Foreground="{DynamicResource SecondaryTextBrush}"/>
+                                               Foreground="{DynamicResource Brush.TextSecondary}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

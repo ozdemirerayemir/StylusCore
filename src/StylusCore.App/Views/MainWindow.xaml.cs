@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using StylusCore.App.Shell.ViewModels;
 using StylusCore.Engine.Wpf.Input.Bindings;
 using StylusCore.App.Shared.Components;
@@ -18,6 +20,23 @@ namespace StylusCore.App.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        // DWM API for rounded corners
+        public enum DWMWINDOWATTRIBUTE
+        {
+            DWMWA_WINDOW_CORNER_PREFERENCE = 33
+        }
+
+        public enum DWM_WINDOW_CORNER_PREFERENCE
+        {
+            DWMWCP_DEFAULT = 0,
+            DWMWCP_DONOTROUND = 1,
+            DWMWCP_ROUND = 2,
+            DWMWCP_ROUNDSMALL = 3
+        }
+
+        [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        internal static extern void DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE attribute, ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute, uint cbAttribute);
+
         private MainViewModel _viewModel;
 
         public MainWindow()
@@ -44,6 +63,23 @@ namespace StylusCore.App.Views
 
             // Subscribe to Close request
             _viewModel.CloseRequested += (s, e) => Close();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            // Enable native rounded corners on Windows 11
+            var hwnd = new WindowInteropHelper(this).Handle;
+            var preference = DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND;
+            try
+            {
+                DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(uint));
+            }
+            catch (Exception)
+            {
+                // API might not be supported on older Windows versions, safely ignore
+            }
         }
 
         private void Sidebar_ToggleRequested(object sender, EventArgs e)

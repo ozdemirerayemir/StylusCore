@@ -5,10 +5,10 @@
         xmlns:views="clr-namespace:StylusCore.App.Features.Library.Views"
         xmlns:converters="clr-namespace:StylusCore.App.Shared.Converters"
         Title="{DynamicResource Str_AppName}"
-        Width="1280" Height="800"
-        MinWidth="800" MinHeight="600"
+        Width="{DynamicResource Shell.MainWindowWidth}" Height="{DynamicResource Shell.MainWindowHeight}"
+        MinWidth="{DynamicResource Shell.MainWindowMinWidth}" MinHeight="{DynamicResource Shell.MainWindowMinHeight}"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource AppShellBackgroundBrush}"
+        Background="{DynamicResource Brush.AppBg}"
         WindowStyle="None"
         AllowsTransparency="False"
         ResizeMode="CanResize"
@@ -16,25 +16,24 @@
 
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="{DynamicResource Shell.HeaderHeight}"  
-                      ResizeBorderThickness="5"
-                      GlassFrameThickness="0"
+                      ResizeBorderThickness="{DynamicResource Shell.ResizeBorderThickness}"
+                      GlassFrameThickness="-1"
                       CornerRadius="0"
                       UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
 
     <!-- Main Window Border (Rounded Corners) -->
-    <Border Background="{DynamicResource AppShellBackgroundBrush}"
+    <Border Background="{DynamicResource Brush.AppBg}"
             CornerRadius="0"
-            BorderBrush="{DynamicResource PrimaryBorderBrush}"
+            BorderBrush="Transparent"
             BorderThickness="1">
 
-            <!-- GLOBAL GRID STRUCTURE (Clean Shell) -->
             <Grid>
                 <Grid.Style>
                     <Style TargetType="Grid">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
-                                <Setter Property="Margin" Value="8"/>
+                                <Setter Property="Margin" Value="{DynamicResource Spacing8}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -47,10 +46,9 @@
                 <!-- ROW 0: GLOBAL HEADER -->
                 <controls:HeaderControl Grid.Row="0" Panel.ZIndex="1000"/>
 
-                <!-- ROW 1: MAIN BODY (Sidebar + Content) -->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="SidebarColumn" Width="48"/> <!-- Sabit, code-behind'dan güncellenir -->
+                        <ColumnDefinition x:Name="SidebarColumn" Width="{DynamicResource Shell.SidebarCollapsedWidth.GL}"/> <!-- Sabit, code-behind'dan güncellenir -->
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
     
@@ -59,12 +57,12 @@
     
                     <!-- MAIN CONTENT (Rounded top-left corner) -->
                     <Border Grid.Column="1"
-                            Background="{DynamicResource ContentAreaBackgroundBrush}"
+                            Background="{DynamicResource Brush.ContentBg}"
                             CornerRadius="{DynamicResource Library.ContentCornerRadius}"
-                            BorderBrush="{DynamicResource PrimaryBorderBrush}"
-                            BorderThickness="1,1,0,0">
+                            BorderBrush="Transparent"
+                            BorderThickness="{DynamicResource Shell.MainWindowContentBorderThickness}">
                         <Border.Effect>
-                            <DropShadowEffect Color="Black" Direction="135" ShadowDepth="2" Opacity="0.04" BlurRadius="8"/>
+                            <DropShadowEffect Color="{DynamicResource Color.Shadow}" Direction="135" ShadowDepth="2" Opacity="0.04" BlurRadius="8"/>
                         </Border.Effect>
                         <Border CornerRadius="{DynamicResource Library.ContentCornerRadius}"
                                 ClipToBounds="True">

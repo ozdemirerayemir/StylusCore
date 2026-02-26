@@ -152,7 +152,9 @@ UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
   - All Styles (including `IconBase`, `SidebarButtonStyle`, button styles)
   - All Localization strings (`Str_*`)
 - **FORBIDDEN:** Using `StaticResource` for any Brush, Font, or Size value in Shell UI XAML.
-- **Rationale:** `DynamicResource` enables runtime theme switching, UI density changes, and future preset customization. `StaticResource` freezes the lookup and prevents updates.
+- **FORBIDDEN (HARDCODED SIZES):** Writing raw numbers for `Margin`, `Padding`, `Width`, `Height`, `CornerRadius`, or `FontSize` (e.g. `Margin="10"`, `Width="200"`).
+- **MUST:** All measurements MUST be bound using `{DynamicResource [TokenName]}` (e.g., `{DynamicResource Spacing16}`, `{DynamicResource ControlHeightMD}`).
+- **Rationale:** `DynamicResource` enables runtime theme switching, UI density changes, and future preset customization. `StaticResource` freezes the lookup and prevents updates. Hitting raw numbers prevents runtime density swaps entirely.
 
 ---
 

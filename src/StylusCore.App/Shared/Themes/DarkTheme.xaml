@@ -5,31 +5,27 @@
     <!-- Dark Theme Colors -->
 
     <!-- Background Colors -->
-    <Color x:Key="PrimaryBackgroundColor">#1E1E1E</Color>
-    <Color x:Key="SecondaryBackgroundColor">#252526</Color>
-    <Color x:Key="TertiaryBackgroundColor">#333337</Color>
-    <Color x:Key="SidebarBackgroundColor">#252526</Color>
-    <Color x:Key="CanvasBackgroundColor">#1E1E1E</Color>
-    <Color x:Key="CardBackgroundColor">#2D2D30</Color>
-    <Color x:Key="HoverBackgroundColor">#3E3E42</Color>
+    <Color x:Key="Color.AppBg">#1A1A1E</Color>
+    <Color x:Key="Color.ContentBg">#202024</Color>
+    <Color x:Key="Color.Surface">#2D2D30</Color>
+    <Color x:Key="Color.SidebarBg">#252526</Color>
+    <Color x:Key="Color.HoverBg">#3E3E42</Color>
 
     <!-- Text Colors -->
-    <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
-    <Color x:Key="SecondaryTextColor">#CCCCCC</Color>
-    <Color x:Key="TertiaryTextColor">#888888</Color>
-    <Color x:Key="DisabledTextColor">#666666</Color>
-    <Color x:Key="AccentTextColor">#4CC2FF</Color>
+    <Color x:Key="Color.TextPrimary">#FFFFFF</Color>
+    <Color x:Key="Color.TextSecondary">#D1D5DB</Color>
+    <Color x:Key="Color.TextTertiary">#9CA3AF</Color>
+    <Color x:Key="Color.TextDisabled">#6B7280</Color>
+    <Color x:Key="Color.TextAccent">#60A5FA</Color>
 
     <!-- Accent Colors (Brighter for Dark Mode) -->
-    <Color x:Key="PrimaryAccentColor">#0078D4</Color>
-    <Color x:Key="SecondaryAccentColor">#4CC2FF</Color>
-    <Color x:Key="HoverAccentColor">#2B88D8</Color>
-    <Color x:Key="PressedAccentColor">#004E8C</Color>
+    <Color x:Key="Color.Primary">#3B82F6</Color>
+    <Color x:Key="Color.PrimaryHover">#60A5FA</Color>
+    <Color x:Key="Color.PrimaryPressed">#2563EB</Color>
 
     <!-- Border Colors -->
-    <Color x:Key="PrimaryBorderColor">#3F3F46</Color>
-    <Color x:Key="SecondaryBorderColor">#555555</Color>
-    <Color x:Key="FocusBorderColor">#0078D4</Color>
+    <Color x:Key="Color.BorderSoft">#3F3F46</Color>
+    <Color x:Key="Color.BorderHard">#52525B</Color>
 
     <!-- Status Colors -->
     <Color x:Key="SuccessColor">#107C10</Color>
@@ -37,29 +33,29 @@
     <Color x:Key="ErrorColor">#FF4343</Color> <!-- Brighter Red -->
     <Color x:Key="ConflictColor">#FF4343</Color>
 
-    <!-- Brushes -->
-    <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{StaticResource PrimaryBackgroundColor}"/>
-    <SolidColorBrush x:Key="SecondaryBackgroundBrush" Color="{StaticResource SecondaryBackgroundColor}"/>
-    <SolidColorBrush x:Key="TertiaryBackgroundBrush" Color="{StaticResource TertiaryBackgroundColor}"/>
-    <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackgroundColor}"/>
-    <SolidColorBrush x:Key="CanvasBackgroundBrush" Color="{StaticResource CanvasBackgroundColor}"/>
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}"/>
-    <SolidColorBrush x:Key="HoverBackgroundBrush" Color="{StaticResource HoverBackgroundColor}"/>
+    <!-- Background Brushes -->
+    <SolidColorBrush x:Key="Brush.AppBg" Color="{StaticResource Color.AppBg}"/>
+    <SolidColorBrush x:Key="Brush.ContentBg" Color="{StaticResource Color.ContentBg}"/>
+    <SolidColorBrush x:Key="Brush.Surface" Color="{StaticResource Color.Surface}"/>
+    <SolidColorBrush x:Key="Brush.SidebarBg" Color="{StaticResource Color.SidebarBg}"/>
+    <SolidColorBrush x:Key="Brush.HoverBg" Color="{StaticResource Color.HoverBg}"/>
 
-    <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryTextColor}"/>
-    <SolidColorBrush x:Key="SecondaryTextBrush" Color="{StaticResource SecondaryTextColor}"/>
-    <SolidColorBrush x:Key="TertiaryTextBrush" Color="{StaticResource TertiaryTextColor}"/>
-    <SolidColorBrush x:Key="DisabledTextBrush" Color="{StaticResource DisabledTextColor}"/>
-    <SolidColorBrush x:Key="AccentTextBrush" Color="{StaticResource AccentTextColor}"/>
+    <!-- Text Brushes -->
+    <SolidColorBrush x:Key="Brush.TextPrimary" Color="{StaticResource Color.TextPrimary}"/>
+    <SolidColorBrush x:Key="Brush.TextSecondary" Color="{StaticResource Color.TextSecondary}"/>
+    <SolidColorBrush x:Key="Brush.TextTertiary" Color="{StaticResource Color.TextTertiary}"/>
+    <SolidColorBrush x:Key="Brush.TextDisabled" Color="{StaticResource Color.TextDisabled}"/>
+    <SolidColorBrush x:Key="Brush.TextAccent" Color="{StaticResource Color.TextAccent}"/>
 
-    <SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource PrimaryAccentColor}"/>
-    <SolidColorBrush x:Key="SecondaryAccentBrush" Color="{StaticResource SecondaryAccentColor}"/>
-    <SolidColorBrush x:Key="HoverAccentBrush" Color="{StaticResource HoverAccentColor}"/>
-    <SolidColorBrush x:Key="PressedAccentBrush" Color="{StaticResource PressedAccentColor}"/>
+    <!-- Accent Brushes -->
+    <SolidColorBrush x:Key="Brush.Primary" Color="{StaticResource Color.Primary}"/>
+    <SolidColorBrush x:Key="Brush.Accent" Color="{StaticResource Color.Primary}"/>
+    <SolidColorBrush x:Key="Brush.PrimaryHover" Color="{StaticResource Color.PrimaryHover}"/>
+    <SolidColorBrush x:Key="Brush.PrimaryPressed" Color="{StaticResource Color.PrimaryPressed}"/>
 
-    <SolidColorBrush x:Key="PrimaryBorderBrush" Color="{StaticResource PrimaryBorderColor}"/>
-    <SolidColorBrush x:Key="SecondaryBorderBrush" Color="{StaticResource SecondaryBorderColor}"/>
-    <SolidColorBrush x:Key="FocusBorderBrush" Color="{StaticResource FocusBorderColor}"/>
+    <!-- Border Brushes -->
+    <SolidColorBrush x:Key="Brush.BorderSoft" Color="{StaticResource Color.BorderSoft}"/>
+    <SolidColorBrush x:Key="Brush.BorderHard" Color="{StaticResource Color.BorderHard}"/>
 
     <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
     <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
@@ -71,6 +67,8 @@
     <!-- Sizing (Sidebar metrics moved to GeneralResources.xaml) -->
     <sys:Double x:Key="RibbonHeight">120</sys:Double>
     <sys:Double x:Key="RibbonHeightCollapsed">40</sys:Double>
+    
+    <!-- Mapped DEPRECATED to existing Keys until we can clean up views -->
     <Thickness x:Key="DefaultMargin">8</Thickness>
     <Thickness x:Key="SmallMargin">4</Thickness>
     <Thickness x:Key="LargeMargin">16</Thickness>
@@ -81,18 +79,6 @@
     <SolidColorBrush x:Key="SidebarHoverBrush" Color="#15FFFFFF"/>
 
     <!-- Icon Stroke (defaults to text color; user can override for accent icons) -->
-    <SolidColorBrush x:Key="IconStrokeBrush" Color="{StaticResource PrimaryTextColor}"/>
-
-    <!-- LIBRARY UI BRUSHES -->
-    <SolidColorBrush x:Key="AppShellBackgroundBrush" Color="#1A1A1E"/>
-    <SolidColorBrush x:Key="ContentAreaBackgroundBrush" Color="#202024"/>
-    <SolidColorBrush x:Key="SidebarActiveBrush" Color="#2D2D30"/>
-    <SolidColorBrush x:Key="SidebarActiveTextBrush" Color="#60A5FA"/>
-    <SolidColorBrush x:Key="SidebarActiveBorderBrush" Color="#3F3F46"/>
-    <SolidColorBrush x:Key="SearchBoxBackgroundBrush" Color="#2D2D30"/>
-    <SolidColorBrush x:Key="FocusRingBrush" Color="#1A60A5FA"/>
-    <SolidColorBrush x:Key="TonalButtonBackgroundBrush" Color="#1E3A5F"/>
-    <SolidColorBrush x:Key="TonalButtonTextBrush" Color="#93C5FD"/>
-    <SolidColorBrush x:Key="TonalButtonBorderBrush" Color="#1E40AF"/>
+    <SolidColorBrush x:Key="IconStrokeBrush" Color="{StaticResource Color.TextPrimary}"/>
 
 </ResourceDictionary>

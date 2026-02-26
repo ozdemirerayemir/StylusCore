@@ -7,7 +7,7 @@
     <Grid x:Name="MenuGrid">
         <!-- Background Circle -->
         <Ellipse x:Name="BackgroundCircle"
-                 Fill="{DynamicResource SecondaryBackgroundBrush}"
+                 Fill="{DynamicResource Brush.ContentBg}"
                  Opacity="0.95"
                  Effect="{StaticResource DropShadowEffect}"/>
 
@@ -16,18 +16,18 @@
 
         <!-- Center Button -->
         <Ellipse x:Name="CenterCircle"
-                 Width="60" Height="60"
+                 Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
-                 Fill="{DynamicResource TertiaryBackgroundBrush}"
-                 Stroke="{DynamicResource PrimaryBorderBrush}"
+                 Fill="{DynamicResource Brush.Surface}"
+                 Stroke="{DynamicResource Brush.BorderSoft}"
                  StrokeThickness="1"/>
 
         <TextBlock x:Name="CenterLabel"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Foreground="{DynamicResource PrimaryTextBrush}"
-                   FontSize="12"
+                   Foreground="{DynamicResource Brush.TextPrimary}"
+                   FontSize="{DynamicResource FontSize_Small}"
                    Text="Menu"/>
     </Grid>
 
@@ -42,17 +42,17 @@
         <!-- Menu Item Style -->
         <Style x:Key="RadialMenuItemStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
-            <Setter Property="Width" Value="48"/>
-            <Setter Property="Height" Value="48"/>
+            <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
+            <Setter Property="Width" Value="{DynamicResource ControlHeightLG}"/>
+            <Setter Property="Height" Value="{DynamicResource ControlHeightLG}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid>
                             <Ellipse x:Name="ItemBg"
-                                     Fill="{DynamicResource TertiaryBackgroundBrush}"
-                                     Stroke="{DynamicResource PrimaryBorderBrush}"
+                                     Fill="{DynamicResource Brush.Surface}"
+                                     Stroke="{DynamicResource Brush.BorderSoft}"
                                      StrokeThickness="1"/>
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
@@ -60,7 +60,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ItemBg" Property="Fill"
-                                        Value="{DynamicResource PrimaryAccentBrush}"/>
+                                        Value="{DynamicResource Brush.Accent}"/>
                                 <Setter Property="Foreground" Value="White"/>
                             </Trigger>
                         </ControlTemplate.Triggers>

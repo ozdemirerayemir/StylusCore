@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              ClipToBounds="True"
              Focusable="True"
-             Background="{DynamicResource CanvasBackgroundBrush}">
+             Background="{DynamicResource Brush.AppBg}">
 
     <Grid x:Name="CanvasGrid">
         <!-- Page Background with Template -->
         <Border x:Name="PageBackground"
-                Background="{DynamicResource CanvasBackgroundBrush}"
+                Background="{DynamicResource Brush.AppBg}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
             <!-- Page dimensions set in code -->
@@ -50,27 +50,27 @@
                     VerticalAlignment="Bottom"
                     Margin="16">
             <Button Style="{DynamicResource IconButtonStyle}"
-                    Width="32" Height="32"
+                    Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}"
                     Click="ZoomOut_Click">
-                <TextBlock Text="−" FontSize="16" FontWeight="Bold"/>
+                <TextBlock Text="−" FontSize="{DynamicResource FontSize_Header}" FontWeight="Bold"/>
             </Button>
             <TextBlock x:Name="ZoomLabel"
                        Text="100%"
                        Width="50"
                        TextAlignment="Center"
                        VerticalAlignment="Center"
-                       Foreground="{DynamicResource SecondaryTextBrush}"/>
+                       Foreground="{DynamicResource Brush.TextSecondary}"/>
             <Button Style="{DynamicResource IconButtonStyle}"
-                    Width="32" Height="32"
+                    Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}"
                     Click="ZoomIn_Click">
-                <TextBlock Text="+" FontSize="16" FontWeight="Bold"/>
+                <TextBlock Text="+" FontSize="{DynamicResource FontSize_Header}" FontWeight="Bold"/>
             </Button>
             <Button Style="{DynamicResource IconButtonStyle}"
-                    Width="32" Height="32"
+                    Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}"
                     Margin="8,0,0,0"
                     Click="ZoomFit_Click"
                     ToolTip="Fit to Page">
-                <TextBlock Text="◱" FontSize="14"/>
+                <TextBlock Text="◱" FontSize="{DynamicResource FontSize_Body}"/>
             </Button>
         </StackPanel>
     </Grid>

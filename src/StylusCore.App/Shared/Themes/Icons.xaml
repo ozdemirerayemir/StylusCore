@@ -154,7 +154,7 @@
     <StreamGeometry x:Key="Icon.WindowMinimize">M2 13h20</StreamGeometry>
 
     <!-- Window Maximize (Square) -->
-    <StreamGeometry x:Key="Icon.WindowMaximize">M4 4h16v16H4Z</StreamGeometry>
+    <StreamGeometry x:Key="Icon.WindowMaximize">M4 4h16v16H4v-16</StreamGeometry>
 
     <!-- Window Restore (Double Squares) -->
     <StreamGeometry x:Key="Icon.WindowRestore">M8 4h12v12h-4v4H4V8h4V4z M8 8h8v8</StreamGeometry>

@@ -8,25 +8,27 @@
     <Page.Resources>
         <!-- Library Card Template (React Design) -->
         <DataTemplate x:Key="LibraryTemplate">
-            <Border Width="260" MinHeight="220" Margin="0,0,16,16"
-                    Background="{DynamicResource CardBackgroundBrush}"
-                    CornerRadius="{DynamicResource Library.CardCornerRadius}"
+            <Border Width="{DynamicResource Library.CardWidth}" MinHeight="{DynamicResource Library.CardMinHeight}" Margin="0,0,24,24"
+                    Background="{DynamicResource Brush.Surface}"
+                    BorderBrush="{DynamicResource Brush.BorderSoft}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusLG}"
                     Cursor="Hand"
                     MouseLeftButtonUp="LibraryCard_Click"
                     Tag="{Binding}"
                     ClipToBounds="True">
                 <Border.Effect>
-                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="2" Opacity="0.06" BlurRadius="12"/>
+                    <DropShadowEffect Color="Black" Direction="270" ShadowDepth="0" Opacity="0.03" BlurRadius="15"/>
                 </Border.Effect>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="96"/>
+                        <RowDefinition Height="{DynamicResource Library.CoverHeight.GL}"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
                     <!-- ── COVER (Gradient) ── -->
                     <Border Grid.Row="0"
-                            CornerRadius="{DynamicResource Library.CardTopCornerRadius}">
+                            CornerRadius="{DynamicResource Library.CardTopCornerRadius}"> <!-- Need static inner top radius, using literal for now or new token later -->
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Orange}"/>
@@ -59,13 +61,13 @@
                             </Style>
                         </Border.Style>
                         <!-- Rounded-square icon container -->
-                        <Border Width="40" Height="40"
-                                CornerRadius="10"
+                        <Border Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}"
+                                CornerRadius="{DynamicResource RadiusSM}"
                                 Background="{DynamicResource Solid.White33}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Margin="16,16,0,0">
-                            <Grid Width="20" Height="20"
+                                Margin="{DynamicResource Spacing16}">
+                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
                                 <Path Data="{StaticResource Icon.Book}"
@@ -89,15 +91,15 @@
                         <!-- Name -->
                         <TextBlock Grid.Row="0"
                                    Text="{Binding Name}"
-                                   FontWeight="SemiBold"
+                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
                                    FontSize="{DynamicResource FontSize_Body}"
-                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                    TextTrimming="CharacterEllipsis"/>
 
                         <!-- Notebook count -->
                         <TextBlock Grid.Row="1"
                                    FontSize="{DynamicResource FontSize_Small}"
-                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Foreground="{DynamicResource Brush.TextSecondary}"
                                    Margin="0,4,0,0">
                             <Run Text="{Binding Notebooks.Count, Mode=OneWay}"/>
                             <Run Text=" "/><Run Text="{DynamicResource Str_NotebooksCount}"/>
@@ -105,7 +107,7 @@
 
                         <!-- Bottom row: Clock + time | ⋯ button -->
                         <Border Grid.Row="3"
-                                BorderBrush="{DynamicResource PrimaryBorderBrush}"
+                                BorderBrush="{DynamicResource Brush.BorderHard}"
                                 BorderThickness="0,1,0,0"
                                 Padding="0,12,0,0">
                             <Grid>
@@ -120,14 +122,14 @@
                                     <Grid Width="14" Height="14" Margin="0,0,5,0">
                                         <Path Data="{StaticResource Icon.Clock}"
                                               Style="{DynamicResource IconBase}"
-                                              Stroke="{DynamicResource TertiaryTextBrush}"
+                                              Stroke="{DynamicResource Brush.TextTertiary}"
                                               StrokeThickness="1.5"
                                               Stretch="Uniform"
                                               Width="12" Height="12"/>
                                     </Grid>
                                     <TextBlock Text="{DynamicResource Str_JustNow}"
                                                FontSize="{DynamicResource FontSize_Small}"
-                                               Foreground="{DynamicResource TertiaryTextBrush}"
+                                               Foreground="{DynamicResource Brush.TextTertiary}"
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
     
@@ -143,66 +145,89 @@
                                     <Grid Width="16" Height="16">
                                         <Path Data="{StaticResource Icon.MoreHorizontal}"
                                               Style="{DynamicResource IconBase}"
-                                              Fill="{DynamicResource SecondaryTextBrush}"
+                                              Fill="{DynamicResource Brush.TextSecondary}"
                                               Stretch="Uniform"
                                               Width="16" Height="4"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"/>
                                     </Grid>
                                     <Button.ContextMenu>
-                                        <ContextMenu Padding="0,4" BorderThickness="1" BorderBrush="{DynamicResource PrimaryBorderBrush}">
+                                        <ContextMenu Padding="{DynamicResource Spacing8}">
                                             <!-- COVER COLOR Label -->
                                             <MenuItem Header="{DynamicResource Str_CoverColor}" 
-                                                      Foreground="{DynamicResource TertiaryTextBrush}"
-                                                      FontSize="10"
-                                                      FontWeight="Bold"
+                                                      Foreground="{DynamicResource Brush.TextTertiary}"
+                                                      FontSize="{DynamicResource FontSize_Small}"
+                                                      FontWeight="{DynamicResource FontWeight_Bold}"
                                                       IsHitTestVisible="False"
-                                                      Padding="12,4,12,0"
-                                                      StaysOpenOnClick="True"/>
+                                                      Padding="4,0,4,4"
+                                                      StaysOpenOnClick="True">
+                                                <MenuItem.Template>
+                                                    <!-- Sadece başlık gibi görünmesini sağlamak için basit bir template -->
+                                                    <ControlTemplate TargetType="MenuItem">
+                                                        <Border Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter ContentSource="Header"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </MenuItem.Template>
+                                            </MenuItem>
                                             
                                             <!-- Color Picker Row -->
-                                            <MenuItem StaysOpenOnClick="True" Padding="8,4">
-                                                <MenuItem.Header>
-                                                    <StackPanel Orientation="Horizontal" Margin="4,4,4,0">
-                                                        <Button Width="24" Height="24" Margin="0,0,8,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Pink}" DataContext="{x:Static sys:CoverColor.Pink}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border Background="{TemplateBinding Background}" CornerRadius="12"/>
-                                                                </ControlTemplate>
-                                                            </Button.Template>
-                                                        </Button>
-                                                        <Button Width="24" Height="24" Margin="0,0,8,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Blue}" DataContext="{x:Static sys:CoverColor.Blue}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="12"/></ControlTemplate></Button.Template>
-                                                        </Button>
-                                                        <Button Width="24" Height="24" Margin="0,0,8,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Teal}" DataContext="{x:Static sys:CoverColor.Teal}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="12"/></ControlTemplate></Button.Template>
-                                                        </Button>
-                                                        <Button Width="24" Height="24" Margin="0,0,8,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Purple}" DataContext="{x:Static sys:CoverColor.Purple}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="12"/></ControlTemplate></Button.Template>
-                                                        </Button>
-                                                        <Button Width="24" Height="24" Margin="0,0,8,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Orange}" DataContext="{x:Static sys:CoverColor.Orange}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="12"/></ControlTemplate></Button.Template>
-                                                        </Button>
-                                                        <Button Width="24" Height="24" Margin="0,0,0,0" Style="{DynamicResource IconButtonStyle}" Background="{DynamicResource NotebookCoverBrush_Yellow}" DataContext="{x:Static sys:CoverColor.Yellow}" Click="ChangeLibraryColor_Click">
-                                                            <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="12"/></ControlTemplate></Button.Template>
-                                                        </Button>
-                                                    </StackPanel>
-                                                </MenuItem.Header>
+                                            <MenuItem StaysOpenOnClick="True">
+                                                <MenuItem.Template>
+                                                    <ControlTemplate TargetType="MenuItem">
+                                                        <Border Padding="4,4,4,8">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Pink}" DataContext="{x:Static sys:CoverColor.Pink}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Pink}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Blue}" DataContext="{x:Static sys:CoverColor.Blue}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Blue}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Teal}" DataContext="{x:Static sys:CoverColor.Teal}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Teal}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Purple}" DataContext="{x:Static sys:CoverColor.Purple}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Purple}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Orange}" DataContext="{x:Static sys:CoverColor.Orange}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Orange}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                                <Button Width="20" Height="20" Margin="0,0,0,0" Background="{DynamicResource NotebookCoverBrush_Yellow}" DataContext="{x:Static sys:CoverColor.Yellow}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Yellow}">
+                                                                    <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
+                                                                </Button>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </MenuItem.Template>
                                             </MenuItem>
 
-                                            <Separator Margin="12,4"/>
+                                            <!-- Slider - Simulated just for aesthetics matching React UI currently, functionally it might adjust brightness/saturation if implemented later -->
+                                            <MenuItem IsHitTestVisible="False">
+                                                <MenuItem.Template>
+                                                    <ControlTemplate TargetType="MenuItem">
+                                                        <Border Padding="4,4,4,8">
+                                                            <Grid Height="6">
+                                                                <Border Background="{DynamicResource Brush.AppBg}" CornerRadius="3"/>
+                                                                <Border Background="{DynamicResource Brush.TextSecondary}" CornerRadius="3" Width="40" HorizontalAlignment="Center"/>
+                                                            </Grid>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </MenuItem.Template>
+                                            </MenuItem>
+
+                                            <Separator/>
 
                                             <!-- Rename -->
                                             <MenuItem Header="{DynamicResource Str_Rename}" Click="RenameLibrary_Click">
                                                 <MenuItem.Icon>
-                                                    <Path Data="{StaticResource Icon.Edit}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource SecondaryTextBrush}" Stretch="Uniform" Width="14" Height="14"/>
+                                                    <Path Data="{StaticResource Icon.Edit}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource Brush.TextSecondary}" Stretch="Uniform" Width="16" Height="16"/>
                                                 </MenuItem.Icon>
                                             </MenuItem>
                                             
                                             <!-- Delete -->
                                             <MenuItem Header="{DynamicResource Str_Delete}" Click="DeleteLibrary_Click" Foreground="{DynamicResource ErrorBrush}">
                                                 <MenuItem.Icon>
-                                                    <Path Data="{StaticResource Icon.Trash}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource ErrorBrush}" Stretch="Uniform" Width="14" Height="14"/>
+                                                    <Path Data="{StaticResource Icon.Trash}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource ErrorBrush}" Stretch="Uniform" Width="16" Height="16"/>
                                                 </MenuItem.Icon>
                                             </MenuItem>
                                         </ContextMenu>
@@ -218,110 +243,124 @@
 
     </Page.Resources>
 
-    <Grid Margin="{DynamicResource Library.ContentPadding}">
+    <Grid Margin="{DynamicResource Library.PageMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>  <!-- Header/Toolbar -->
             <RowDefinition Height="*"/>     <!-- Content -->
         </Grid.RowDefinitions>
 
         <!-- ============================================================ -->
-        <!-- TOOLBAR                                                       -->
+        <!-- TOOLBAR / HEADER (Web Geometry)                               -->
         <!-- ============================================================ -->
-        <Grid Grid.Row="0" Margin="0,0,0,24">
+        <Grid Grid.Row="0" Margin="0,0,0,24" Height="{DynamicResource Library.HeaderHeight}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>  <!-- Title -->
-                <ColumnDefinition Width="Auto"/>  <!-- View Toggle -->
-                <ColumnDefinition Width="*"/>     <!-- Search (centered, flexible) -->
-                <ColumnDefinition Width="Auto"/>  <!-- Sort -->
-                <ColumnDefinition Width="Auto"/>  <!-- + New -->
+                <ColumnDefinition Width="*"/>     <!-- Left: Title -->
+                <ColumnDefinition Width="Auto"/>  <!-- Center: Main Controls -->
+                <ColumnDefinition Width="*"/>     <!-- Right: Actions -->
             </Grid.ColumnDefinitions>
 
-            <!-- Title -->
+            <!-- 1. LEFT: Title -->
             <TextBlock x:Name="PageTitle"
                        Grid.Column="0"
                        Text="{DynamicResource Str_Library}"
                        FontSize="{DynamicResource FontSize_Title}"
-                       FontWeight="Bold"
-                       Foreground="{DynamicResource PrimaryTextBrush}"
-                       VerticalAlignment="Center"
-                       Margin="0,0,16,0"/>
+                       FontWeight="{DynamicResource FontWeight_Bold}"
+                       Foreground="{DynamicResource Brush.TextPrimary}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
 
-            <!-- View Mode Toggle (Grid / List) -->
-            <Border Grid.Column="1"
-                    Background="{DynamicResource SecondaryBackgroundBrush}"
-                    CornerRadius="8"
-                    Padding="2"
-                    VerticalAlignment="Center"
-                    Margin="0,0,16,0">
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton x:Name="GridViewToggle"
-                                 Style="{DynamicResource SegmentedToggleStyle}"
-                                 IsChecked="True"
-                                 GroupName="ViewMode"
-                                 ToolTip="{DynamicResource Str_GridView}">
-                        <Grid Width="16" Height="16">
-                            <Path Data="{StaticResource Icon.LayoutGrid}"
-                                  Style="{DynamicResource IconBase}"
-                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                  StrokeThickness="1.5"
-                                  Stretch="Uniform" Width="14" Height="14"/>
-                        </Grid>
-                    </RadioButton>
-                    <RadioButton x:Name="ListViewToggle"
-                                 Style="{DynamicResource SegmentedToggleStyle}"
-                                 GroupName="ViewMode"
-                                 ToolTip="{DynamicResource Str_ListView}">
-                        <Grid Width="16" Height="16">
-                            <Path Data="{StaticResource Icon.List}"
-                                  Style="{DynamicResource IconBase}"
-                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                                  StrokeThickness="1.5"
-                                  Stretch="Uniform" Width="14" Height="14"/>
-                        </Grid>
-                    </RadioButton>
-                </StackPanel>
-            </Border>
+            <!-- 2. CENTER: View Mode + Search + Sort (Absolute Center) -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                
+                <!-- View Mode Toggle -->
+                <Border Background="{DynamicResource Brush.ContentBg}"
+                        CornerRadius="{DynamicResource RadiusSM}"
+                        Padding="2"
+                        VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton x:Name="GridViewToggle"
+                                     Style="{DynamicResource SegmentedToggleStyle}"
+                                     IsChecked="True"
+                                     GroupName="ViewMode"
+                                     ToolTip="{DynamicResource Str_GridView}">
+                            <Grid Width="16" Height="16">
+                                <Path Data="{StaticResource Icon.LayoutGrid}"
+                                      Style="{DynamicResource IconBase}"
+                                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                      StrokeThickness="1.5"
+                                      Stretch="Uniform" Width="14" Height="14"/>
+                            </Grid>
+                        </RadioButton>
+                        <RadioButton x:Name="ListViewToggle"
+                                     Style="{DynamicResource SegmentedToggleStyle}"
+                                     GroupName="ViewMode"
+                                     ToolTip="{DynamicResource Str_ListView}">
+                            <Grid Width="16" Height="16">
+                                <Path Data="{StaticResource Icon.List}"
+                                      Style="{DynamicResource IconBase}"
+                                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"
+                                      StrokeThickness="1.5"
+                                      Stretch="Uniform" Width="14" Height="14"/>
+                            </Grid>
+                        </RadioButton>
+                    </StackPanel>
+                </Border>
 
-            <!-- Search Box (centered in flexible column) -->
-            <TextBox x:Name="SearchBox"
-                     Grid.Column="2"
-                     Style="{DynamicResource SearchBoxStyle}"
-                     Tag="{DynamicResource Str_SearchLibraries}"
-                     VerticalAlignment="Center"
-                     HorizontalAlignment="Center"/>
+                <!-- Search Box -->
+                <TextBox x:Name="SearchBox"
+                         Style="{DynamicResource SearchBoxStyle}"
+                         Width="{DynamicResource SearchBox.Width}"
+                         Height="{DynamicResource ControlHeightMD}"
+                         Margin="{DynamicResource Spacing24_Horizontal}"
+                         Tag="{DynamicResource Str_SearchLibraries}"
+                         VerticalAlignment="Center"/>
 
-            <!-- Sort Button -->
-            <ToggleButton x:Name="SortToggle"
-                          Grid.Column="3"
-                          Style="{DynamicResource SortToggleButtonStyle}"
-                          VerticalAlignment="Center"
-                          Margin="12,0"
-                          ToolTip="{DynamicResource Str_SortBy}">
-                <Grid Width="16" Height="16">
-                    <Path Data="{StaticResource Icon.ArrowUpDown}"
-                          Style="{DynamicResource IconBase}"
-                          StrokeThickness="1.5"
-                          Stretch="Uniform" Width="14" Height="14"/>
-                </Grid>
-            </ToggleButton>
+                <!-- Sort Button -->
+                <ToggleButton x:Name="SortToggle"
+                              Style="{DynamicResource SortToggleButtonStyle}"
+                              Height="{DynamicResource ControlHeightMD}"
+                              Width="{DynamicResource ControlHeightMD}"
+                              VerticalAlignment="Center"
+                              ToolTip="{DynamicResource Str_SortBy}">
+                    <Grid Width="16" Height="16">
+                        <Path Data="{StaticResource Icon.ArrowUpDown}"
+                              Style="{DynamicResource IconBase}"
+                              StrokeThickness="1.5"
+                              Stretch="Uniform" Width="14" Height="14"/>
+                    </Grid>
+                </ToggleButton>
+            </StackPanel>
 
-            <!-- + New Library / Notebook Button -->
-            <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="NewLibraryButton"
-                        Content="{DynamicResource Str_NewLibrary}"
-                        Style="{DynamicResource TonalButtonStyle}"
-                        Click="NewLibrary_Click"/>
+            <!-- 3. RIGHT: Actions (Primary Button) -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button x:Name="NewNotebookButton"
                         Content="{DynamicResource Str_NewBook}"
                         Style="{DynamicResource TonalButtonStyle}"
+                        Height="{DynamicResource ControlHeightMD}"
+                        Margin="0,0,12,0"
                         Click="NewNotebook_Click"
                         Visibility="Collapsed"/>
+                
+                <!-- Primary Action Button (Strong Web Weight) -->
+                <Button x:Name="NewLibraryButton"
+                        Content="{DynamicResource Str_NewLibrary}"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        Height="{DynamicResource ControlHeightMD}"
+                        Padding="{DynamicResource Spacing24_Horizontal}"
+                        Click="NewLibrary_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="{DynamicResource RadiusMD}"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
             </StackPanel>
         </Grid>
 
         <!-- Libraries Grid (visible when no library selected) -->
         <ScrollViewer x:Name="LibrariesScrollViewer"
                       Grid.Row="1"
+                      Background="{DynamicResource Brush.ContentBg}"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled">
 
@@ -339,6 +378,7 @@
         <!-- Notebooks Grid (visible when a library is selected) -->
         <ScrollViewer x:Name="NotebooksScrollViewer"
                       Grid.Row="1"
+                      Background="{DynamicResource Brush.ContentBg}"
                       VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled"
                       Visibility="Collapsed">
@@ -355,9 +395,9 @@
                     <DataTemplate>
                         <!-- Notebook Card (Nebo style - colored cover) -->
                         <Border x:Name="NotebookCard"
-                                CornerRadius="{DynamicResource LargeCornerRadius}"
-                                Width="160"
-                                Height="200"
+                                CornerRadius="{DynamicResource RadiusTG}"
+                                Width="{DynamicResource Library.CardWidth}"
+                                Height="{DynamicResource Library.CardMinHeight}"
                                 Margin="0,0,16,16"
                                 Cursor="Hand"
                                 MouseLeftButtonUp="NotebookCard_Click"
@@ -454,17 +494,17 @@
                                 
                                 <!-- Notebook Info -->
                                 <Border Grid.Row="1" 
-                                        Background="{DynamicResource SecondaryBackgroundBrush}" 
+                                        Background="{DynamicResource Brush.ContentBg}" 
                                         CornerRadius="0,0,8,8"
                                         Padding="8">
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}"
                                                    FontSize="{DynamicResource FontSize_Body}"
-                                                   FontWeight="SemiBold"
-                                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                                   Foreground="{DynamicResource Brush.TextPrimary}"
                                                    TextTrimming="CharacterEllipsis"/>
                                         <TextBlock FontSize="{DynamicResource FontSize_Small}"
-                                                   Foreground="{DynamicResource SecondaryTextBrush}">
+                                                   Foreground="{DynamicResource Brush.TextSecondary}">
                                             <Run Text="{Binding Pages.Count, Mode=OneWay}"/>
                                             <Run Text=" "/><Run Text="{DynamicResource Str_PagesCount}"/>
                                         </TextBlock>
@@ -487,26 +527,26 @@
             <Border Width="{DynamicResource EmptyState.IconContainerSize}"
                     Height="{DynamicResource EmptyState.IconContainerSize}"
                     CornerRadius="48"
-                    Background="{DynamicResource SecondaryBackgroundBrush}">
+                    Background="{DynamicResource Brush.AppBg}">
                 <Grid Width="{DynamicResource EmptyState.IconSize}"
                       Height="{DynamicResource EmptyState.IconSize}"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
                     <Path Data="{StaticResource Icon.Library}"
                           Style="{DynamicResource IconBase}"
-                          Stroke="{DynamicResource TertiaryTextBrush}"
+                          Stroke="{DynamicResource Brush.TextTertiary}"
                           StrokeThickness="1.5"
                           Stretch="Uniform"/>
                 </Grid>
             </Border>
             <TextBlock Text="{DynamicResource Str_NoLibraries}"
                        FontSize="{DynamicResource FontSize_Large}"
-                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextSecondary}"
                        HorizontalAlignment="Center"
                        Margin="0,20,0,0"/>
             <TextBlock Text="{DynamicResource Str_CreateFirstLibrary}"
                        FontSize="{DynamicResource FontSize_Small}"
-                       Foreground="{DynamicResource TertiaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextTertiary}"
                        HorizontalAlignment="Center"
                        Margin="0,6,0,0"/>
             <Button Content="{DynamicResource Str_NewLibrary}"
@@ -525,26 +565,26 @@
             <Border Width="{DynamicResource EmptyState.IconContainerSize}"
                     Height="{DynamicResource EmptyState.IconContainerSize}"
                     CornerRadius="48"
-                    Background="{DynamicResource SecondaryBackgroundBrush}">
+                    Background="{DynamicResource Brush.AppBg}">
                 <Grid Width="{DynamicResource EmptyState.IconSize}"
                       Height="{DynamicResource EmptyState.IconSize}"
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
                     <Path Data="{StaticResource Icon.Book}"
                           Style="{DynamicResource IconBase}"
-                          Stroke="{DynamicResource TertiaryTextBrush}"
+                          Stroke="{DynamicResource Brush.TextTertiary}"
                           StrokeThickness="1.5"
                           Stretch="Uniform"/>
                 </Grid>
             </Border>
             <TextBlock Text="{DynamicResource Str_NoNotebooks}"
                        FontSize="{DynamicResource FontSize_Large}"
-                       Foreground="{DynamicResource SecondaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextSecondary}"
                        HorizontalAlignment="Center"
                        Margin="0,20,0,0"/>
             <TextBlock Text="{DynamicResource Str_CreateFirstNotebook}"
                        FontSize="{DynamicResource FontSize_Small}"
-                       Foreground="{DynamicResource TertiaryTextBrush}"
+                       Foreground="{DynamicResource Brush.TextTertiary}"
                        HorizontalAlignment="Center"
                        Margin="0,6,0,0"/>
             <Button Content="{DynamicResource Str_NewNotebook}"

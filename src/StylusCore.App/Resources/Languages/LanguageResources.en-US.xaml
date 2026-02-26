@@ -20,6 +20,7 @@
     <!-- Sidebar -->
     <sys:String x:Key="Str_Library">Library</sys:String>
     <sys:String x:Key="Str_Settings">Settings</sys:String>
+    <sys:String x:Key="Str_Menu">Menu</sys:String>
     <sys:String x:Key="Str_User">User</sys:String>
     <sys:String x:Key="Str_Sections">Note Sections</sys:String>
     <sys:String x:Key="Str_Book">Books</sys:String>
@@ -162,8 +163,13 @@
     <sys:String x:Key="Str_Ribbon_File">File</sys:String>
     <sys:String x:Key="Str_Ribbon_Home">Home</sys:String>
     <sys:String x:Key="Str_Ribbon_Insert">Insert</sys:String>
+    <sys:String x:Key="Str_Ribbon_Edit">Edit</sys:String>
     <sys:String x:Key="Str_Ribbon_Draw">Draw</sys:String>
     <sys:String x:Key="Str_Ribbon_View">View</sys:String>
+    <sys:String x:Key="Str_Ribbon_Tools">Tools</sys:String>
     <sys:String x:Key="Str_Ribbon_Help">Help</sys:String>
+    
+    <sys:String x:Key="Str_New">New</sys:String>
+    <sys:String x:Key="Str_ExportPDF">Export PDF</sys:String>
 
 </ResourceDictionary>
