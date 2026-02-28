@@ -1,349 +1,319 @@
-# Project Direction: StylusCore
-
-This document defines the long-term direction, concept, and structural philosophy of the application.  
-It is not a technical specification or a rule file, but a structured guide to the project's vision, interaction model, and evolution.
-
----
-
-## 1. Project Vision & Concept
-
-StylusCore is designed as a hybrid creative workspace that bridges structured documentation and freeform expression.
-
-It is not a simple note-taking application.  
-It is a unified editing environment where structured text, free text, ink, shapes, and future object types coexist on the same canvas — without interfering with each other.
-
-The system prioritizes:
-
-- Deterministic behavior
-- Explicit tool switching
-- User-controlled state transitions
-- Modular and expandable architecture
-
-StylusCore aims to solve the rigidity of traditional editors by offering flexibility without sacrificing structural clarity.
+# StylusCore — Master Blueprint (V1.3 FINAL)
+> **Tek kaynak konsept dosyası.** > Bu doküman, StylusCore’un vizyonunu, etkileşim modelini, içerik (object) sistemini, radial menü davranışlarını ve feature ekleme kurallarını tek bir yerde toplar.  
+> Yeni bir AI veya geliştirici, bu dosyayı okuduktan sonra projeyi **A’dan Z’ye** anlamalıdır.
 
 ---
 
-## 2. Current Application Structure
+## 0) Kısa Tanım (One-liner)
+**StylusCore**, klavye ile yapılandırılmış dokümantasyon ve grafik tablet/kalem ile serbest çizimi aynı editörde birleştiren, **tool-based** ve **deterministic** (öngörülebilir) davranışa sahip hibrit bir not/editör uygulamasıdır.
 
-The application is built on a modular hierarchical architecture:
-
-- **Library Layer**  
-  Manages collections, books, and content containers.
-
-- **Book / Content Selection Layer**  
-  Organizes and navigates notebooks, sections, and pages.
-
-- **Editor Layer**  
-  The core workspace where content creation and manipulation occur.
-
-- **UI Layers**
-  - Header
-  - Ribbon
-  - Sidebar
-  - Canvas
-  - Panels
-
-Each layer is intentionally isolated and extensible, allowing independent evolution without structural collapse.
+> Not: Kullanılan grafik tablet **touch/pinch gesture desteklemez**. Zoom/pan gibi navigasyonlar **mouse/keyboard + tablet tuşları/dial** üzerinden tasarlanır.
 
 ---
 
-## 3. Editor Philosophy
+## 1) Ürün Kimliği ve Vizyon
 
-The editor operates on clear principles:
+### 1.1 Problem: Neyi çözmeye çalışıyoruz?
+Klasik “doküman editörleri” (Word vb.) serbest çizim/yerleşim konusunda kısıtlıdır.  
+Serbest “canvas” uygulamaları ise (çoğu not/çizim uygulaması) doküman düzeni ve yapısal yazımda zayıftır.
+**Amaç:** Serbestlik sunarken yapısal netliği kaybetmemek.
 
-- **Deterministic Behavior**  
-  No hidden automation. Every action has a visible and predictable result.
-
-- **Explicit State Transitions**  
-  Tool and mode changes must always be user-driven and visually clear.
-
-- **Object-Type Separation**  
-  Text, ink, shapes, and future media types are independent systems.
-
-- **Expandable Interaction Model**  
-  New tools and interaction patterns must integrate without breaking existing logic.
-
-- **Resource-Driven UI System**  
-  No hardcoded styling. All visuals derive from centralized resources.
+### 1.2 Ürün İlkeleri
+- **Deterministic behavior:** Gizli otomasyon yok. Her eylem açık ve öngörülebilir sonuç üretir.
+- **Explicit tool switching:** Tool/mode değişimi daima kullanıcı tarafından yapılır ve görünürdür.
+- **User-controlled state transitions:** Sistem “tahmin” yapmaz, kullanıcı “seçer”.
+- **Object-type separation:** Text / ink / shapes / media türleri birbirine karışmadan aynı yüzeyde yaşar.
+- **Modüler genişleyebilirlik:** Yeni tool ve object türleri eklenebilir olmalı.
+- **Resource-driven UI:** Görsel stiller hardcode edilmez; merkezi resource’lardan gelir.
 
 ---
 
-# 4. Interaction & Tool System Architecture
+## 2) Global Hiyerarşi (En Üst Seviye)
+Global hiyerarşi **sadece 3 seviyedir**:
+Library
+  └── Notebook
+        └── Editor
 
-StylusCore is a multi-modal editor built around explicit tool control.
+### 2.1 Library
+Konu/kategori bazlı üst konteyner. Örn: “Yazılım”, “Üniversite”, “Kişisel” vb.
+
+### 2.2 Notebook
+Library içindeki “kitap”. Konu bazlı içerik grubu. Örn: “C#”, “Python”, “Fizik” vb.
+
+### 2.3 Editor
+Notebook içeriğinin düzenlendiği ana çalışma alanı.
+> **Not:** “Section” ve “Page” global hiyerarşi değildir; Editor içindedir.
 
 ---
 
-## 4.1 Core Interaction Modes
+## 3) Editor İç Yapısı (Editor-Internal Structure)
+Editor şunları barındırır:
+- **Sections (Sidebar Chapters):** Konu başlıkları / chapter’lar
+- **Pages:** Section içindeki çalışma sayfaları
+- **Active Surface:** Aktif page’in düzenlendiği yüzey (canvas)
 
-The editor operates through clearly defined modes:
+---
 
-- Navigation Mode
+## 4) UI Katmanları (User Interface Layers)
+UI görsel olarak şu bölümlere ayrılır (modüler):
+- Header
+- Ribbon
+- Sidebar (Sections/Pages)
+- Canvas (Active Surface)
+- Panels (properties, inspector, tools, AI vb.)
+
+> **Amaç:** Bağımsız evrim. Bir panel değişirken canvas mimarisi çökmemelidir.
+
+---
+
+## 5) Etkileşim Modeli: Tool/Modes
+
+### 5.1 Terminoloji
+- **Mode (Kullanıcı dili):** Kullanıcının algıladığı durum (Ink Mode, Text Mode vb.)
+- **Tool (Sistem dili):** Input’u yorumlayıp object üreten sistem implementasyonu (PenTool, TextTool vb.)
+
+### 5.2 Core Modes (V1)
+- Navigation Mode (pan/zoom/scroll)
 - Ink Mode
 - Text Mode
 - Eraser Mode
 - Shape Mode
-- Selection / Object Mode (future expansion)
+- Selection Mode
 
-Modes never switch automatically.  
-All transitions are explicit.
-
----
-
-## 4.2 Text System Architecture
-
-StylusCore supports two distinct text paradigms.
-
-### A) Free Text (Floating Text Blocks)
-
-- Activated via Text Tool.
-- Cursor changes to a "+" indicator.
-- User draws a rectangular area (similar to drawing a text box).
-- A temporary boundary appears during creation.
-- After writing begins, the boundary becomes invisible.
-- Text wraps downward when reaching horizontal bounds.
-- It does not expand horizontally beyond defined width.
-- The text block remains selectable and movable after creation.
-
-This model supports flexible spatial layout similar to PowerPoint or OneNote.
+### 5.3 Altın Kural
+**Tool otomatik değişmez.** Kullanıcı tetikler.
 
 ---
 
-### B) Document Text (Structured Text Mode)
+## 6) Canvas ve Sayfa Boyutu
+### 6.1 Desteklenenler
+- Infinite Canvas
+- Standard sizes: A2/A3/A4/A5/Letter vb.
+- Orientation: Portrait / Landscape
 
-This mode behaves like a traditional document editor (Word-style behavior):
-
-- Clicking anywhere activates a writing cursor.
-- Writing begins at a structured origin.
-- Supports paragraphs, line breaks, indentation.
-- Supports alignment (left, center, right).
-- Supports bullet lists and ordered lists (future expansion).
-- Supports structured formatting patterns.
-
-This mode is designed for structured documentation inside a page.
+### 6.2 Kural
+Sayfa boyutu ve yönü **Page property**’dir. Aynı notebook içinde farklı sayfa boyutları desteklenebilir.
 
 ---
 
-## 4.3 Text Styling & Customization
+## 7) Object Model: “Her Şey Object”
+Her şey object graph olarak yönetilir.
 
-Text supports:
+### 7.1 Object Türleri
+- **InkStroke** (kalem/fırça vuruşları)
+- **FreeTextBlock** (floating text)
+- **DocumentText** (flow/structured text)
+- **Shape** (parametrik şekiller)
+- **Image** (görsel)
+- **VoiceBlock** (audio + transcript)
 
-- Font family
-- Font size
-- Font weight (bold, etc.)
-- Italic / underline
-- Text color
-- Alignment
-- Paragraph spacing (future expansion)
+### 7.2 Object-Type Separation
+Object’ler aynı yüzeyde **üst üste durabilir** ama silme/düzenleme/seçme kuralları tür bazlı **izole** olmalıdır (edit kuralları birbirine karışmaz).
 
-### Default & Favorite Profiles
-
-Users may define:
-
-- Preferred default font
-- Preferred default size
-- Preferred default styling
-
-New text objects use the user’s default profile unless explicitly changed.
+### 7.3 Z-Order
+Sadece **render sırası** (öne getir/arkaya gönder) için kullanılır. Edit mantığını etkilemez.
 
 ---
 
-## 4.4 Ink System Architecture
+## 8) Text Sistemi
+İki ayrı text paradigması desteklenir:
 
-Ink mode supports multiple pen types:
+### 8.1 Free Text (Floating Text Box)
+Taşınabilir, serbest alan. Text Tool ile box çizilir, yazı o alan içinde (sabit genişlikte) akar.
 
-- Ballpoint
-- Fountain pen
-- Brush
-- Marker
-- Future brush engines
+### 8.2 Document Text (Structured)
+Word benzeri yazım, paragraflar, structured layout.
 
-Configurable parameters:
-
-- Color
-- Thickness
-- Opacity
-- Stroke behavior
-- Pressure sensitivity (future-ready)
-- Stroke smoothing
-
-Ink strokes are independent objects and do not merge into text logic.
+### 8.3 Text Özellikleri & Profiller
+- Font, Size, Bold/Italic/Underline, Color, Alignment.
+- **Default Profiles:** Kullanıcı favori preset/preset tanımlayabilir.
 
 ---
 
-## 4.5 Eraser System
+## 9) Ink Sistemi
+StylusCore bir "note-first editor"dür; ancak güçlü eskiz/diyagram desteği vardır.
 
-The eraser is not a single tool.
+### 9.1 Pen Engine vs Preset
+- **Tool/Engine (Az):** Temel motor.
+- **Preset (Çok):** Kullanıcı tercihleri (Örn: Ballpoint Blue 0.4).
 
-Supported types (current and planned):
+### 9.2 Core Tool Set
+1. **Ballpoint Pen:** Net, düşük jitter (basınç etkisi yok/az).
+2. **Fountain Pen:** Basınçla kalınlık değişimi belirgin.
+3. **Brush Pen:** Kalın vuruş, kaligrafi (yüksek basınç etkisi).
+4. **Pencil:** Eskiz için texture/graphite hissi.
+5. **Highlighter:** Yarı saydam, text üstüne highlight (object separation korunur).
 
-- Stroke Eraser (removes entire stroke)
-- Point Eraser (partial erase)
-- Object Eraser (removes selected object)
-- Smart Eraser (future expansion)
+### 9.3 Ortak Parametreler
+Color, Thickness, Opacity, Smoothing, Stabilization, Pressure sensitivity (enable/disable), Pressure curve.
+*Basınç, sistem tarafından normalize edilir (0..1 aralığı).*
 
-Text and ink are logically separated.  
-Erasing ink must not automatically delete structured text unless explicitly intended.
+### 9.4 Stroke Veri Modeli
+Performans ve kalite için Stroke şunları tutar:
+- Points: (x,y,time)
+- Pressure: (0..1)
+- ToolId (engine) ve PresetId
+- BoundingBox (hızlı hit-test)
+- Versioning
 
----
-
-## 4.6 Shape System
-
-Shapes are independent object types.
-
-Planned shape support includes:
-
-- Rectangle
-- Ellipse
-- Line
-- Arrow
-- Polygon
-- Freeform shapes (future)
-
-Shapes support:
-
-- Fill color
-- Border color
-- Border thickness
-- Opacity
-- Transformations (future)
-
-Shapes are editable, movable objects.
+### 9.5 Çizim Şablonları (V2)
+A4 yatay/dikey sayfa açılabilir. Çizim için grid, dotted gibi şablonlar ileriki versiyonlara kalır.
 
 ---
 
-## 4.7 Radial Menu Philosophy
-
-The radial menu is the primary rapid-access tool system.
-
-It is:
-
-- Mode-aware
-- Fully customizable
-- Preset-driven
-
-Users can configure:
-
-- Item order
-- Size
-- Radius
-- Tool grouping
-- Mode-specific radial layouts
-
-Separate radial configurations may exist for:
-
-- Mouse workflow
-- Graphic tablet workflow
-
-The radial system must not introduce hidden state changes.
+## 10) Eraser Sistemi
+Text ve ink birbirini **otomatik silmez**.
+- **Stroke Eraser:** Tüm stroke’u siler.
+- **Point Eraser:** Stroke’un bir kısmını siler.
+- **Object Eraser:** Seçili object’i siler.
+- **Smart Eraser:** (V2+) Akıllı davranış.
 
 ---
 
-## 4.8 Context Menu Philosophy
+## 11) Shape Sistemi
+Shapes, stroke değildir; parametrik ve editable object'lerdir.
 
-Right-click context menus exist across object types.
+### 11.1 V1 Shape Set
+Rectangle, Ellipse, Line, Arrow.
 
-Behavior includes:
-
-- Object-specific actions (delete, duplicate, transform)
-- Text styling shortcuts
-- Shape adjustments
-- Tool-specific commands
-
-Context menus should reflect professional document editor behavior (Word/PowerPoint style), but remain expandable and tool-aware.
+### 11.2 Shape Özellikleri
+Fill color, border color, border thickness, opacity. (Resize/rotate edilebilir).
 
 ---
 
-## 4.9 Input Model
+## 12) Radial Menu Sistemi (Workflow Engine)
+Radial menu StylusCore’un hız ve workflow sistemidir. Business logic içermez, sadece Tool/Preset/Command tetikler.
 
-StylusCore is input-agnostic.
+### 12.1 Temel Mantık
+Kullanıcı istediği kadar menü oluşturabilir. Her radial menu birden fazla trigger (keybind) destekler.
 
-Supported input systems:
+### 12.2 Multiple Keybind Desteği
+Bir menü şunlarla tetiklenebilir: Keyboard, Mouse buttons, Tablet express keys, Pen buttons, Dial press. *(Conflict aynı profile içinde engellenir).*
 
-- Mouse + Keyboard
-- Graphic Tablet
-- Future: Touch / Gesture
+### 12.3 Açılma Modları & İptal
+- **Modlar:** Hold-to-select (basılı tut) veya Toggle.
+- **Cancel Behavior:** Center deadzone (imleç merkeze gelirse iptal), Esc, Cancel slot.
+- **Cursor:** Cursor warp edilmez; menü imlecin olduğu yerde açılır.
 
-All inputs must map to the same tool abstraction layer.
-
-There must be:
-
-- No implicit mode switching
-- No automatic tool inference
-- No ambiguous state transitions
-
----
-
-## 4.10 Object Coexistence Model
-
-The canvas supports multiple object types:
-
-- Ink strokes
-- Structured text
-- Free text blocks
-- Shapes
-- Future embedded media
-
-Each object type maintains:
-
-- Its own logic
-- Its own edit rules
-- Its own erase behavior
-
-Cross-type interference is prohibited by design.
+### 12.4 Menu İçeriği & Kurallar
+- **Item Türleri:** Sadece ToolItem, PresetItem, CommandItem, SubmenuItem eklenebilir. Special-case hack yasaktır.
+- **Nested Radial:** Maksimum depth 2'dir.
+- **Önerilen Slot:** 6-8 slot idealdir.
+- **Input Capture:** Radial açıkken çizim/text input kapalıdır (yanlışlıkla işlem yapılmasını önler).
 
 ---
 
-## 5. Technical Direction
+## 13) Settings Sistemi
+Ayarlar ekranı modülerdir ve profillere dayanır: `General`, `Input Profiles`, `Radial Menu`, `Tools & Presets`, `View & Navigation`.
 
-The architecture supports long-term extensibility:
-
-- MVVM separation
-- Feature encapsulation
-- Resource-based styling
-- Localization readiness
-- Accessibility readiness
-- Plugin-capable structure (future)
+### 13.1 Input Profiles
+İki ana profil vardır ve her biri tamamen bağımsız ayar/menü seti tutar:
+1. Keyboard & Mouse Profile
+2. Tablet & Pen Profile
+*(Örn: Radial menüler ve favori preset'ler bu profillere göre ayrı ayrı saklanır).*
 
 ---
 
-## 6. Completed Milestones
-
-- Core Editor foundation
-- Section / Page system
-- Panel behavior refactoring
-- Resource centralization
-- Accessibility baseline integration
+## 14) Context Menu (Sağ Tık)
+Sağ tık menüleri seçilen object type’a göre değişir (Word/PowerPoint yaklaşımı):
+- delete, duplicate, transform
+- text styling shortcuts
+- shape adjustments
 
 ---
 
-## 7. Short-Term Roadmap
-
-- Free Text implementation
-- Document Text structured system
-- Text defaults & favorites
-- Radial menu customization engine
-- Ink engine refinement
-- Eraser type expansion
-- Context menu standardization
+## 15) Input Model
+Mouse + Keyboard ve Graphic Tablet tam desteklenir. "Tool abstraction" kullanılır. Implicit (gizli) tool switching veya "tahmin" yoktur.
 
 ---
 
-## 8. Long-Term Evolution
+## 16) Selection & Transform
+**Selection (Ayrı bir Tool'dur):**
+- Default: Single select
+- Shift: Multi-select
+- Box select (Selection tool ile sürükleyerek)
+- *Kural:* Tıklanan noktada **ZIndex’i en yüksek object** seçilir.
 
-- Advanced brush engines
-- Plugin-ready tool architecture
-- AI-assisted tools (optional future)
-- Gesture input
-- Layer system (potential future)
-- Advanced object grouping
-- Power-user customization features
+**Transform:**
+- Move: Text, Shape, Image, Stroke
+- Resize: Text, Shape, Image (V1'de stroke resize yoktur).
 
 ---
 
-## 9. Development Governance Reference
+## 17) Clipboard / Paste
+- **Ctrl+V:** Clipboard'da image varsa `Image object` olur. Text varsa aktif context'e veya `FreeTextBlock`'a yapışır.
+- **Yerleşim:** İmleç konumu biliniyorsa oraya, bilinmiyorsa **viewport center**'a yapıştırılır.
+- **Ctrl+Shift+V:** Plain text olarak yapıştır.
 
-All strict architectural and development rules are defined under the `.agent/` directory and must always be followed.
+---
 
-This document defines product direction and interaction philosophy only.  
-Implementation must always comply with the rule system.
+## 18) Voice / Whisper (STT)
+İki mod:
+1. **Canvas Voice:** Alana metin kutusu çizer, sesi metne çevirip oraya koyar (VoiceBlock + Text).
+2. **Document Voice:** İmleç konumuna sesi metin olarak ekler.
+*Kural:* STT sonucu her zaman metne dönüşür ve UI thread’i bloklamaz.
+
+---
+
+## 19) AI Desteği
+AI bir "helper layer"dır (rewrite, summarize, improve).
+*Kural:* AI doğrudan datayı değiştirmez, öneri sunar, kullanıcı uygular.
+
+---
+
+## 20) Kaydetme & Autosave
+- 30–60 saniye aralıklı autosave.
+- Crash recovery ve snapshot yaklaşımı hedeflenir.
+
+---
+
+## 21) Undo / Redo
+Sistem **Command-based** tasarlanır. (AddStroke, MoveObject, PasteImage vb.)
+Sürekli eylemler (drag move, ink stroke) tek komut olarak gruplanır (begin -> commit).
+
+---
+
+## 22) Navigasyon (Pan/Zoom)
+- **Zoom:** Ctrl + MouseWheel, Tablet Dial, veya Ribbon/Panel üzerinden dropdown (50%, 100%, Fit to Page). Zoom, cursor konumunu anchor (merkez) alır.
+- **Pan:** Space + Drag (Mouse) veya Middle Mouse Drag.
+
+---
+
+## 23) Tablet Özel Davranışları
+- Pen pressure altyapısı mevcuttur.
+- Pen Button 1: Radial trigger (varsayılan).
+- Pen Button 2: Eraser modifier (opsiyon).
+- Dial Rotate: Zoom veya brush size.
+- Palm Rejection: Accidental input filtreleri.
+
+---
+
+## 24) Performans Kuralları
+- **UI Thread asla bloklanmaz:** STT, AI istekleri, IO ve export background thread'de yapılır.
+- Commit anında data state ve render state tutarlı olmalı, **single source of truth** hedeflenmelidir.
+
+---
+
+## 25) UI/XAML Kuralları (Görsel Disiplin)
+- **Resource-driven UI:** Hardcoded renk yasaktır, merkezi DynamicResource kullanılır.
+- Shadowing (kırık key / aynı key'in birden fazla yerde tanımlanması) yasaktır.
+- Custom stiller key'li olmalıdır.
+- Editor projesi olduğu için erken aşamada performans adına code-behind normaldir.
+
+---
+
+## 26) Feature Ekleme "Blueprint" Kuralı
+Yeni özellik eklerken sorulur: Yeni Tool mu? Yeni Object mi? Yeni Command mi? Parametre mi?
+*Kural:* "Şu sayfaya özel istisna" gibi special-case hack'ler kesinlikle yasaktır. Her özellik genel modele oturmalıdır.
+
+---
+
+## 27) Roadmap (V1 Odaklı)
+**V1 Hedefleri:** Library/Notebook hiyerarşisi, temel tool set (Pen, Text, Shape), Radial Menu (çekirdek yapı), Basic STT, Autosave, Selection & Transform.
+**V2+ Adayları:** Advanced brush engines, Smart eraser, Plugin architecture, Alignment/snapping, Lasso select.
+
+---
+
+## 28) Yönetim Notu
+Detaylı mimari kurallar ve zorunluluklar `.agent/` altında bulunur.
+Bu dosya StylusCore’un **tek kaynak konsept dokümanıdır**. Yeni bir feature eklemeden önce daima bu doküman referans alınır.

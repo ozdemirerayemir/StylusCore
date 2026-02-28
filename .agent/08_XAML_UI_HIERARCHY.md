@@ -152,9 +152,16 @@ UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
   - All Styles (including `IconBase`, `SidebarButtonStyle`, button styles)
   - All Localization strings (`Str_*`)
 - **FORBIDDEN:** Using `StaticResource` for any Brush, Font, or Size value in Shell UI XAML.
-- **FORBIDDEN (HARDCODED SIZES):** Writing raw numbers for `Margin`, `Padding`, `Width`, `Height`, `CornerRadius`, or `FontSize` (e.g. `Margin="10"`, `Width="200"`).
+- **FORBIDDEN (HARDCODED SIZES):** Writing raw numbers for `Margin`, `Padding`, `Width`, `Height`, `CornerRadius`, or `FontSize` (e.g. `Margin="10"`, `Width="200"`), **except where explicitly permitted in Section 4.5**.
 - **MUST:** All measurements MUST be bound using `{DynamicResource [TokenName]}` (e.g., `{DynamicResource Spacing16}`, `{DynamicResource ControlHeightMD}`).
 - **Rationale:** `DynamicResource` enables runtime theme switching, UI density changes, and future preset customization. `StaticResource` freezes the lookup and prevents updates. Hitting raw numbers prevents runtime density swaps entirely.
+
+### 4.5 Permitted Hardcoding Exceptions (VALID EXCEPTIONS)
+While section 4.4 forbids generic hardcoding of metrics, the following scenarios are **EXEMPT** and **SHOULD** use hardcoded values to prevent "token bloat" (over-engineering):
+1. **Geometric Proportions & Structural Layouts:** Using `*` or `Auto` for Grid row/column definitions, or minimum fixed structural values (e.g., a toggle arrow width constraint, `Width="10"`) that must maintain physical form regardless of UI Density.
+2. **Hairlines & Separators:** `BorderThickness="1"` or `StrokeThickness="1.5"`. A 1px separator line should remain 1px even on 'Large' density presets. Binding this to a token is an anti-pattern.
+3. **Visual Effect Parameters:** Values within `DropShadowEffect` (e.g., `BlurRadius="4"`, `ShadowDepth="1"`, `Opacity="0.1"`), internal Opacity triggers, and Storyboard `Duration`s. These are highly specific micro-adjustments for a single visual state and should not pollute the global token dictionary.
+4. **Context-Isolated Micro Spacing:** If a spacing need (e.g., `Margin="12,0,0,0"` between an OK/Cancel button pair in a specialized dialog) is uniquely isolated and will never be reused, it **MAY** be hardcoded locally to avoid expanding the global 01_Metrics dictionary unnecessarily. *However, preferring standard Spacing tokens is still recommended if they fit.*
 
 ---
 
@@ -386,6 +393,7 @@ UserControl (Width="48", SnapsToDevicePixels="True", UseLayoutRounding="True")
 ## 17) Anti-Patterns Checklist (Shell)
 
 - **FORBIDDEN:** Hardcoded strings, colors, fonts.
+- **FORBIDDEN:** Hardcoded layout sizes (Margin, Padding, CornerRadius, Width) **except for the permitted exceptions in 4.5 (e.g., 1px lines, DropShadow parameters, * sizing)**.
 - **FORBIDDEN:** ListBox/ListView inside ScrollViewer.
 - **FORBIDDEN:** Deep nested borders/grids without need.
 - **FORBIDDEN:** Excessive triggers in list item templates.
