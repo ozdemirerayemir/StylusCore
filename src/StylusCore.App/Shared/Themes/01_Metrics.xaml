@@ -7,41 +7,32 @@
     <!-- ================================================================== -->
 
     <!-- Corner Radii (Canonical Set) -->
-    <CornerRadius x:Key="RadiusSM">8</CornerRadius>
-    <CornerRadius x:Key="RadiusMD">12</CornerRadius>
-    <CornerRadius x:Key="RadiusLG">16</CornerRadius>
-    
-    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
-    <CornerRadius x:Key="CornerRadius_Small">4</CornerRadius>
-    <CornerRadius x:Key="CornerRadius_Standard">8</CornerRadius>
-    <CornerRadius x:Key="CornerRadius_Large">16</CornerRadius>
+    <CornerRadius x:Key="Radius.Small">4</CornerRadius>
+    <CornerRadius x:Key="Radius.Medium">8</CornerRadius>
+    <CornerRadius x:Key="Radius.Large">12</CornerRadius>
+    <CornerRadius x:Key="Radius.XLarge">16</CornerRadius>
 
     <!-- Margins / Paddings (Spacing Tokens) -->
-    <Thickness x:Key="Spacing8">8</Thickness>
-    <Thickness x:Key="Spacing12">12</Thickness>
-    <Thickness x:Key="Spacing16">16</Thickness>
-    <Thickness x:Key="Spacing24">24</Thickness>
-    <Thickness x:Key="Spacing32">32</Thickness>
-    <Thickness x:Key="Spacing24_Horizontal">24,0</Thickness>
+    <Thickness x:Key="Spacing.Small">4</Thickness>
+    <Thickness x:Key="Spacing.Medium">8</Thickness>
+    <Thickness x:Key="Spacing.Large">12</Thickness>
+    <Thickness x:Key="Spacing.XLarge">16</Thickness>
+    <Thickness x:Key="Spacing.XXLarge">24</Thickness>
+    <Thickness x:Key="Spacing.XXXLarge">32</Thickness>
+    <Thickness x:Key="Spacing.XXLarge.Horizontal">24,0</Thickness>
+    <Thickness x:Key="Padding.Input">12,8</Thickness>
     
-    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
-    <Thickness x:Key="Margin_Small">4</Thickness>
-    <Thickness x:Key="Margin_Standard">8</Thickness>
-    <Thickness x:Key="Margin_Large">16</Thickness>
-    <Thickness x:Key="Margin_XLarge">24</Thickness>
-    <Thickness x:Key="Padding_Input">12,8</Thickness>
-
     <!-- Sizing -->
-    <sys:Double x:Key="ControlHeightSM">36</sys:Double>
-    <sys:Double x:Key="ControlHeightMD">40</sys:Double>
-    <sys:Double x:Key="ControlHeightLG">48</sys:Double>
+    <sys:Double x:Key="Control.Height.Small">36</sys:Double>
+    <sys:Double x:Key="Control.Height.Medium">40</sys:Double>
+    <sys:Double x:Key="Control.Height.Large">48</sys:Double>
     
-    <sys:Double x:Key="Size_Icon_Small">16</sys:Double>
-    <sys:Double x:Key="Size_Icon_Standard">24</sys:Double>
-    <sys:Double x:Key="Size_Icon_Large">32</sys:Double>
+    <sys:Double x:Key="Icon.Size.Small">16</sys:Double>
+    <sys:Double x:Key="Icon.Size.Medium">24</sys:Double>
+    <sys:Double x:Key="Icon.Size.Large">32</sys:Double>
     
-    <sys:Double x:Key="Height_Button_Standard">32</sys:Double>
-    <sys:Double x:Key="Height_Input_Standard">32</sys:Double>
+    <sys:Double x:Key="Button.Height.Standard">32</sys:Double>
+    <sys:Double x:Key="Input.Height.Standard">32</sys:Double>
 
     <!-- ================================================================== -->
     <!-- SHELL / SIDEBAR METRICS                                             -->
@@ -86,18 +77,8 @@
     <!-- GLOBAL METRICS (MIGRATED FROM THEMES)                               -->
     <!-- ================================================================== -->
     
-    <sys:Double x:Key="RibbonHeight">120</sys:Double>
-    <sys:Double x:Key="RibbonHeightCollapsed">40</sys:Double>
-
-    <!-- [DEPRECATED] DO NOT USE IN NEW CODE -->
-    <!-- These were formally DefaultMargin, SmallMargin, DefaultCornerRadius etc -->
-    <!-- Mapped to standard naming internally where used -->
-    <Thickness x:Key="DefaultMargin">8</Thickness>
-    <Thickness x:Key="SmallMargin">4</Thickness>
-    <Thickness x:Key="LargeMargin">16</Thickness>
-    
-    <CornerRadius x:Key="DefaultCornerRadius">4</CornerRadius>
-    <CornerRadius x:Key="LargeCornerRadius">8</CornerRadius>
+    <sys:Double x:Key="Ribbon.Height">120</sys:Double>
+    <sys:Double x:Key="Ribbon.Height.Collapsed">40</sys:Double>
 
     <!-- ================================================================== -->
     <!-- LIBRARY VIEW METRICS                                                -->
@@ -111,7 +92,6 @@
     <CornerRadius x:Key="Library.CardCornerRadius">16</CornerRadius>
     <CornerRadius x:Key="Library.CardTopCornerRadius">16,16,0,0</CornerRadius>
     <CornerRadius x:Key="Library.ContentCornerRadius">16,0,0,0</CornerRadius>
-    <CornerRadius x:Key="CornerRadius_XLarge">12</CornerRadius>
     <Thickness x:Key="Library.ContentPadding">32</Thickness>
     <Thickness x:Key="Library.CardGap">8</Thickness>
 

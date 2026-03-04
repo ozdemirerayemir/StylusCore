@@ -1,4 +1,4 @@
-<Page x:Class="StylusCore.App.Features.Settings.Views.SettingsView"
+﻿<Page x:Class="StylusCore.App.Features.Settings.Views.SettingsView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Settings"
@@ -6,25 +6,25 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="{DynamicResource Spacing24}">
+        <StackPanel Margin="{DynamicResource Spacing.XXLarge}">
 
             <!-- Header -->
             <TextBlock Text="{DynamicResource Str_Settings}"
-                       FontSize="{DynamicResource FontSize_Header}"
-                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       FontSize="{DynamicResource Font.Size.Header}"
+                       FontWeight="{DynamicResource Font.Weight.SemiBold}"
                        Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,24"/>
 
             <!-- Appearance Section -->
             <TextBlock Text="{DynamicResource Str_Appearance}"
-                       FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       FontSize="{DynamicResource Font.Size.Large}"
+                       FontWeight="{DynamicResource Font.Weight.SemiBold}"
                        Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
             <Border Background="{DynamicResource Brush.AppBg}"
-                    CornerRadius="{DynamicResource RadiusLG}"
-                    Padding="{DynamicResource Spacing16}"
+                    CornerRadius="{DynamicResource Radius.XLarge}"
+                    Padding="{DynamicResource Spacing.XLarge}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- Theme -->
@@ -70,14 +70,14 @@
 
             <!-- Auto-Save Section -->
             <TextBlock Text="{DynamicResource Str_AutoSave}"
-                       FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       FontSize="{DynamicResource Font.Size.Large}"
+                       FontWeight="{DynamicResource Font.Weight.SemiBold}"
                        Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
             <Border Background="{DynamicResource Brush.AppBg}"
-                    CornerRadius="{DynamicResource RadiusLG}"
-                    Padding="{DynamicResource Spacing16}"
+                    CornerRadius="{DynamicResource Radius.XLarge}"
+                    Padding="{DynamicResource Spacing.XLarge}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- Interval -->
@@ -116,14 +116,14 @@
 
             <!-- Key Bindings Section -->
             <TextBlock Text="{DynamicResource Str_KeyBindings}"
-                       FontSize="{DynamicResource FontSize_Large}"
-                       FontWeight="{DynamicResource FontWeight_SemiBold}"
+                       FontSize="{DynamicResource Font.Size.Large}"
+                       FontWeight="{DynamicResource Font.Weight.SemiBold}"
                        Foreground="{DynamicResource Brush.TextPrimary}"
                        Margin="0,0,0,16"/>
 
             <Border Background="{DynamicResource Brush.AppBg}"
-                    CornerRadius="{DynamicResource RadiusLG}"
-                    Padding="{DynamicResource Spacing16}"
+                    CornerRadius="{DynamicResource Radius.XLarge}"
+                    Padding="{DynamicResource Spacing.XLarge}"
                     Margin="0,0,0,24">
                 <StackPanel>
                     <!-- KeyBindings Table Header -->
@@ -133,11 +133,11 @@
                             <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{DynamicResource Str_Input}" FontWeight="{DynamicResource FontWeight_SemiBold}" 
+                        <TextBlock Text="{DynamicResource Str_Input}" FontWeight="{DynamicResource Font.Weight.SemiBold}" 
                                    Foreground="{DynamicResource Brush.TextPrimary}"/>
-                        <TextBlock Grid.Column="1" Text="{DynamicResource Str_Action}" FontWeight="{DynamicResource FontWeight_SemiBold}"
+                        <TextBlock Grid.Column="1" Text="{DynamicResource Str_Action}" FontWeight="{DynamicResource Font.Weight.SemiBold}"
                                    Foreground="{DynamicResource Brush.TextPrimary}"/>
-                        <TextBlock Grid.Column="2" Text="{DynamicResource Str_Modifiers}" FontWeight="{DynamicResource FontWeight_SemiBold}"
+                        <TextBlock Grid.Column="2" Text="{DynamicResource Str_Modifiers}" FontWeight="{DynamicResource Font.Weight.SemiBold}"
                                    Foreground="{DynamicResource Brush.TextPrimary}"/>
                     </Grid>
                     

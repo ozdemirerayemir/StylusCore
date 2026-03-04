@@ -1,4 +1,4 @@
-<Page x:Class="StylusCore.App.Features.Editor.Views.EditorView"
+﻿<Page x:Class="StylusCore.App.Features.Editor.Views.EditorView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:controls="clr-namespace:StylusCore.App.Controls"
@@ -37,14 +37,14 @@
                     <StackPanel Orientation="Horizontal" Margin="{DynamicResource Sidebar.TextMargin}">
                         <!-- Select Tool -->
                         <Button ToolTip="{DynamicResource Str_Tooltip_Select}" Style="{DynamicResource IconButtonStyle}" 
-                                Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
+                                Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}" 
                                 Command="{Binding SelectToolCommand}">
                             <Path Data="{StaticResource Icon.Select}" Style="{DynamicResource IconBase}"/>
                         </Button>
                         <!-- Lasso Select -->
                         <Button ToolTip="{DynamicResource Str_Tooltip_Lasso}" Style="{DynamicResource IconButtonStyle}" 
-                                Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                Margin="{DynamicResource Margin_Small}">
+                                Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}" 
+                                Margin="{DynamicResource Spacing.Small}">
                             <Path Data="{StaticResource Icon.Lasso}" Style="{DynamicResource IconBase}"/>
                         </Button>
                     </StackPanel>
@@ -55,7 +55,7 @@
                     <!-- Group: Tools -->
                     <StackPanel Orientation="Horizontal">
                         <!-- Pen -->
-                        <Button Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
+                        <Button Width="{DynamicResource Control.Height.Medium}" Height="{DynamicResource Control.Height.Medium}" Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenBlack}">
                             <Grid>
                                 <Path Data="{StaticResource Icon.Pen}" Style="{DynamicResource IconBase}"/>
                                 <!-- Color Indicator (TODO: Make Dynamic) -->
@@ -63,18 +63,18 @@
                             </Grid>
                         </Button>
                         <!-- Pen (Red) -->
-                        <Button Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
+                        <Button Width="{DynamicResource Control.Height.Medium}" Height="{DynamicResource Control.Height.Medium}" Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_PenRed}">
                             <Grid>
                                 <Path Data="{StaticResource Icon.Pen}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource Brush.Error}"/>
                                 <Ellipse Width="8" Height="8" Fill="{DynamicResource Brush.Error}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-2,-2"/>
                             </Grid>
                         </Button>
                         <!-- Highlighter -->
-                        <Button Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
+                        <Button Width="{DynamicResource Control.Height.Medium}" Height="{DynamicResource Control.Height.Medium}" Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Highlighter}">
                             <Path Data="{StaticResource Icon.Highlighter}" Style="{DynamicResource IconBase}" Stroke="{DynamicResource Brush.Accent}" Fill="{DynamicResource Brush.Accent}"/>
                         </Button>
                         <!-- Eraser -->
-                        <Button Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}" Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
+                        <Button Width="{DynamicResource Control.Height.Medium}" Height="{DynamicResource Control.Height.Medium}" Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Eraser}">
                             <Path Data="{StaticResource Icon.Eraser}" Style="{DynamicResource IconBase}"/>
                         </Button>
                     </StackPanel>
@@ -85,15 +85,15 @@
                     <!-- Group: Shapes -->
                     <StackPanel Orientation="Horizontal">
                         <!-- Rect -->
-                        <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                                Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
+                        <Button Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}" 
+                                Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_Rect}">
                             <Path Data="{StaticResource Icon.Rectangle}" Style="{DynamicResource IconBase}"/>
                         </Button>
                     </StackPanel>
 
                     <!-- Group: Ink to Shape -->
-                    <Button Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}" 
-                            Margin="{DynamicResource Margin_Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
+                    <Button Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}" 
+                            Margin="{DynamicResource Spacing.Small}" Style="{DynamicResource IconButtonStyle}" ToolTip="{DynamicResource Str_Tooltip_InkToShape}">
                         <Path Data="{StaticResource Icon.InkToShape}" Style="{DynamicResource IconBase}"/>
                     </Button>
                 </StackPanel>
@@ -102,8 +102,8 @@
                 <Button Grid.Column="1" 
                         ToolTip="{DynamicResource Str_Tooltip_CycleRibbonMode}" 
                         Style="{DynamicResource IconButtonStyle}"
-                        Width="{DynamicResource Height_Button_Standard}" 
-                        Height="{DynamicResource Height_Button_Standard}"
+                        Width="{DynamicResource Button.Height.Standard}" 
+                        Height="{DynamicResource Button.Height.Standard}"
                         Command="{Binding CycleRibbonModeCommand}"
                         Margin="0,0,8,0">
                     <Path Data="{StaticResource Icon.ChevronDown}" Style="{DynamicResource IconBase}"/>
@@ -145,15 +145,15 @@
 
                 <!-- Header -->
                 <Border Grid.Row="0"
-                        Padding="{DynamicResource Margin_Large}"
+                        Padding="{DynamicResource Spacing.XLarge}"
                         Background="{DynamicResource Brush.AppBg}"
                         BorderBrush="{DynamicResource Brush.BorderSoft}"
                         BorderThickness="0,0,0,1">
                     <Grid>
                         <TextBlock x:Name="SectionsTitle"
                                    Text="{DynamicResource Str_Editor_Sections}"
-                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
-                                   FontSize="{DynamicResource FontSize_Body}"
+                                   FontWeight="{DynamicResource Font.Weight.SemiBold}"
+                                   FontSize="{DynamicResource Font.Size.Body}"
                                    VerticalAlignment="Center"
                                    Foreground="{DynamicResource Brush.TextPrimary}"/>
                         
@@ -162,12 +162,12 @@
                                 HorizontalAlignment="Right"
                                 AutomationProperties.Name="{DynamicResource Str_Tooltip_CollapsePanel}"
                                 VerticalAlignment="Center"
-                                Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
+                                Width="{DynamicResource Icon.Size.Small}" Height="{DynamicResource Icon.Size.Small}"
                                 Style="{DynamicResource IconButtonStyle}"
                                 ToolTip="{DynamicResource Str_Tooltip_CollapsePanel}"
                                 Padding="0"
                                 Click="CollapsePanel_Click">
-                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}">
+                            <Grid Width="{DynamicResource Icon.Size.Small}" Height="{DynamicResource Icon.Size.Small}">
                                 <Path Data="{StaticResource Icon.ChevronLeft}" Style="{DynamicResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>
@@ -186,7 +186,7 @@
                 <!-- Add Buttons -->
                 <Border x:Name="BottomButtonsBorder"
                         Grid.Row="2"
-                        Padding="{DynamicResource Margin_Standard}"
+                        Padding="{DynamicResource Spacing.Medium}"
                         Background="{DynamicResource Brush.AppBg}"
                         BorderBrush="{DynamicResource Brush.BorderSoft}"
                         BorderThickness="0,1,0,0">
@@ -218,13 +218,13 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,16">
                         <Button x:Name="ExpandBtn"
-                                Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
+                                Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}"
                                 AutomationProperties.Name="{DynamicResource Str_Tooltip_ExpandPanel}"
                                 Style="{DynamicResource IconButtonStyle}"
                                 ToolTip="{DynamicResource Str_Tooltip_ExpandPanel}"
                                 Padding="0"
                                 Click="ExpandPanel_Click">
-                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}">
+                            <Grid Width="{DynamicResource Icon.Size.Small}" Height="{DynamicResource Icon.Size.Small}">
                                 <Path Data="{StaticResource Icon.ChevronRight}" Style="{DynamicResource IconBase}" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Grid>
                         </Button>

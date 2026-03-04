@@ -62,18 +62,7 @@
     <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
     <SolidColorBrush x:Key="ConflictBrush" Color="{StaticResource ConflictColor}"/>
 
-    <!-- Typography moved to GeneralResources.xaml -->
-
-    <!-- Sizing (Sidebar metrics moved to GeneralResources.xaml) -->
-    <sys:Double x:Key="RibbonHeight">120</sys:Double>
-    <sys:Double x:Key="RibbonHeightCollapsed">40</sys:Double>
-    
-    <!-- Mapped DEPRECATED to existing Keys until we can clean up views -->
-    <Thickness x:Key="DefaultMargin">8</Thickness>
-    <Thickness x:Key="SmallMargin">4</Thickness>
-    <Thickness x:Key="LargeMargin">16</Thickness>
-    <CornerRadius x:Key="DefaultCornerRadius">4</CornerRadius>
-    <CornerRadius x:Key="LargeCornerRadius">8</CornerRadius>
+    <!-- Typography and Sizing are fully moved to 01_Metrics/04_Typography -->
 
     <!-- Sidebar Theming Brushes -->
     <SolidColorBrush x:Key="SidebarHoverBrush" Color="#0A000000"/>

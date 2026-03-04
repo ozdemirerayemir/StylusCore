@@ -65,8 +65,8 @@
         <Setter Property="Foreground" Value="{DynamicResource Brush.Primary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="16,8"/>
-        <Setter Property="FontSize" Value="{DynamicResource FontSize_Small}"/>
-        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_SemiBold}"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Small}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.SemiBold}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -76,7 +76,7 @@
                         <Border x:Name="bgBorder"
                                 Background="{TemplateBinding Background}"
                                 Opacity="0.1"
-                                CornerRadius="{DynamicResource CornerRadius_XLarge}"/>
+                                CornerRadius="{DynamicResource Radius.XLarge}"/>
                         
                         <!-- Content Presenter Overlay -->
                         <Border Padding="{TemplateBinding Padding}">
@@ -107,7 +107,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource Brush.BorderHard}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="15,0"/>
-        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_Medium}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.Medium}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -116,7 +116,7 @@
                             Background="{TemplateBinding Background}" 
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8">
+                            CornerRadius="{DynamicResource Radius.Medium}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -145,7 +145,7 @@
         <Setter Property="Width" Value="{DynamicResource SearchBox.Width}"/>
         <Setter Property="Padding" Value="32,0,12,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="{DynamicResource FontSize_Small}"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Small}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -157,7 +157,7 @@
                                 CornerRadius="{DynamicResource SearchBox.CornerRadius}"
                                 SnapsToDevicePixels="True"/>
                         <!-- Search Icon -->
-                        <Grid Width="16" Height="16"
+                        <Grid Width="{DynamicResource Icon.Size.Small}" Height="{DynamicResource Icon.Size.Small}"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
                               Margin="10,0,0,0"
@@ -183,7 +183,7 @@
                                    IsHitTestVisible="False"
                                    VerticalAlignment="Center"
                                    Margin="34,0,0,0"
-                                   FontSize="{DynamicResource FontSize_Small}"
+                                   FontSize="{DynamicResource Font.Size.Small}"
                                    Visibility="Visible"/>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -227,7 +227,7 @@
                 <ControlTemplate TargetType="RadioButton">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="6"
+                            CornerRadius="{DynamicResource Radius.Small}"
                             Padding="4">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -266,7 +266,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="8"
+                            CornerRadius="{DynamicResource Radius.Medium}"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>

@@ -1,4 +1,4 @@
-<Window x:Class="StylusCore.App.Views.MainWindow"
+﻿<Window x:Class="StylusCore.App.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:StylusCore.App.Shared.Components"
@@ -33,7 +33,7 @@
                     <Style TargetType="Grid">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
-                                <Setter Property="Margin" Value="{DynamicResource Spacing8}"/>
+                                <Setter Property="Margin" Value="{DynamicResource Spacing.Medium}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

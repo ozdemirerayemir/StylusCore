@@ -1,4 +1,4 @@
-<Page x:Class="StylusCore.App.Features.Library.Views.LibraryView"
+﻿<Page x:Class="StylusCore.App.Features.Library.Views.LibraryView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:sys="clr-namespace:StylusCore.Core.Enums;assembly=StylusCore.Core"
@@ -12,7 +12,7 @@
                     Background="{DynamicResource Brush.Surface}"
                     BorderBrush="{DynamicResource Brush.BorderSoft}"
                     BorderThickness="1"
-                    CornerRadius="{DynamicResource RadiusLG}"
+                    CornerRadius="{DynamicResource Radius.XLarge}"
                     Cursor="Hand"
                     MouseLeftButtonUp="LibraryCard_Click"
                     Tag="{Binding}"
@@ -31,43 +31,43 @@
                             CornerRadius="{DynamicResource Library.CardTopCornerRadius}"> <!-- Need static inner top radius, using literal for now or new token later -->
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Orange}"/>
+                                <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Orange}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Purple">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Purple}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Purple}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Blue">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Blue}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Blue}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Green">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Green}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Green}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Yellow">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Yellow}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Yellow}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Red">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Red}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Red}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Pink">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Pink}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Pink}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Orange">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Orange}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Orange}"/>
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding CoverColor}" Value="Teal">
-                                        <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Teal}"/>
+                                        <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Teal}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Border.Style>
                         <!-- Rounded-square icon container -->
-                        <Border Width="{DynamicResource ControlHeightMD}" Height="{DynamicResource ControlHeightMD}"
-                                CornerRadius="{DynamicResource RadiusSM}"
+                        <Border Width="{DynamicResource Control.Height.Medium}" Height="{DynamicResource Control.Height.Medium}"
+                                CornerRadius="{DynamicResource Radius.Medium}"
                                 Background="{DynamicResource Solid.White33}"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Margin="{DynamicResource Spacing16}">
-                            <Grid Width="{DynamicResource Size_Icon_Small}" Height="{DynamicResource Size_Icon_Small}"
+                                Margin="{DynamicResource Spacing.XLarge}">
+                            <Grid Width="{DynamicResource Icon.Size.Small}" Height="{DynamicResource Icon.Size.Small}"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center">
                                 <Path Data="{StaticResource Icon.Book}"
@@ -91,14 +91,14 @@
                         <!-- Name -->
                         <TextBlock Grid.Row="0"
                                    Text="{Binding Name}"
-                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
-                                   FontSize="{DynamicResource FontSize_Body}"
+                                   FontWeight="{DynamicResource Font.Weight.SemiBold}"
+                                   FontSize="{DynamicResource Font.Size.Body}"
                                    Foreground="{DynamicResource Brush.TextPrimary}"
                                    TextTrimming="CharacterEllipsis"/>
 
                         <!-- Notebook count -->
                         <TextBlock Grid.Row="1"
-                                   FontSize="{DynamicResource FontSize_Small}"
+                                   FontSize="{DynamicResource Font.Size.Small}"
                                    Foreground="{DynamicResource Brush.TextSecondary}"
                                    Margin="0,4,0,0">
                             <Run Text="{Binding Notebooks.Count, Mode=OneWay}"/>
@@ -128,7 +128,7 @@
                                               Width="12" Height="12"/>
                                     </Grid>
                                     <TextBlock Text="{DynamicResource Str_JustNow}"
-                                               FontSize="{DynamicResource FontSize_Small}"
+                                               FontSize="{DynamicResource Font.Size.Small}"
                                                Foreground="{DynamicResource Brush.TextTertiary}"
                                                VerticalAlignment="Center"/>
                                 </StackPanel>
@@ -152,12 +152,12 @@
                                               VerticalAlignment="Center"/>
                                     </Grid>
                                     <Button.ContextMenu>
-                                        <ContextMenu Padding="{DynamicResource Spacing8}">
+                                        <ContextMenu Padding="{DynamicResource Spacing.Medium}">
                                             <!-- COVER COLOR Label -->
                                             <MenuItem Header="{DynamicResource Str_CoverColor}" 
                                                       Foreground="{DynamicResource Brush.TextTertiary}"
-                                                      FontSize="{DynamicResource FontSize_Small}"
-                                                      FontWeight="{DynamicResource FontWeight_Bold}"
+                                                      FontSize="{DynamicResource Font.Size.Small}"
+                                                      FontWeight="{DynamicResource Font.Weight.Bold}"
                                                       IsHitTestVisible="False"
                                                       Padding="4,0,4,4"
                                                       StaysOpenOnClick="True">
@@ -177,22 +177,22 @@
                                                     <ControlTemplate TargetType="MenuItem">
                                                         <Border Padding="4,4,4,8">
                                                             <StackPanel Orientation="Horizontal">
-                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Pink}" DataContext="{x:Static sys:CoverColor.Pink}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Pink}">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource Brush.NotebookCover.Pink}" DataContext="{x:Static sys:CoverColor.Pink}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Pink}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
-                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Blue}" DataContext="{x:Static sys:CoverColor.Blue}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Blue}">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource Brush.NotebookCover.Blue}" DataContext="{x:Static sys:CoverColor.Blue}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Blue}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
-                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Teal}" DataContext="{x:Static sys:CoverColor.Teal}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Teal}">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource Brush.NotebookCover.Teal}" DataContext="{x:Static sys:CoverColor.Teal}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Teal}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
-                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Purple}" DataContext="{x:Static sys:CoverColor.Purple}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Purple}">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource Brush.NotebookCover.Purple}" DataContext="{x:Static sys:CoverColor.Purple}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Purple}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
-                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource NotebookCoverBrush_Orange}" DataContext="{x:Static sys:CoverColor.Orange}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Orange}">
+                                                                <Button Width="20" Height="20" Margin="0,0,8,0" Background="{DynamicResource Brush.NotebookCover.Orange}" DataContext="{x:Static sys:CoverColor.Orange}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Orange}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
-                                                                <Button Width="20" Height="20" Margin="0,0,0,0" Background="{DynamicResource NotebookCoverBrush_Yellow}" DataContext="{x:Static sys:CoverColor.Yellow}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Yellow}">
+                                                                <Button Width="20" Height="20" Margin="0,0,0,0" Background="{DynamicResource Brush.NotebookCover.Yellow}" DataContext="{x:Static sys:CoverColor.Yellow}" Click="ChangeLibraryColor_Click" Cursor="Hand" ToolTip="{DynamicResource Str_Color_Yellow}">
                                                                     <Button.Template><ControlTemplate TargetType="Button"><Border Background="{TemplateBinding Background}" CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource Brush.BorderHard}"/></ControlTemplate></Button.Template>
                                                                 </Button>
                                                             </StackPanel>
@@ -263,8 +263,8 @@
             <TextBlock x:Name="PageTitle"
                        Grid.Column="0"
                        Text="{DynamicResource Str_Library}"
-                       FontSize="{DynamicResource FontSize_Title}"
-                       FontWeight="{DynamicResource FontWeight_Bold}"
+                       FontSize="{DynamicResource Font.Size.Title}"
+                       FontWeight="{DynamicResource Font.Weight.Bold}"
                        Foreground="{DynamicResource Brush.TextPrimary}"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"/>
@@ -274,7 +274,7 @@
                 
                 <!-- View Mode Toggle -->
                 <Border Background="{DynamicResource Brush.ContentBg}"
-                        CornerRadius="{DynamicResource RadiusSM}"
+                        CornerRadius="{DynamicResource Radius.Medium}"
                         Padding="2"
                         VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
@@ -310,16 +310,16 @@
                 <TextBox x:Name="SearchBox"
                          Style="{DynamicResource SearchBoxStyle}"
                          Width="{DynamicResource SearchBox.Width}"
-                         Height="{DynamicResource ControlHeightMD}"
-                         Margin="{DynamicResource Spacing24_Horizontal}"
+                         Height="{DynamicResource Control.Height.Medium}"
+                         Margin="{DynamicResource Spacing.XXLarge.Horizontal}"
                          Tag="{DynamicResource Str_SearchLibraries}"
                          VerticalAlignment="Center"/>
 
                 <!-- Sort Button -->
                 <ToggleButton x:Name="SortToggle"
                               Style="{DynamicResource SortToggleButtonStyle}"
-                              Height="{DynamicResource ControlHeightMD}"
-                              Width="{DynamicResource ControlHeightMD}"
+                              Height="{DynamicResource Control.Height.Medium}"
+                              Width="{DynamicResource Control.Height.Medium}"
                               VerticalAlignment="Center"
                               ToolTip="{DynamicResource Str_SortBy}">
                     <Grid Width="16" Height="16">
@@ -336,7 +336,7 @@
                 <Button x:Name="NewNotebookButton"
                         Content="{DynamicResource Str_NewBook}"
                         Style="{DynamicResource TonalButtonStyle}"
-                        Height="{DynamicResource ControlHeightMD}"
+                        Height="{DynamicResource Control.Height.Medium}"
                         Margin="0,0,12,0"
                         Click="NewNotebook_Click"
                         Visibility="Collapsed"/>
@@ -345,12 +345,12 @@
                 <Button x:Name="NewLibraryButton"
                         Content="{DynamicResource Str_NewLibrary}"
                         Style="{DynamicResource PrimaryButtonStyle}"
-                        Height="{DynamicResource ControlHeightMD}"
-                        Padding="{DynamicResource Spacing24_Horizontal}"
+                        Height="{DynamicResource Control.Height.Medium}"
+                        Padding="{DynamicResource Spacing.XXLarge.Horizontal}"
                         Click="NewLibrary_Click">
                     <Button.Resources>
                         <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="{DynamicResource RadiusMD}"/>
+                            <Setter Property="CornerRadius" Value="{DynamicResource Radius.Large}"/>
                         </Style>
                     </Button.Resources>
                 </Button>
@@ -406,31 +406,31 @@
                             <!-- Dynamic background based on CoverColor -->
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Purple}"/>
+                                    <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Purple}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Purple">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Purple}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Purple}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Blue">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Blue}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Blue}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Green">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Green}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Green}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Yellow">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Yellow}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Yellow}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Red">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Red}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Red}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Pink">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Pink}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Pink}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Orange">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Orange}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Orange}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CoverColor}" Value="Teal">
-                                            <Setter Property="Background" Value="{DynamicResource NotebookCoverBrush_Teal}"/>
+                                            <Setter Property="Background" Value="{DynamicResource Brush.NotebookCover.Teal}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -499,11 +499,11 @@
                                         Padding="8">
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}"
-                                                   FontSize="{DynamicResource FontSize_Body}"
-                                                   FontWeight="{DynamicResource FontWeight_SemiBold}"
+                                                   FontSize="{DynamicResource Font.Size.Body}"
+                                                   FontWeight="{DynamicResource Font.Weight.SemiBold}"
                                                    Foreground="{DynamicResource Brush.TextPrimary}"
                                                    TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock FontSize="{DynamicResource FontSize_Small}"
+                                        <TextBlock FontSize="{DynamicResource Font.Size.Small}"
                                                    Foreground="{DynamicResource Brush.TextSecondary}">
                                             <Run Text="{Binding Pages.Count, Mode=OneWay}"/>
                                             <Run Text=" "/><Run Text="{DynamicResource Str_PagesCount}"/>
@@ -540,12 +540,12 @@
                 </Grid>
             </Border>
             <TextBlock Text="{DynamicResource Str_NoLibraries}"
-                       FontSize="{DynamicResource FontSize_Large}"
+                       FontSize="{DynamicResource Font.Size.Large}"
                        Foreground="{DynamicResource Brush.TextSecondary}"
                        HorizontalAlignment="Center"
                        Margin="0,20,0,0"/>
             <TextBlock Text="{DynamicResource Str_CreateFirstLibrary}"
-                       FontSize="{DynamicResource FontSize_Small}"
+                       FontSize="{DynamicResource Font.Size.Small}"
                        Foreground="{DynamicResource Brush.TextTertiary}"
                        HorizontalAlignment="Center"
                        Margin="0,6,0,0"/>
@@ -578,12 +578,12 @@
                 </Grid>
             </Border>
             <TextBlock Text="{DynamicResource Str_NoNotebooks}"
-                       FontSize="{DynamicResource FontSize_Large}"
+                       FontSize="{DynamicResource Font.Size.Large}"
                        Foreground="{DynamicResource Brush.TextSecondary}"
                        HorizontalAlignment="Center"
                        Margin="0,20,0,0"/>
             <TextBlock Text="{DynamicResource Str_CreateFirstNotebook}"
-                       FontSize="{DynamicResource FontSize_Small}"
+                       FontSize="{DynamicResource Font.Size.Small}"
                        Foreground="{DynamicResource Brush.TextTertiary}"
                        HorizontalAlignment="Center"
                        Margin="0,6,0,0"/>

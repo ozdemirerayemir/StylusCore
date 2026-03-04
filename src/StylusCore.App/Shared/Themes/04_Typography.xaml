@@ -3,21 +3,21 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- 1. Font Families -->
-    <FontFamily x:Key="FontFamily_Main">Segoe UI</FontFamily>
-    <FontFamily x:Key="FontFamily_Monospace">Consolas</FontFamily>
+    <FontFamily x:Key="Font.Family.Main">Segoe UI</FontFamily>
+    <FontFamily x:Key="Font.Family.Monospace">Consolas</FontFamily>
 
     <!-- 2. Font Weights -->
-    <FontWeight x:Key="FontWeight_Light">Light</FontWeight>
-    <FontWeight x:Key="FontWeight_Regular">Normal</FontWeight>
-    <FontWeight x:Key="FontWeight_Medium">Medium</FontWeight>
-    <FontWeight x:Key="FontWeight_SemiBold">SemiBold</FontWeight>
-    <FontWeight x:Key="FontWeight_Bold">Bold</FontWeight>
+    <FontWeight x:Key="Font.Weight.Light">Light</FontWeight>
+    <FontWeight x:Key="Font.Weight.Regular">Normal</FontWeight>
+    <FontWeight x:Key="Font.Weight.Medium">Medium</FontWeight>
+    <FontWeight x:Key="Font.Weight.SemiBold">SemiBold</FontWeight>
+    <FontWeight x:Key="Font.Weight.Bold">Bold</FontWeight>
 
     <!-- 3. Font Sizes -->
-    <sys:Double x:Key="FontSize_Small">12</sys:Double>
-    <sys:Double x:Key="FontSize_Body">14</sys:Double>
-    <sys:Double x:Key="FontSize_Large">18</sys:Double>
-    <sys:Double x:Key="FontSize_Title">24</sys:Double>
-    <sys:Double x:Key="FontSize_Header">32</sys:Double>
+    <sys:Double x:Key="Font.Size.Small">12</sys:Double>
+    <sys:Double x:Key="Font.Size.Body">14</sys:Double>
+    <sys:Double x:Key="Font.Size.Large">18</sys:Double>
+    <sys:Double x:Key="Font.Size.Title">24</sys:Double>
+    <sys:Double x:Key="Font.Size.Header">32</sys:Double>
 
 </ResourceDictionary>

@@ -7,7 +7,7 @@
 ## 0) Kısa Tanım (One-liner)
 **StylusCore**, klavye ile yapılandırılmış dokümantasyon ve grafik tablet/kalem ile serbest çizimi aynı editörde birleştiren, **tool-based** ve **deterministic** (öngörülebilir) davranışa sahip hibrit bir not/editör uygulamasıdır.
 
-> Not: Kullanılan grafik tablet **touch/pinch gesture desteklemez**. Zoom/pan gibi navigasyonlar **mouse/keyboard + tablet tuşları/dial** üzerinden tasarlanır.
+> Not: Motor seviyesinde **eşzamanlı Pen & Touch (Kalem=Çizim, Dokunmatik=Pan/Zoom/Navigasyon)** desteği zorunludur. Donanım touch desteklemese bile altyapı buna hazır olmalı, fallback olarak mouse/keyboard kullanılır.
 
 ---
 
@@ -121,8 +121,8 @@ Sadece **render sırası** (öne getir/arkaya gönder) için kullanılır. Edit 
 ### 8.1 Free Text (Floating Text Box)
 Taşınabilir, serbest alan. Text Tool ile box çizilir, yazı o alan içinde (sabit genişlikte) akar.
 
-### 8.2 Document Text (Structured)
-Word benzeri yazım, paragraflar, structured layout.
+### 8.2 Document Text (View-to-Edit)
+Statik metinler Engine tarafından çizilir. Düzenleme anında WPF RichTextBox bir overlay (View-to-Edit deseni) olarak açılır.
 
 ### 8.3 Text Özellikleri & Profiller
 - Font, Size, Bold/Italic/Underline, Color, Alignment.
@@ -223,7 +223,7 @@ Sağ tık menüleri seçilen object type’a göre değişir (Word/PowerPoint ya
 ---
 
 ## 15) Input Model
-Mouse + Keyboard ve Graphic Tablet tam desteklenir. "Tool abstraction" kullanılır. Implicit (gizli) tool switching veya "tahmin" yoktur.
+Mouse + Keyboard, Graphic Tablet ve eşzamanlı **Touch (Dokunmatik)** tam desteklenir. Kalem her zaman çizim/silme yaparken, Touch sadece navigasyon (pan/zoom) için ayrılmıştır. "Tool abstraction" kullanılır. Implicit (gizli) tool switching veya "tahmin" yoktur.
 
 ---
 
@@ -236,7 +236,7 @@ Mouse + Keyboard ve Graphic Tablet tam desteklenir. "Tool abstraction" kullanıl
 
 **Transform:**
 - Move: Text, Shape, Image, Stroke
-- Resize: Text, Shape, Image (V1'de stroke resize yoktur).
+- Resize: Text, Shape, Image, Stroke (Core ve Engine seviyesinde tüm nesneler transform desteğine sahiptir).
 
 ---
 

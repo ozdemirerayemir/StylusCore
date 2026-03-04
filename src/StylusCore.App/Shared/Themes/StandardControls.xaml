@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border x:Name="rectangle"
                             Background="{DynamicResource Brush.TextSecondary}"
-                            CornerRadius="{DynamicResource RadiusSM}"
+                            CornerRadius="{DynamicResource Radius.Medium}"
                             Height="{TemplateBinding Height}"
                             SnapsToDevicePixels="True"
                             Width="{TemplateBinding Width}"/>
@@ -97,7 +97,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3"
+                            CornerRadius="{DynamicResource Radius.Small}"
                             SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
@@ -143,7 +143,7 @@
                                             Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="3">
+                                            CornerRadius="{DynamicResource Radius.Small}">
                                     </Border>
                                 </ControlTemplate>
                             </ToggleButton.Template>
@@ -225,7 +225,7 @@
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <Border x:Name="checkBoxBorder"
                                 Width="18" Height="18"
-                                CornerRadius="3"
+                                CornerRadius="{DynamicResource Radius.Small}"
                                 BorderThickness="1"
                                 Background="{DynamicResource Brush.AppBg}"
                                 BorderBrush="{DynamicResource Brush.BorderSoft}"
@@ -319,8 +319,8 @@
     <Style x:Key="RibbonTabItemStyle" TargetType="ListBoxItem">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_Normal}"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Body}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.Regular}"/>
         <Setter Property="Margin" Value="0,0,8,0"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="BorderThickness" Value="0,0,0,2"/>
@@ -340,7 +340,7 @@
                             <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="FontWeight" Value="{DynamicResource FontWeight_SemiBold}"/>
+                            <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.SemiBold}"/>
                             <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}"/> <!-- Indicator -->
                             <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}"/>
                         </Trigger>
@@ -359,13 +359,13 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Small}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                      <Border x:Name="border"
                              Background="{TemplateBinding Background}"
-                             CornerRadius="6"
+                             CornerRadius="{DynamicResource Radius.Medium}"
                              Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                      </Border>
@@ -466,7 +466,7 @@
                     <Border Background="{DynamicResource Brush.Surface}"
                             BorderBrush="{DynamicResource Brush.BorderHard}"
                             BorderThickness="1"
-                            CornerRadius="{DynamicResource RadiusSM}"
+                            CornerRadius="{DynamicResource Radius.Medium}"
                             Padding="4,2">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="12" 
@@ -483,7 +483,7 @@
 
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="FontSize" Value="{DynamicResource FontSize_Small}"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Small}"/>
         <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="Template">
@@ -491,7 +491,7 @@
                 <ControlTemplate TargetType="{x:Type MenuItem}">
                     <Border x:Name="Border" 
                             Background="Transparent"
-                            CornerRadius="6"
+                            CornerRadius="{DynamicResource Radius.Medium}"
                             Padding="{TemplateBinding Padding}"
                             Margin="0,2">
                         <Grid>
@@ -552,15 +552,15 @@
         <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="8,4"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_SemiBold}"/>
+        <Setter Property="FontSize" Value="{DynamicResource Font.Size.Body}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.SemiBold}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="6"
+                            CornerRadius="{DynamicResource Radius.Medium}"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
@@ -592,11 +592,11 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="15,0"/>
-        <Setter Property="FontWeight" Value="{DynamicResource FontWeight_SemiBold}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource Font.Weight.SemiBold}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="8">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{DynamicResource Radius.Medium}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
                     </Border>
                     <ControlTemplate.Triggers>

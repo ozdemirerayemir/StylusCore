@@ -1,4 +1,4 @@
-<UserControl x:Class="StylusCore.App.Controls.RadialMenu"
+﻿<UserControl x:Class="StylusCore.App.Controls.RadialMenu"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Width="200" Height="200"
@@ -16,7 +16,7 @@
 
         <!-- Center Button -->
         <Ellipse x:Name="CenterCircle"
-                 Width="{DynamicResource Height_Button_Standard}" Height="{DynamicResource Height_Button_Standard}"
+                 Width="{DynamicResource Button.Height.Standard}" Height="{DynamicResource Button.Height.Standard}"
                  HorizontalAlignment="Center"
                  VerticalAlignment="Center"
                  Fill="{DynamicResource Brush.Surface}"
@@ -27,7 +27,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Foreground="{DynamicResource Brush.TextPrimary}"
-                   FontSize="{DynamicResource FontSize_Small}"
+                   FontSize="{DynamicResource Font.Size.Small}"
                    Text="Menu"/>
     </Grid>
 
@@ -43,8 +43,8 @@
         <Style x:Key="RadialMenuItemStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{DynamicResource Brush.TextPrimary}"/>
-            <Setter Property="Width" Value="{DynamicResource ControlHeightLG}"/>
-            <Setter Property="Height" Value="{DynamicResource ControlHeightLG}"/>
+            <Setter Property="Width" Value="{DynamicResource Control.Height.Large}"/>
+            <Setter Property="Height" Value="{DynamicResource Control.Height.Large}"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>

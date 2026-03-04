@@ -257,11 +257,11 @@ Paste resolver:
 
 ## 13) Persistence / Autosave / Recovery
 
-### 13.1 Dosya formatı (V1 öneri)
-- tek bir “.styluscore” paket:
-  - document.json (metadata + object graph)
-  - blobs/ (images, audio)
-  - optional: incremental snapshots
+### 13.1 Dosya formatı (Zorunlu)
+- tek bir “.stylusdb” SQLite dosyası (06_PERSISTENCE_DB.md):
+  - R-Tree tabanlı spatial chunking
+  - Protobuf ile serialize edilmiş, LZ4 ile sıkıştırılmış binary veriler
+  - (JSON kullanımı büyük kanvas verileri için KESİNLİKLE YASAKTIR)
 
 ### 13.2 Autosave
 - timer (30–60s)
